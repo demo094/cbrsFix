@@ -19,6 +19,9 @@
         <!--<div id="timer" ng-show="userPanelTO.serverSeconds != null" timer="{{userPanelTO.serverSeconds}}"></div>-->
     </div>
 
-    <div ng-show="error != null">Error status {{error.status}} <br>{{error.message}}</div>
     <div ui-view></div>
+</div>
+<div ng-show="error != null">
+    <div ng-show="error.cause != null"><br>{{error.cause}}<br>{{error.message}}</div>
+    <div ng-show="error.status != null">Error status {{error.status}} <br>{{error.message}}</div>
 </div>

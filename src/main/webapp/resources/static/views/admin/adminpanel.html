@@ -6,9 +6,12 @@
     <br><a ui-sref=".statistics">Look up system statistics</a>
     <br><button ng-click="logout()">Logout</button>
 
-    <div ng-show="error != null">Error status {{error.status}} <br>{{error.message}}</div>
     <div ui-view></div>
 
+</div>
+<div ng-show="error != null">
+    <div ng-show="error.cause != null"><br>{{error.cause}}<br>{{error.message}}</div>
+    <div ng-show="error.status != null">Error status {{error.status}} <br>{{error.message}}</div>
 </div>
 
 <!--<div ng-view></div>-->

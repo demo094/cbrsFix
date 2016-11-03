@@ -77,7 +77,7 @@ routerApp.controller('rentalController', function($scope, $http, $state, $timeou
               };
    });
 
-routerApp.controller('loginController', function($scope, $http, $location, $cookies){
+routerApp.controller('loginController', function($scope, $http, $location){
     $scope.login = function(){
         $http.post('login', $scope.credentials).then(function(response){
             $location.path('userpanel');

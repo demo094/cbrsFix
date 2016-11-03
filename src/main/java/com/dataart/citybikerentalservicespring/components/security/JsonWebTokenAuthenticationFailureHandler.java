@@ -22,7 +22,6 @@ public class JsonWebTokenAuthenticationFailureHandler implements AuthenticationF
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         LOGGER.error("Authentication failure!", exception);
         sendError(response, "Authentication failed!", exception);
-//        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Authentication failed!");
     }
 
     private void sendError(HttpServletResponse response, String message, Exception ex) throws IOException {
