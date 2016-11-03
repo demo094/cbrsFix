@@ -1,0 +1,29 @@
+<div class="section" ng-controller="stationAdminController">
+    <h4>{{header}}</h4>
+
+    <table border="1px solid" style="border-spacing: 1px">
+        <tr>
+            <th>No</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Address</th>
+            <th>City</th>
+            <th colspan="2">Actions</th>
+        </tr>
+        <tr ng-repeat="stationTO in stationTOs" ng-if="$index >= 0">
+            <td>{{stationTO.stationId}}</td>
+            <td>{{stationTO.stationName}}</td>
+            <td>{{stationTO.stationType}}</td>
+            <td>{{stationTO.stationAddress}}</td>
+            <td>{{stationTO.stationCity}}</td>
+            <td><a ui-sref=".editstation({id:stationTO.stationId})">Edit</a></td>
+            <td>
+                <button ng-click="deleteStation(stationTO.stationId)">Delete</button>
+            </td>
+        </tr>
+    </table>
+    <br><a ui-sref=".addstation">Add station</a>
+    <div ng-show="error != null">Error status {{error.status}} <br>{{error.message}}</div>
+    <div ui-view></div>
+
+</div>
