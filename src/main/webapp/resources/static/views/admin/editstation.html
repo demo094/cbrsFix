@@ -1,0 +1,45 @@
+<div class="section" ng-controller="editStationController">
+    <h4>{{header}} - {{stationTO.stationName}}</h4>
+
+    <form ng-submit="saveChanges()">
+        <table>
+            <tr>
+                <td>Name:</td>
+                <td><input type="text" ng-model="editstation.name" placeholder="{{stationTO.stationName}}" /></td>
+            </tr>
+            <tr>
+                <td>Type:</td>
+                <td><input type="text" ng-model="editstation.type" placeholder="{{stationTO.stationType}}" /></td>
+            </tr>
+            <tr>
+                <td>Address:</td>
+                <td><input type="text" ng-model="editstation.address" placeholder="{{stationTO.stationAddress}}" /></td>
+            </tr>
+            <tr>
+                <td>City:</td>
+                <td><input type="text" ng-model="editstation.city" placeholder="{{stationTO.stationCity}}" /></td>
+            </tr>
+            <input type="hidden" ng-model="editstation.id" />
+            <tr>
+                <td>
+                    <button type="submit">Save</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <div ng-show="editStationError != null">Error status {{editStationError.status}} <br>{{editStationError.message}}</div>
+    <div ng-show="serverResponse != null"><br>{{serverResponse}}</div>
+    <br>Slots on the station:
+    <div ng-show="stationTO.slotTOs == null"><br>There are no slots on this station!</div>
+    <table border="1px solid" style="border-spacing: 1px">
+        <tr><th>No</th><th>State</th><th>Action</th></tr>
+        <tr ng-repeat="slotTO in stationTO.slotTOs" ng-if="$index >= 0">
+            <td>{{slotTO.slotId}}</td>
+            <td ng-show="slotTO.bikeId != null">Bike - {{slotTO.bikeId}}</td>
+            <td ng-show="slotTO.bikeId == null">empty</td>
+            <td><button ng-click="delete()">Delete</button></td>
+        </tr>
+    </table>
+
+    <br><button ng-click="addSlot()">Add slot</button>
+</div>

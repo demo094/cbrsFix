@@ -1,0 +1,22 @@
+<div class="section" ng-controller="editPriceIntController">
+    <h4>{{editPriceIntervalHeader}}</h4>
+    <form ng-submit="updatePriceInterval()">
+        <table>
+            <input type="hidden" ng-model="editPriceInt.intervalId"/>
+            <tr>
+                <td>End:</td>
+                <td><input type="text" ng-model="editPriceInt.end" placeholder="{{priceIntervalTO.end}}"/></td>
+            </tr>
+            <tr>
+                <td>Price:</td>
+                <td><input type="text" ng-model="editPriceInt.price" placeholder="{{priceIntervalTO.price}}"/></td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="submit">Save</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <div ng-show="updatePriceError != null">Error status {{updatePriceError.status}} <br>{{updatePriceError.message}}</div>
+</div>

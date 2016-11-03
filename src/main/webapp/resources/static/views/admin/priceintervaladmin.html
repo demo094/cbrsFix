@@ -1,0 +1,24 @@
+<div class="section" ng-controller="priceIntController">
+    <h3>{{header}}</h3>
+
+    <table border="1px solid" style="border-spacing: 1px">
+        <tr>
+            <th>End</th>
+            <th>Price</th>
+            <th colspan="2">Actions</th>
+        </tr>
+        <tr ng-repeat="priceIntervalTO in priceIntervalTOs" ng-if="$index >= 0">
+            <td>{{priceIntervalTO.end}}</td>
+            <td>{{priceIntervalTO.price}}</td>
+            <td><a ui-sref=".editpriceinterval({id:priceIntervalTO.id})">Edit</a></td>
+            <td>
+                <button ng-click="deletePriceInterval(priceIntervalTO.id)">Delete</button>
+            </td>
+        </tr>
+    </table>
+
+    <br><a ui-sref=".addpriceinterval">Add price interval</a>
+    <div ng-show="error != null">Error status {{error.status}} <br>{{error.message}}</div>
+    <div ui-view></div>
+
+</div>
