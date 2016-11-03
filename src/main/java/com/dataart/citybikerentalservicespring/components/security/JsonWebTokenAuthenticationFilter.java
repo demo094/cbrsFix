@@ -1,32 +1,25 @@
 package com.dataart.citybikerentalservicespring.components.security;
 
-import com.dataart.citybikerentalservicespring.exceptions.jwtexceptions.JwtTokenMissingException;
+import com.dataart.citybikerentalservicespring.exceptions.jsonwebtokenexceptions.JsonWebTokenMissingException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * Created by mkrasowski on 18.10.2016.
  */
-public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
+public class JsonWebTokenAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
 
-    public JwtAuthenticationFilter() {
+    public JsonWebTokenAuthenticationFilter() {
         super("/api/**");
     }
 
@@ -42,10 +35,10 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
                 .filter(cookie -> cookie.getName().equals("accessToken"))
                 .findAny()
                 .map(Cookie::getValue)
-                .orElseThrow(()->new JwtTokenMissingException("No token found"));
+                .orElseThrow(()->new JsonWebTokenMissingException("No token found"));
 
 
-        JwtAuthenticationToken authenticationToken = new JwtAuthenticationToken(token);
+        JsonWebAuthenticationToken authenticationToken = new JsonWebAuthenticationToken(token);
 
         return getAuthenticationManager().authenticate(authenticationToken);
     }

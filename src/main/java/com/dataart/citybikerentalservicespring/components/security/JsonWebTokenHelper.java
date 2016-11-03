@@ -1,6 +1,6 @@
 package com.dataart.citybikerentalservicespring.components.security;
 
-import com.dataart.citybikerentalservicespring.exceptions.jwtexceptions.JwtTokenException;
+import com.dataart.citybikerentalservicespring.exceptions.jsonwebtokenexceptions.JsonWebTokenException;
 import com.dataart.citybikerentalservicespring.persistence.model.User;
 import com.dataart.citybikerentalservicespring.view.TO.UserDetailsTO;
 import io.jsonwebtoken.Claims;
@@ -18,13 +18,13 @@ import java.util.List;
  * Created by mkrasowski on 18.10.2016.
  */
 @Component
-public class JwtHelper {
+public class JsonWebTokenHelper {
     @Value("${secret}")
     private String secret;
 
 
 
-    public UserDetailsTO parseToken(String token) throws JwtTokenException {
+    public UserDetailsTO parseToken(String token) throws JsonWebTokenException {
         try {
             Claims body = Jwts.parser()
                     .setSigningKey(secret)
@@ -38,7 +38,7 @@ public class JwtHelper {
 
             return userDetailsTO;
         } catch (JwtException | ClassCastException ex) {
-            throw new JwtTokenException(ex);
+            throw new JsonWebTokenException(ex);
         }
     }
 

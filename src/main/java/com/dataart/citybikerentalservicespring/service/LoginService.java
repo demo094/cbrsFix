@@ -1,19 +1,15 @@
 package com.dataart.citybikerentalservicespring.service;
 
-import com.dataart.citybikerentalservicespring.components.security.JwtAuthenticationToken;
-import com.dataart.citybikerentalservicespring.components.security.JwtHelper;
+import com.dataart.citybikerentalservicespring.components.security.JsonWebTokenHelper;
 import com.dataart.citybikerentalservicespring.exceptions.userexceptions.AccountNotActivatedException;
 import com.dataart.citybikerentalservicespring.exceptions.userexceptions.UnexpectedAuthenticationException;
 import com.dataart.citybikerentalservicespring.persistence.model.User;
 import com.dataart.citybikerentalservicespring.view.TO.AuthenticationTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import javax.servlet.http.Cookie;
 
 /**
  * Created by mkrasowski on 28.10.2016.
@@ -25,7 +21,7 @@ public class LoginService {
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
-    private JwtHelper jwtHelper;
+    private JsonWebTokenHelper jsonWebTokenHelper;
 
     public String createAuthenticationToken(AuthenticationTO authenticationTO){
         try {
@@ -44,7 +40,7 @@ public class LoginService {
             } else if (!user.isActivated()) {
                 throw new AccountNotActivatedException();
             } else {
-                return jwtHelper.generateToken(user);
+                return jsonWebTokenHelper.generateToken(user);
             }
         } catch (RuntimeException ex) {
             if (ex instanceof AuthenticationException) {
