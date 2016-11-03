@@ -29,6 +29,7 @@ public class CalculationUtil {
         BigDecimal tripPrice = BigDecimal.ZERO;
         Long notNullIntervalEnd = 0L;
 
+        //TODO new algorithm
         for (PriceInterval priceInterval : priceIntervalList) {
             if (priceInterval.getEnd() != null && (seconds > 0 &&
                     seconds <= priceInterval.getEnd() || seconds >= priceInterval.getEnd())) {
