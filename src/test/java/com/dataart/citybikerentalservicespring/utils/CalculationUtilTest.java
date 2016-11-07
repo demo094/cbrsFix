@@ -28,12 +28,6 @@ public class CalculationUtilTest {
 
     }
 
-//    @Test
-//    public void calculateWithNewAlgorithm(){
-//        assertEquals(BigDecimal.ZERO, CalculationUtil.calculateTripPriceNewAlgorithm(17, getPriceIntervalList()));
-//        assertEquals(BigDecimal.ONE, CalculationUtil.calculateTripPriceNewAlgorithm(20, getPriceIntervalList()));
-//        assertEquals(BigDecimal.ONE, CalculationUtil.calculateTripPriceNewAlgorithm(24, getPriceIntervalList()));
-//    }
 
     public List<PriceInterval> getPriceIntervalList() {
         List<PriceInterval> priceIntervalList = new ArrayList<>();

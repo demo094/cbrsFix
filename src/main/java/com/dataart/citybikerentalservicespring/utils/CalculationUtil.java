@@ -11,39 +11,24 @@ import java.util.List;
  */
 @Component
 public class CalculationUtil {
+    private static final int ONE_MINUTE = 60;
 
     public static BigDecimal calculateTripPrice(long seconds, List<PriceInterval> priceIntervalList) {
         BigDecimal tripPrice = BigDecimal.ZERO;
+        long startInterval = 0L;
 
         for (PriceInterval priceInterval : priceIntervalList) {
-            if ((priceInterval.getEnd() == null || priceInterval.getEnd() >= seconds || priceInterval.getEnd() <= seconds)
-                    && priceInterval.getStart() <= seconds) {
+            if (priceInterval.getEnd() != null && seconds >= startInterval
+                    && (seconds <= priceInterval.getEnd() || seconds >= priceInterval.getEnd())){
+                startInterval = priceInterval.getEnd();
                 tripPrice = tripPrice.add(priceInterval.getPrice());
             }
         }
 
-        return tripPrice;
-    }
-
-    public static BigDecimal calculateTripPriceNewAlgorithm(long seconds, List<PriceInterval> priceIntervalList) {
-        BigDecimal tripPrice = BigDecimal.ZERO;
-        Long notNullIntervalEnd = 0L;
-
-        //TODO new algorithm
-        for (PriceInterval priceInterval : priceIntervalList) {
-            if (priceInterval.getEnd() != null && (seconds > 0 &&
-                    seconds <= priceInterval.getEnd() || seconds >= priceInterval.getEnd())) {
-                notNullIntervalEnd = priceInterval.getEnd();
-                tripPrice = tripPrice.add(priceInterval.getPrice());
-            }
-
-            if (seconds > notNullIntervalEnd && priceInterval.getEnd() == null) {
-                tripPrice = tripPrice.add(priceInterval.getPrice().multiply(new BigDecimal((seconds - notNullIntervalEnd) / 60)));
-            }
-//            if ((priceInterval.getEnd() == null || priceInterval.getEnd() >= seconds || priceInterval.getEnd() <= seconds)
-//                    && priceInterval.getStart() <= seconds) {
-//
-//            }
+        long lastIntervalStart = startInterval;
+        if (seconds >= lastIntervalStart) {
+            PriceInterval lastPriceInterval = priceIntervalList.get(priceIntervalList.size() - 1);
+            tripPrice = tripPrice.add(lastPriceInterval.getPrice().multiply(BigDecimal.valueOf(((seconds - lastIntervalStart) / ONE_MINUTE) + 1)));
         }
 
         return tripPrice;
