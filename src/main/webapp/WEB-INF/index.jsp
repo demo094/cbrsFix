@@ -30,15 +30,44 @@
     <title>Bike rental service</title>
 </head>
 <body style="margin-left:1%" ng-app="routerApp" class="no-js">
-     Welcome to the city's bike rental service!
-     <br><a href="#/login">Log in to the service</a>
-     <br><a href="#/resetpassword">Forgot password?</a>
-     <br>
-     <br><a href="#/registration">Register</a>
-     <br><a href="#/resendactivation">Resend activation link</a>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#/">City bike rental service</a>
+            </div>
 
-    <br>
-    <div ui-view></div>
+            <ul class="nav navbar-nav">
+                <li><a href="#/about">About</a></li>
+                <li><a href="#/news">News</a></li>
+                <li><a href="#/gallery">Gallery</a></li>
+                <li><a href="#/contact">Contact</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#/registration"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+                <li><a href="#/login"><span class="glyphicon glyphicon-log-in"></span> Log in</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+    <div id="nav_menu_left" class="panel panel-default col-sm-3 sidenav">
+        <div class="panel-heading">
+        City bike support menu
+        </div>
+        <div class="panel-body">
+            <div class="row content">
+                <a href="#/resetpassword">Forgot password?</a>
+                <br><a href="#/resendactivation">Resend activation link</a>
+                <br><a href="#/adminmail">Send a mail to administration</a>
+            </div>
+        </div>
+    </div>
+        <br>
+        <div class="col-sm-8 text-left">
+            <div ui-view></div>
+        </div>
+        </div>
     <br>
         <div ng-show="error != null">
         <div ng-show="error.status != null">Error status {{error.status}}</div>
