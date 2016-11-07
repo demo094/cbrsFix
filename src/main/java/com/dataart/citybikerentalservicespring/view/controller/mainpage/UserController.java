@@ -46,14 +46,10 @@ public class UserController {
     @PreAuthorize("hasRole('USER')")
     public UserPanelTO userPanelTO() throws CbrsException {
         AuthenticatedUser authUser = AuthenticationContext.getAuthenticatedUser();
-        if (authUser == null) {
-            throw new CbrsException();
-        } else {
             User user = userService.findById(authUser.getId());
             RentalHistory rentalHistory = rentalService.getLastRental(user);
             Payment payment = rentalService.getLastTripPrice(user);
             return new UserPanelTO(user, rentalHistory, payment);
-        }
     }
 
     @RequestMapping(value = "/resetPassEmail", method = RequestMethod.POST)

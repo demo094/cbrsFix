@@ -33,10 +33,10 @@ public class AppExceptionHandler {
     }
 
     @ExceptionHandler(CbrsRuntimeException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiErrorTO handleCbrsRuntimeException(CbrsRuntimeException ex) {
         LOGGER.error("An error occurred!", ex);
-        return new ApiErrorTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), (ex.getUserMessage().getMessage()));
+        return new ApiErrorTO(HttpStatus.BAD_REQUEST.value(), (ex.getUserMessage().getMessage()));
     }
 
     @ExceptionHandler(RuntimeException.class)

@@ -31,26 +31,18 @@ public class RentalController {
     @PreAuthorize("hasRole('USER')")
     public RentalResponse angularRentBike(@PathVariable("id") Integer slotId) throws CbrsException {
         AuthenticatedUser authenticatedUser = AuthenticationContext.getAuthenticatedUser();
-        if (authenticatedUser == null) {
-            throw new CbrsException();
-        } else {
             User user = userService.findById(authenticatedUser.getId());
             rentalService.rentBikeFromSlot(user, slotId);
             return new RentalResponse("Bike rented!");
-        }
     }
 
     @RequestMapping(value = "/api/station/slot/{id}/return", method = RequestMethod.POST)
     @PreAuthorize("hasRole('USER')")
     public RentalResponse angularReturnBike(@PathVariable("id") Integer slotId) throws CbrsException {
         AuthenticatedUser authenticatedUser = AuthenticationContext.getAuthenticatedUser();
-        if (authenticatedUser == null) {
-            throw new CbrsException();
-        } else {
             User user = userService.findById(authenticatedUser.getId());
             rentalService.returnBike(user, slotId);
             return new RentalResponse("Bike returned!");
-        }
     }
 
 }

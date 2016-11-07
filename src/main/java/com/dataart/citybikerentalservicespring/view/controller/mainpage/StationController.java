@@ -46,11 +46,7 @@ public class StationController {
     @PreAuthorize("hasRole('USER')")
     public UserBikeTO userBikeTO() throws CbrsException {
         AuthenticatedUser authenticatedUser = AuthenticationContext.getAuthenticatedUser();
-        if (authenticatedUser == null) {
-            throw new CbrsException();
-        } else {
             return new UserBikeTO(userService.findById(authenticatedUser.getId()));
-        }
     }
 
 }
