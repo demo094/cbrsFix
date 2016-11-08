@@ -125,7 +125,7 @@ routerApp.controller('editStationController', function($scope, $http, $statePara
 });
 
 routerApp.controller('priceIntController', function($scope, $http, $state, $stateParams){
-    $scope.header = "Price intervals management";
+    $scope.header = "Price interval management";
     $scope.addStationHeader = "Add price interval";
     $http.get('api/adminpriceintervals').then(function(response){
         $scope.priceIntervalTOs = response.data;

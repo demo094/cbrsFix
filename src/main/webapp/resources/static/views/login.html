@@ -1,17 +1,20 @@
-<div class="section" ng-controller="loginController">
-    <h3>Login page</h3>
-    <form role="form" ng-submit="login()">
+<div class="panel-heading">
+    Login panel
+</div>
+
+<div class="panel-body" ng-controller="loginController">
+    <form role="form" class="form-inline" ng-submit="login()">
         <table>
             <tr>
-                <td><input type="text" id="email" name="email" ng-model="credentials.email" placeholder="Email"/></td>
+                <td><input type="text" class="form-control" id="email" name="email" ng-model="credentials.email" placeholder="Email"/></td>
             </tr>
             <tr>
-                <td><input type="password" id="password" name="password" ng-model="credentials.password"
+                <td><input type="password" class="form-control" id="pwd" name="password" ng-model="credentials.password"
                            placeholder="Password"/></td>
             </tr>
             <tr>
                 <td>
-                    <button type="submit">Submit</button>
+                    <button class="btn btn-default" type="submit">Submit</button>
                 </td>
             </tr>
         </table>

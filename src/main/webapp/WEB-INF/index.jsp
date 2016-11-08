@@ -20,6 +20,7 @@
     <script src="webjars/angularjs/1.5.8/angular-resource.js"></script>
     <script src="webjars/angularjs/1.5.8/angular-route.js"></script>
     <script src="webjars/angularjs/1.5.8/angular-cookies.js"></script>
+    <script src="webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
     <script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.min.js"></script>
     <script src="resources/static/js/routerApp.js"></script>
     <script src="resources/static/js/controller.js"></script>
@@ -29,16 +30,50 @@
 
     <title>Bike rental service</title>
 </head>
-<body style="margin-left:1%" ng-app="routerApp" class="no-js">
-     Welcome to the city's bike rental service!
-     <br><a href="#/login">Log in to the service</a>
-     <br><a href="#/resetpassword">Forgot password?</a>
-     <br>
-     <br><a href="#/registration">Register</a>
-     <br><a href="#/resendactivation">Resend activation link</a>
+<body style="margin-left:5%; margin-right:5%" ng-app="routerApp" class="no-js">
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
 
-    <br>
-    <div ui-view></div>
+                <a class="navbar-brand" href="#/">City bike rental service</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="mainNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="#/about">About</a></li>
+                <li><a href="#/news">News</a></li>
+                <li><a href="#/gallery">Gallery</a></li>
+                <li><a href="#/contact">Contact</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#/registration"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+                <li><a href="#/login"><span class="glyphicon glyphicon-log-in"></span> Log in</a></li>
+            </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+    <div class="row content">
+        <div id="nav_menu_left" class="panel panel-default col-sm-2 sidenav">
+            <div class="panel-heading">
+                Support menu
+            </div>
+            <div class="panel-body">
+                <a href="#/resetpassword">Forgot password?</a>
+                <br><a href="#/resendactivation">Resend activation link</a>
+                <br><a href="#/adminmail">Send a mail to administration</a>
+            </div>
+        </div>
+            <div class="panel panel-default col-sm-8 text-left" ui-view></div>
+        </div>
+    </div>
     <br>
         <div ng-show="error != null">
         <div ng-show="error.status != null">Error status {{error.status}}</div>

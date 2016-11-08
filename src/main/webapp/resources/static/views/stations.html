@@ -1,5 +1,7 @@
-<div class="section"  ng-controller = "stationsController">
-    <h3>{{headingTitle}}</h3>
+<div class="panel-heading">
+    {{headingTitle}}
+</div>
+<div class="panel-body"  ng-controller = "stationsController">
     <div id="stationList">
         <p ng-repeat="stationTO in stationTOs" ng-if="$index >= 0">
             <a ui-sref=".station({id:stationTO.stationId})">{{stationTO.stationName}}</a>

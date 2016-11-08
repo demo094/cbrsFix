@@ -11,6 +11,22 @@ routerApp.config(function($stateProvider, $urlRouterProvider, $cookiesProvider) 
             templateUrl: 'resources/static/views/login.html',
             controller: 'loginController'
         })
+        .state('about',{
+            url: '/about',
+            templateUrl: 'resources/static/views/about.html'
+        })
+        .state('news',{
+            url: '/news',
+            templateUrl: 'resources/static/views/news.html'
+        })
+        .state('gallery',{
+            url: '/gallery',
+            templateUrl: 'resources/static/views/gallery.html'
+        })
+        .state('contact',{
+            url: '/contact',
+            templateUrl: 'resources/static/views/contact.html'
+        })
         .state('resetpassword', {
             url: '/resetpassword',
             templateUrl: 'resources/static/views/resetpassword.html',
