@@ -31,7 +31,6 @@ public class PriceIntervalService {
     @Transactional
     public void updatePriceInterval(int id, Long start, Long end, BigDecimal price) {
         PriceInterval priceInterval = priceIntervalRepository.findOne(id);
-        priceInterval.setStart(start);
         priceInterval.setEnd(end);
         priceInterval.setPrice(price);
         priceIntervalRepository.save(priceInterval);

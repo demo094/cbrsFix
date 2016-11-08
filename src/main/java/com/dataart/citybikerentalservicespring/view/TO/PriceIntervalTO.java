@@ -16,7 +16,6 @@ public class PriceIntervalTO {
 
     public PriceIntervalTO(PriceInterval priceInterval) {
         this.id = priceInterval.getId();
-        this.start = priceInterval.getStart();
         this.end = priceInterval.getEnd();
         this.price = priceInterval.getPrice();
     }
