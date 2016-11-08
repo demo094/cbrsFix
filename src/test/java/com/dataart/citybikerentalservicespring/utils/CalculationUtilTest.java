@@ -31,10 +31,10 @@ public class CalculationUtilTest {
 
     public List<PriceInterval> getPriceIntervalList() {
         List<PriceInterval> priceIntervalList = new ArrayList<>();
-        priceIntervalList.add(new PriceInterval(0L, 20L, BigDecimal.ZERO));
-        priceIntervalList.add(new PriceInterval(20L, 60L, BigDecimal.ONE));
-        priceIntervalList.add(new PriceInterval(60L, 120L, BigDecimal.valueOf(2)));
-        priceIntervalList.add(new PriceInterval(120L, BigDecimal.valueOf(3)));
+        priceIntervalList.add(new PriceInterval(20L, BigDecimal.ZERO));
+        priceIntervalList.add(new PriceInterval(60L, BigDecimal.ONE));
+        priceIntervalList.add(new PriceInterval(120L, BigDecimal.valueOf(2)));
+        priceIntervalList.add(new PriceInterval(null, BigDecimal.valueOf(3)));
         return priceIntervalList;
     }
 }

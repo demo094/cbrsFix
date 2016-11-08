@@ -15,8 +15,6 @@ public class PriceInterval {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-//    @Column(nullable = false)
-    private long start;
     @Column
     private Long end;
     @Column(nullable = false)
@@ -25,18 +23,7 @@ public class PriceInterval {
     public PriceInterval() {
     }
 
-    public PriceInterval(long start, BigDecimal price) {
-        this.start = start;
-        this.price = price;
-    }
-
-    public PriceInterval(long start, Long end, BigDecimal price) {
-        this.start = start;
-        this.end = end;
-        this.price = price;
-    }
-
-    public PriceInterval(Long end, BigDecimal price){
+    public PriceInterval(Long end, BigDecimal price) {
         this.end = end;
         this.price = price;
     }
@@ -47,14 +34,6 @@ public class PriceInterval {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public long getStart() {
-        return start;
-    }
-
-    public void setStart(long start) {
-        this.start = start;
     }
 
     public Long getEnd() {
