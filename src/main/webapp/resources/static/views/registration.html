@@ -1,15 +1,26 @@
-<div class="section">
-    <br>Register to become one of the users of the service. :)
-    <br>Remember, the credentials must not be empty!
+<div class="panel-heading">
+    Registration panel
+</div>
+<div class="panel-body">
+    Register to become one of the users of the service. :) Remember, the credentials must not be empty!
     <form ng-controller="registrationController" ng-submit="registration()">
         <table>
-            <tr><td><input type="email" ng-model="register.email" placeholder="Email"/></td></tr>
-            <tr><td><input type="password" ng-model="register.password" placeholder="Password"/></td></tr>
-            <tr><td><input type="password" ng-model="register.retypedPassword" placeholder="Retype password"/></td></tr>
-            <input type="hidden" ng-model="register.csrf" name="${_csrf.parameterName}" value="${_csrf.token}" />
-            <tr><td><input type="submit"/></td></tr>
+            <tr>
+                <td><input type="email" class="form-control" id="email" ng-model="register.email" placeholder="Email"/></td>
+            </tr>
+            <tr>
+                <td><input type="password" class="form-control" id="pwd" ng-model="register.password" placeholder="Password"/></td>
+            </tr>
+            <tr>
+                <td><input type="password" class="form-control" id="repeat_pwd" ng-model="register.retypedPassword" placeholder="Retype password"/></td>
+            </tr>
+            <input type="hidden" ng-model="register.csrf" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            <tr>
+                <td><input type="submit" class="btn btn-default"/></td>
+            </tr>
         </table>
     </form>
+    <br>
     <div id="response"></div>
     <div ng-show="error != null">Error status {{error.status}} <br>{{error.message}}</div>
 

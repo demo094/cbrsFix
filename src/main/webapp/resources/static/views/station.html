@@ -1,12 +1,12 @@
-<div class="section">
-    <h3>Slots on the station {{stationTO.stationName}}</h3>
+<div>
+    Slots on the station {{stationTO.stationName}}
     <div id="slotList">
         <div ng-repeat="item in stationTO.slotTOs" ng-if="$index >= 0">
             <form ng-if="item.bikeId != null" ng-controller="rentalController">
-                <table border="1px solid">
+                <input type="hidden" ng-model="item.slotId"/>
+                <table class="table table-hover table-compact">
                     <tr>
                         <td>occupied</td>
-                        <input type="hidden" ng-model="item.slotId"/>
                         <td ng-if="userBikeTO.bikeId == null">
                             <button type="submit" ng-click="rentBike()">Rent</button>
                         </td>
@@ -14,10 +14,10 @@
                 </table>
             </form>
             <form ng-if="item.bikeId == null" ng-controller="rentalController">
-                <table border="1px solid">
+                <input type="hidden" ng-model="item.slotId"/>
+                <table class="table table-hover table-compact">
                     <tr>
                         <td>empty</td>
-                        <input type="hidden" ng-model="item.slotId"/>
                         <td ng-if="userBikeTO.bikeId != null">
                             <button type="submit" ng-click="returnBike()">Return</button>
                         </td>

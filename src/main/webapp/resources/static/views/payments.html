@@ -1,14 +1,15 @@
-<div class="section" ng-controller="paymentController">
-    <h3>Payment service</h3>
-    <br>
-    <form ng-submit="paymentSubmit()">
+<div class="panel-heading">
+    Payment service
+</div>
+<div class="panel-body" ng-controller="paymentController">
+    <form id="some_input" ng-submit="paymentSubmit()">
         <input type="hidden" ng-model="payment.idUser" name="idUser"/>
         <table>
-            <tr><td><input type="text"  name="cardNo" placeholder="Credit card number"/></td></tr>
-            <tr><td><input type="text" name="cardExpDate" placeholder="Expiration date MM-YYYY"/></td></tr>
-            <tr><td><input type="text" name="cvvCode" placeholder="CVV code"/></td></tr>
-            <tr><td><input type="text" ng-model="payment.amount" name="amount" placeholder="Cash amount"/></td></tr>
-            <tr><td><input type="submit" /></td></tr>
+            <tr><td><input type="text" class="form-control" name="cardNo" placeholder="Credit card number"/></td></tr>
+            <tr><td><input type="text" class="form-control" name="cardExpDate" placeholder="Expiration date MM-YYYY"/></td></tr>
+            <tr><td><input type="text" class="form-control" name="cvvCode" placeholder="CVV code"/></td></tr>
+            <tr><td><input type="text" class="form-control" ng-model="payment.amount" name="amount" placeholder="Cash amount"/></td></tr>
+            <tr><td><input type="submit" class="btn btn-default" /></td></tr>
         </table>
     </form>
     <br>

@@ -1,13 +1,43 @@
-#content{
-    display: inline-block;
-    float: left;
-    position: relative;
+.table {
+    margin-bottom:0;
 }
 
-#nav_menu_left{
+.navbar {
+    margin-bottom: 1%;
 }
 
-.section{
-    margin-left: 10%;
-    float:left;
+
+.row.content {
+    height: 450px;
+}
+
+.sidenav {
+    height: 50%;
+    margin-right: 1%;
+}
+
+#pwd {
+    margin-bottom: 2px;
+}
+
+#repeat_pwd {
+    margin-bottom: 2px;
+}
+
+#email {
+    margin-bottom: 2px;
+}
+
+#some_input input {
+    margin-bottom: 2px;
+}
+
+@media screen and (max-width: 767px){
+    .sidenav{
+        height: auto;
+        padding: 15px;
+    }
+    .row.content{
+        height: auto;
+    }
 }

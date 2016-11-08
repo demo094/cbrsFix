@@ -1,7 +1,8 @@
-<div class="section" ng-controller="priceIntController">
-    <h3>{{header}}</h3>
-
-    <table border="1px solid" style="border-spacing: 1px">
+<div class="panel-heading">
+    {{header}}
+</div>
+<div class="panel-body" ng-controller="priceIntController">
+    <table class="table table-hover table-compact">
         <tr>
             <th>End</th>
             <th>Price</th>
@@ -20,5 +21,4 @@
     <br><a ui-sref=".addpriceinterval">Add price interval</a>
     <div ng-show="error != null">Error status {{error.status}} <br>{{error.message}}</div>
     <div ui-view></div>
-
 </div>

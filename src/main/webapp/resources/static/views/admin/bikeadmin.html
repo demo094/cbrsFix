@@ -1,7 +1,8 @@
-<div class="section" ng-controller="bikeAdminController">
-    <h4>{{header}}</h4>
-
-    <table border="1px solid" style="border-spacing: 1px">
+<div class="panel-heading">
+    {{header}}
+</div>
+<div class="panel-body" ng-controller="bikeAdminController">
+    <table class="table table-hover table-compact">
         <tr>
             <th>No</th>
             <th colspan="2">Actions</th>
@@ -15,7 +16,8 @@
         </tr>
     </table>
 
-    <br><button ng-click="addBike()">Add bike</button>
+    <br>
+    <button class="btn btn-default" ng-click="addBike()">Add bike</button>
 
     <div ng-show="error != null">Error status {{error.status}} <br>{{error.message}}</div>
     <div ui-view></div>
