@@ -21,6 +21,7 @@ import com.dataart.citybikerentalservicespring.view.requests.ResendTokenRequest;
 import com.dataart.citybikerentalservicespring.view.requests.ResetPasswordRequest;
 import com.dataart.citybikerentalservicespring.view.responses.CommonResponse;
 import com.dataart.citybikerentalservicespring.view.responses.ErrorResponse;
+import com.dataart.citybikerentalservicespring.view.responses.RentalSynchroResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -95,7 +96,6 @@ public class UserController {
     }
 
     @RequestMapping(value = "/payment", method = RequestMethod.POST)
-    @PreAuthorize("hasRole('USER')")
     public CommonResponse angularPaymentSubmit(@RequestBody PaymentRequest paymentRequest) throws CbrsException {
         userService.updateBalance(paymentRequest.getIdUser(), paymentRequest.getAmount());
         return new CommonResponse("Payment done!");
@@ -121,5 +121,15 @@ public class UserController {
             userService.setUserActivated(user, true);
             return new CommonResponse("Account activated");
         }
+    }
+
+    @RequestMapping(value = "/api/rentalBeginTime", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('USER')")
+    public RentalSynchroResponse synchronizeTimer(){
+        AuthenticatedUser authenticatedUser = AuthenticationContext.getAuthenticatedUser();
+        User user = userService.findById(authenticatedUser.getId());
+        RentalHistory rentalHistory = rentalService.getLastRental(user);
+
+        return new RentalSynchroResponse(rentalHistory);
     }
 }

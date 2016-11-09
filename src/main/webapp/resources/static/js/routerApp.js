@@ -1,4 +1,4 @@
-var routerApp = angular.module('routerApp', ['ui.router', 'ngCookies']);
+var routerApp = angular.module('routerApp', ['ui.router', 'ngCookies', 'timer']);
 
 routerApp.config(function($stateProvider, $urlRouterProvider, $cookiesProvider) {
 
@@ -72,11 +72,6 @@ routerApp.config(function($stateProvider, $urlRouterProvider, $cookiesProvider) 
             templateUrl: 'resources/static/views/payments.html',
             controller: 'paymentController'
         })
-//        .state('error', {
-//            url: '/error',
-//            templateUrl: 'resources/static/views/error.html',
-//            controller: 'errorHandler'
-//        })
 
 
 //        ADMIN PANEL STATES

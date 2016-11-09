@@ -1,12 +1,27 @@
-routerApp.controller('userpanelController', function($scope, $http, $cookies, $window){
+routerApp.controller('userpanelController', function($scope, $http, $cookies, $window, $interval){
     $scope.headingTitle = "User panel";
-//    $cookies.put('accessToken', "AAA");
+//    var storedBikeId;
     $http.get('api/userpanel')
         .then(function(response){
             $scope.userPanelTO = response.data;
+//            storedBikeId = response.data.bikeId;
+            $scope.serverTimeMillis = response.data.serverTime;
         }, function(response){
             $scope.error = response.data;
         });
+
+//    if(storedBikeId != null){
+//        $interval(function(){
+//            $http.get('api/rentalBeginTime').then(function(response){
+//                $scope.serverTimeMillis = response.data.rentalBeginTime;
+//            }, function(response){
+//                $scope.serverTimeMillis = null;
+//            });
+//        }, 5000);
+//    }
+//    else {
+//        $interval.cancel();
+//    }
 
     $scope.logout = function(){
         $cookies.remove('accessToken');
@@ -14,16 +29,6 @@ routerApp.controller('userpanelController', function($scope, $http, $cookies, $w
     };
 });
 
-//routerApp.directive('timer', function(){
-//        return {
-//            scope: {
-//                timer: "@"
-//            },
-//            link: function(scope, element, attributes){
-//               rentTimer(attributes.timer);
-//            }
-//        }
-//    });
 
 routerApp.controller('stationsController', function($scope, $http){
        $scope.headingTitle = "List of available stations";
@@ -52,13 +57,12 @@ routerApp.controller('slotController', function($scope, $http, $stateParams){
         });
 });
 
-routerApp.controller('rentalController', function($scope, $http, $state, $timeout){
+routerApp.controller('rentalController', function($scope, $http, $state){
        $scope.rentBike = function(){
             var url = 'api/station/slot/'+ $scope.item.slotId +'/rent';
             $http.post(url)
             .then(function(response){
                 document.getElementById("server_response").innerHTML = response.data.rentStatus;
-                rentTimer($scope.userPanelTO.serverSeconds);
                 $state.reload();
             }, function(response){
                 $scope.rentalError = response.data;
@@ -70,6 +74,7 @@ routerApp.controller('rentalController', function($scope, $http, $state, $timeou
                    $http.post(url)
                    .then(function(response){
                         document.getElementById("server_response").innerHTML = response.data.rentStatus;
+
                         $state.reload();
                        }, function(response){
                         $scope.rentalError = response.data;
@@ -158,4 +163,5 @@ routerApp.controller('paymentController', function($scope, $http, $state){
     };
 
 });
+
 
