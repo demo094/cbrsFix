@@ -17,7 +17,9 @@
     <div ng-if="userPanelTO.bikeId!=null">
         Currently you are renting bike number {{userPanelTO.bikeId}}.
         <br>
-        <!--<div id="timer" ng-show="userPanelTO.serverSeconds != null" timer="{{userPanelTO.serverSeconds}}"></div>-->
+        <timer interval="1000" start-time="serverTimeMillis">
+            {{hhours}} : {{mminutes}} : {{sseconds}}
+        </timer>
     </div>
 
     <div class="panel panel-default" ui-view></div>

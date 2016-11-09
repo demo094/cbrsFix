@@ -3,7 +3,6 @@ package com.dataart.citybikerentalservicespring.view.TO;
 import com.dataart.citybikerentalservicespring.persistence.model.Payment;
 import com.dataart.citybikerentalservicespring.persistence.model.RentalHistory;
 import com.dataart.citybikerentalservicespring.persistence.model.User;
-import com.dataart.citybikerentalservicespring.utils.WebUtil;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -16,7 +15,7 @@ public class UserPanelTO {
     private BigDecimal paymentMoney;
     private Integer bikeId;
     private Instant beginTime;
-    private Long serverSeconds;
+    private Long serverTime;
 
 
     public UserPanelTO() {
@@ -25,10 +24,10 @@ public class UserPanelTO {
     public UserPanelTO(User user, RentalHistory rentalHistory, Payment payment) {
         if (rentalHistory == null) {
             this.beginTime = null;
-            this.serverSeconds = null;
+            this.serverTime = null;
         } else {
             this.beginTime = rentalHistory.getBeginTime();
-            this.serverSeconds = calculateServerSeconds();
+            this.serverTime = calculateServerTime();
         }
         this.userBalance = user.getBalance();
         if (user.getBike() == null) {
@@ -67,16 +66,16 @@ public class UserPanelTO {
         this.paymentMoney = paymentMoney;
     }
 
-    public Long getServerSeconds() {
-        return serverSeconds;
+    public Long getServerTime() {
+        return serverTime;
     }
 
-    public void setServerSeconds(Long serverSeconds) {
-        this.serverSeconds = serverSeconds;
+    public void setServerTime(Long serverTime) {
+        this.serverTime = serverTime;
     }
 
-    public long calculateServerSeconds() {
-        return WebUtil.calculateSecPassed(beginTime);
+    private long calculateServerTime() {
+        return beginTime.toEpochMilli();
 //        return 0;
     }
 }

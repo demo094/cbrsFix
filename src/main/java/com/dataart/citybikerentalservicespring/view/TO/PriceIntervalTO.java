@@ -9,6 +9,7 @@ import java.math.BigDecimal;
  */
 public class PriceIntervalTO {
 
+    //TODO cleanup here!!
     private int id;
     private Long start;
     private Long end;

@@ -20,12 +20,16 @@
     <script src="webjars/angularjs/1.5.8/angular-resource.js"></script>
     <script src="webjars/angularjs/1.5.8/angular-route.js"></script>
     <script src="webjars/angularjs/1.5.8/angular-cookies.js"></script>
+    <script src="webjars/momentjs/2.15.1/min/moment.min.js"></script>
+    <script src="webjars/momentjs/2.15.1/min/locales.min.js"></script>
+    <script src="webjars/humanize-duration/3.7.1/humanize-duration.js"></script>
     <script src="webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
     <script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.min.js"></script>
     <script src="resources/static/js/routerApp.js"></script>
     <script src="resources/static/js/controller.js"></script>
     <script src="resources/static/js/admincontroller.js"></script>
-    <script src="resources/static/js/timer.js"></script>
+    <script src="resources/static/js/angularTimer.js"></script>
+
 
 
     <title>Bike rental service</title>
