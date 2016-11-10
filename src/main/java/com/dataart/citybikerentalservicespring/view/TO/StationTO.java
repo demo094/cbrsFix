@@ -29,9 +29,7 @@ public class StationTO {
         this.stationAddress = station.getAddress();
         this.stationCity = station.getCity();
 //        this.stationCoordinates = null;
-        if(station.getSlotList() == null){
-            this.slotTOs = null;
-        }else {
+        if(station.getSlotList() != null){
             this.slotTOs = returnSlotTOs(station);
         }
     }

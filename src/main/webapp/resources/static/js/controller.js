@@ -11,7 +11,7 @@ routerApp.controller('userpanelController', function($scope, $http, $cookies, $w
         });
 
     var updateInterval = $interval(function(){
-    $http.get('api/rentalBeginTime').then(function(response){
+    $http.get('api/rent/status').then(function(response){
         bike = response.data.bike;
         $scope.serverTimeMillis = response.data.rentalBeginTime;
         if(bike == null){

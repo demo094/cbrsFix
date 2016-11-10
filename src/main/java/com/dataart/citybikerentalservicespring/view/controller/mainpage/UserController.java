@@ -124,9 +124,9 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/api/rentalBeginTime", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/rent/status", method = RequestMethod.GET)
     @PreAuthorize("hasRole('USER')")
-    public RentalSynchroResponse synchronizeTimer(){
+    public RentalSynchroResponse rentStatus(){
         AuthenticatedUser authenticatedUser = AuthenticationContext.getAuthenticatedUser();
         User user = userService.findById(authenticatedUser.getId());
         RentalHistory rentalHistory = rentalService.getLastRental(user);
