@@ -1,27 +1,29 @@
 routerApp.controller('userpanelController', function($scope, $http, $cookies, $window, $interval){
     $scope.headingTitle = "User panel";
-//    var storedBikeId;
+    var bike;
+
     $http.get('api/userpanel')
         .then(function(response){
             $scope.userPanelTO = response.data;
-//            storedBikeId = response.data.bikeId;
             $scope.serverTimeMillis = response.data.serverTime;
         }, function(response){
             $scope.error = response.data;
         });
 
-//    if(storedBikeId != null){
-//        $interval(function(){
-//            $http.get('api/rentalBeginTime').then(function(response){
-//                $scope.serverTimeMillis = response.data.rentalBeginTime;
-//            }, function(response){
-//                $scope.serverTimeMillis = null;
-//            });
-//        }, 5000);
-//    }
-//    else {
-//        $interval.cancel();
-//    }
+    var updateInterval = $interval(function(){
+    $http.get('api/rentalBeginTime').then(function(response){
+        bike = response.data.bike;
+        $scope.serverTimeMillis = response.data.rentalBeginTime;
+        if(bike == null){
+            $scope.serverTimeMillis = null;
+            $interval.cancel(updateInterval);
+            }
+        }, function(response){
+            $scope.serverTimeMillis = null;
+            $interval.cancel(updateInterval);
+        });
+    }, 5000);
+
 
     $scope.logout = function(){
         $cookies.remove('accessToken');
@@ -154,7 +156,7 @@ routerApp.controller('paymentController', function($scope, $http, $state){
 
     $scope.paymentSubmit = function(){
         $scope.payment.idUser = userId;
-        $http.post('payment', $scope.payment).then(function(response){
+        $http.post('api/paymentData', $scope.payment).then(function(response){
             document.getElementById("response").innerHTML = response.data.status;
             $state.reload();
         }, function(response){

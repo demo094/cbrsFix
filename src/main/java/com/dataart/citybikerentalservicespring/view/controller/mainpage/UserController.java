@@ -95,7 +95,8 @@ public class UserController {
         return new PaymentTO(AuthenticationContext.getAuthenticatedUser());
     }
 
-    @RequestMapping(value = "/payment", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/paymentData", method = RequestMethod.POST)
+    @PreAuthorize("hasRole('USER')")
     public CommonResponse angularPaymentSubmit(@RequestBody PaymentRequest paymentRequest) throws CbrsException {
         userService.updateBalance(paymentRequest.getIdUser(), paymentRequest.getAmount());
         return new CommonResponse("Payment done!");
@@ -130,6 +131,6 @@ public class UserController {
         User user = userService.findById(authenticatedUser.getId());
         RentalHistory rentalHistory = rentalService.getLastRental(user);
 
-        return new RentalSynchroResponse(rentalHistory);
+        return new RentalSynchroResponse(user, rentalHistory);
     }
 }
