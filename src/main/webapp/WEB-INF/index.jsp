@@ -34,7 +34,7 @@
 
     <title>Bike rental service</title>
 </head>
-<body style="margin-left:5%; margin-right:5%" ng-app="routerApp" class="no-js">
+<body ng-app="routerApp" class="no-js">
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -67,7 +67,7 @@
     <div class="row content">
         <div id="nav_menu_left" class="panel panel-default col-sm-2 sidenav">
             <div class="panel-heading">
-                Support menu
+                <h4>Support menu</h4>
             </div>
             <div class="panel-body">
                 <a href="#/resetpassword">Forgot password?</a>
@@ -79,10 +79,10 @@
         </div>
     </div>
     <br>
-        <div ng-show="error != null">
+        <div class="panel panel-danger" ng-show="error != null">
         <div ng-show="error.status != null">Error status {{error.status}}</div>
-        <div ng-show="error.cause != null">{{error.cause}}</div>
-         <br>{{error.message}}</div>
+        <div class="panel-heading" ng-show="error.cause != null">{{error.cause}}</div>
+         <div class="panel-body">{{error.message}}</div></div>
 </body>
 
 </html>

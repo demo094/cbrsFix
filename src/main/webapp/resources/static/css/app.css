@@ -1,11 +1,39 @@
+body {
+    margin-left:5%;
+    margin-right:5%;
+}
+
 .table {
     margin-bottom:0;
 }
 
 .navbar {
+    background: linear-gradient(#41B042, black);
+    color: #164A00;
+    border: none;
     margin-bottom: 1%;
 }
 
+.panel-heading {
+    background: linear-gradient(#41B042, black);
+}
+
+.panel-heading h4 {
+    color: white;
+}
+
+.panel {
+    padding: 0;
+    background: #E9FFE8;
+}
+
+#warning {
+    background: linear-gradient(#FFA591, black);
+}
+
+#warningStatus {
+    background: linear-gradient(#FFA591, black);
+}
 
 .row.content {
     height: 450px;

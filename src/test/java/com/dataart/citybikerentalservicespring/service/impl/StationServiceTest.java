@@ -56,8 +56,8 @@ public class StationServiceTest {
         List<Station> stations = getStations();
         List<StationTO> stationTOs = stationService.getStationTOs();
         assertNotNull(stationTOs);
-        assertEquals(new Integer(1), stationTOs.get(0).getSlotTOs().get(0).getSlotId());
-        assertEquals(new Integer(2), stationTOs.get(0).getSlotTOs().get(0).getBikeId());
+        assertEquals(Integer.valueOf(1), stationTOs.get(0).getSlotTOs().get(0).getSlotId());
+        assertEquals(Integer.valueOf(2), stationTOs.get(0).getSlotTOs().get(0).getBikeId());
 
         assertEquals("", stationTOs.get(0).getStationType());
         assertEquals(getStations().get(0).getAddress(), stationTOs.get(0).getStationAddress());
