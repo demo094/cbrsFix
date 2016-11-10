@@ -11,14 +11,10 @@ public class SlotTO {
     private Integer bikeId;
 
     public SlotTO(Bike bike, Slot slot) {
-        if (slot == null) {
-            this.slotId = null;
-        } else {
+        if (slot != null) {
             this.slotId = slot.getId();
         }
-        if (bike == null) {
-            this.bikeId = null;
-        } else {
+        if (bike != null) {
             this.bikeId = bike.getId();
         }
     }

@@ -12,9 +12,7 @@ public class UserBikeTO {
 
     public UserBikeTO(User user) {
         this.userId = user.getId();
-        if(user.getBike() == null){
-            this.bikeId = null;
-        }else {
+        if(user.getBike() != null){
             this.bikeId = user.getBike().getId();
         }
     }

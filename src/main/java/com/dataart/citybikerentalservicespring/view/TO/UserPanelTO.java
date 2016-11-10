@@ -14,7 +14,6 @@ public class UserPanelTO {
     private BigDecimal userBalance;
     private BigDecimal paymentMoney;
     private Integer bikeId;
-    private Instant beginTime;
     private Long serverTime;
 
 
@@ -22,22 +21,14 @@ public class UserPanelTO {
     }
 
     public UserPanelTO(User user, RentalHistory rentalHistory, Payment payment) {
-        if (rentalHistory == null) {
-            this.beginTime = null;
-            this.serverTime = null;
-        } else {
-            this.beginTime = rentalHistory.getBeginTime();
-            this.serverTime = calculateServerTime();
+        if (rentalHistory != null) {
+            this.serverTime = rentalHistory.getBeginTime().toEpochMilli();
         }
         this.userBalance = user.getBalance();
-        if (user.getBike() == null) {
-            this.bikeId = null;
-        } else {
+        if (user.getBike() != null) {
             this.bikeId = user.getBike().getId();
         }
-        if (payment == null) {
-            this.paymentMoney = null;
-        } else {
+        if (payment != null) {
             this.paymentMoney = payment.getMoney();
         }
     }
@@ -74,8 +65,4 @@ public class UserPanelTO {
         this.serverTime = serverTime;
     }
 
-    private long calculateServerTime() {
-        return beginTime.toEpochMilli();
-//        return 0;
-    }
 }
