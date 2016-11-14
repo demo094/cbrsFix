@@ -33,7 +33,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider, $cookiesProvider) 
             controller: 'resetPassController'
         })
         .state('resetpasswordPage', {
-                    url: '/resetpasswordpage?token',
+                    url: '/resetpasswordpage:token',
                     templateUrl: 'resources/static/views/resetpasswordPage.html',
                     controller: 'resetPassPageController'
                 })

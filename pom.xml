@@ -250,6 +250,7 @@
             <artifactId>humanize-duration</artifactId>
             <version>3.7.1</version>
         </dependency>
+
     </dependencies>
 
 
@@ -302,6 +303,5 @@
         </plugins>
 
     </build>
-
 
 </project>

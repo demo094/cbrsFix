@@ -18,5 +18,11 @@
             </tr>
         </table>
     </form>
-    <div ng-show="updatePriceError != null">Error status {{updatePriceError.status}} <br>{{updatePriceError.message}}</div>
+    <div class="panel panel-danger" ng-show="updatePriceError != null">
+        <div id="warning" class="panel-heading" ng-show="updatePriceError.cause != null"><br>{{updatePriceError.cause}}</div>
+        <div id="warningStatus" class="panel-heading" ng-show="updatePriceError.status != null">Error</div>
+        <div class="panel-body">
+            {{updatePriceError.message}}
+        </div>
+    </div>
 </div>

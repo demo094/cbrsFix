@@ -22,17 +22,21 @@ body {
     color: white;
 }
 
+.panel .panel-danger .panel-heading {
+    color: #C4A09F;
+}
+
 .panel {
     padding: 0;
     background: #E9FFE8;
 }
 
 #warning {
-    background: linear-gradient(#FFA591, black);
+    background: linear-gradient(#FFA591, #4A2D1F);
 }
 
 #warningStatus {
-    background: linear-gradient(#FFA591, black);
+    background: linear-gradient(#FFA591, #4A2D1F);
 }
 
 .row.content {

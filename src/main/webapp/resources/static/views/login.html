@@ -1,12 +1,13 @@
 <div class="panel-heading">
-    Login panel
+    <h4>Login panel</h4>
 </div>
 
 <div class="panel-body" ng-controller="loginController">
     <form role="form" class="form-inline" ng-submit="login()">
         <table>
             <tr>
-                <td><input type="text" class="form-control" id="email" name="email" ng-model="credentials.email" placeholder="Email"/></td>
+                <td><input type="text" class="form-control" id="email" name="email" ng-model="credentials.email"
+                           placeholder="Email"/></td>
             </tr>
             <tr>
                 <td><input type="password" class="form-control" id="pwd" name="password" ng-model="credentials.password"
@@ -19,5 +20,11 @@
             </tr>
         </table>
     </form>
-    <div ng-show="loginError != null">Error status {{loginError.status}} <br>{{loginError.message}}</div>
+    <br>
+    <div class="panel panel-danger" ng-show="loginError != null">
+        <div id="warningStatus" class="panel-heading" >An error occured!</div>
+        <div class="panel-body">
+            {{loginError.message}}
+        </div>
+    </div>
 </div>
