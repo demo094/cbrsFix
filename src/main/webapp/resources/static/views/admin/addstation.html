@@ -25,5 +25,11 @@
             </tr>
         </table>
     </form>
-    <div ng-show="addStationError != null">Error status {{addStationError.status}} <br>{{addStationError.message}}</div>
+    <div class="panel panel-danger" ng-show="addStationError != null">
+        <div id="warning" class="panel-heading" ng-show="addStationError.cause != null"><br>{{addStationError.cause}}</div>
+        <div id="warningStatus" class="panel-heading" ng-show="addStationError.status != null">Error</div>
+        <div class="panel-body">
+            {{addStationError.message}}
+        </div>
+    </div>
 </div>

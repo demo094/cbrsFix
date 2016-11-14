@@ -1,5 +1,7 @@
 <div class="panel-heading">
-    CBRS administration panel <button class="btn btn-default pull-right" ng-click="logout()">Logout</button>
+    <h4 class="pull-left">CBRS administration panel</h4>
+    <button class="btn btn-default pull-right" ng-click="logout()">Logout</button>
+    <div class="clearfix"></div>
 </div>
 <div class="panel-body">
     <a ui-sref=".bikeadmin">Manage bikes</a>
@@ -10,9 +12,10 @@
     <div class="panel panel-default" ui-view></div>
 
 </div>
-<div ng-show="error != null">
-    <div ng-show="error.cause != null"><br>{{error.cause}}<br>{{error.message}}</div>
-    <div ng-show="error.status != null">Error status {{error.status}} <br>{{error.message}}</div>
+<div class="panel panel-danger" ng-show="error != null">
+    <div id="warning" class="panel-heading" ng-show="error.cause != null"><br>{{error.cause}}</div>
+    <div id="warningStatus" class="panel-heading" ng-show="error.status != null">Error</div>
+    <div class="panel-body">
+        {{error.message}}
+    </div>
 </div>
-
-<!--<div ng-view></div>-->

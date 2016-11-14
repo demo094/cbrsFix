@@ -28,5 +28,11 @@
         <br>
         <div id="server_response" style="color: green; font-size: 20px; font-weight: bold;"></div>
     </div>
-    <div ng-show="rentalError != null">Error status {{rentalError.status}} <br>{{rentalError.message}}</div>
+    <div class="panel panel-danger" ng-show="rentalError != null">
+        <div id="warning" class="panel-heading" ng-show="error.cause != null"><br>{{rentalError.cause}}</div>
+        <div id="warningStatus" class="panel-heading" ng-show="rentalError.status != null">Error</div>
+        <div class="panel-body">
+            {{rentalError.message}}
+        </div>
+    </div>
 </div>

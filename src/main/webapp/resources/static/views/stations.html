@@ -1,5 +1,5 @@
 <div class="panel-heading">
-    {{headingTitle}}
+    <h4>{{headingTitle}}</h4>
 </div>
 <div class="panel-body"  ng-controller = "stationsController">
     <div id="stationList">
@@ -7,8 +7,13 @@
             <a ui-sref=".station({id:stationTO.stationId})">{{stationTO.stationName}}</a>
         </p>
     </div>
-    <div ng-show="error != null">Error status {{error.status}} <br>{{error.message}}</div>
-
+    <div class="panel panel-danger" ng-show="error != null">
+        <div id="warning" class="panel-heading" ng-show="error.cause != null"><br>{{error.cause}}</div>
+        <div id="warningStatus" class="panel-heading" ng-show="error.status != null">Error</div>
+        <div class="panel-body">
+            {{error.message}}
+        </div>
+    </div>
     <div ui-view></div>
 
 </div>

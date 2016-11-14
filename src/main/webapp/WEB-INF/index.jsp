@@ -45,6 +45,7 @@
                 </button>
 
                 <a class="navbar-brand" href="#/">City bike rental service</a>
+
             </div>
 
             <div class="collapse navbar-collapse" id="mainNavbar">

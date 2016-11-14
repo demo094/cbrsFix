@@ -1,5 +1,5 @@
 <div class="panel-heading">
-    Registration panel
+    <h4>Registration panel</h4>
 </div>
 <div class="panel-body">
     Register to become one of the users of the service. :) Remember, the credentials must not be empty!
@@ -22,7 +22,12 @@
     </form>
     <br>
     <div id="response"></div>
-    <div ng-show="error != null">Error status {{error.status}} <br>{{error.message}}</div>
-
 </div>
+<div class="panel panel-danger" ng-show="error != null">
+    <div id="warningStatus" class="panel-heading" >An error occured!</div>
+    <div class="panel-body">
+        {{error.message}}
+    </div>
+</div>
+
 
