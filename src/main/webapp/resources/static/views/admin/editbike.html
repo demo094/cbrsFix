@@ -28,7 +28,7 @@
     </form>
     <div class="panel panel-danger" ng-show="editBikeError != null">
         <div id="warning" class="panel-heading" ng-show="editBikeError.cause != null"><br>{{editBikeError.cause}}</div>
-        <div id="warningStatus" class="panel-heading" ng-show="editBikeError.status != null">Error</div>
+        <div id="warningStatus" class="panel-heading" ng-show="editBikeError.message != null">Error</div>
         <div class="panel-body">
             {{editBikeError.message}}
         </div>

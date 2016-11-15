@@ -2,5 +2,11 @@
     <h4>Registration panel</h4>
 </div>
 <div class="panel-body">
-    <div ng-show="confirmed != null">{{confirmed.status}}</div>
+    <div ng-show="confirmed != null">{{confirmed}}</div>
+</div>
+<div class="panel panel-danger" ng-show="error != null">
+    <div id="warningStatus" class="panel-heading" >An error occured!</div>
+    <div class="panel-body">
+        {{error.message}}
+    </div>
 </div>

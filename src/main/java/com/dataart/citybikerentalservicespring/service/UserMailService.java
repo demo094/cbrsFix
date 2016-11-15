@@ -9,7 +9,6 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
-import javax.mail.internet.MimeMessage;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,21 +40,21 @@ public class UserMailService {
         Map<String, Object> model = new HashMap<>();
         model.put("email", email);
         model.put("creationDate", new Date().toString());
-        model.put("actLink", WebUtil.createTestActivationLink(token));
+        model.put("actLink", WebUtil.createActivationLink(token));
         return model;
     }
 
     public Map<String, Object> prepareResendTokenEmail(String email, String token) {
         Map<String, Object> model = new HashMap<>();
         model.put("email", email);
-        model.put("actLink", WebUtil.createTestActivationLink(token));
+        model.put("actLink", WebUtil.createActivationLink(token));
         return model;
     }
 
     public Map<String, Object> prepareResetPasswordEmail(String email, String tokenContents) {
         Map<String, Object> model = new HashMap<>();
         model.put("email", email);
-        model.put("resetLink", WebUtil.createTestPasswordResetLink(tokenContents));
+        model.put("resetLink", WebUtil.createPasswordResetLink(tokenContents));
         return model;
     }
 }

@@ -4,8 +4,7 @@
     <div class="clearfix"></div>
 </div>
 <div class="panel-body" ng-show="userPanelTO != null">
-    <a href="#/userpanel">User panel</a>
-    <br><a ui-sref=".stations">List of stations</a>
+    <a ui-sref=".stations">List of stations</a>
     <br><a ui-sref=".payments">Payment service</a>
     <br>
     <br>
@@ -27,9 +26,9 @@
     <div class="panel panel-default" ui-view></div>
 </div>
 <div class="panel panel-danger" ng-show="error != null">
-    <div id="warning" class="panel-heading" ng-show="error.cause != null"><br>{{error.cause}}</div>
-    <div id="warningStatus" class="panel-heading" ng-show="error.status != null">Error</div>
+    <div id="warningStatus" class="panel-heading" ng-show="error.message != null">Error</div>
     <div class="panel-body">
         {{error.message}}
+        <br><span ng-show="error.cause != null">{{error.cause}}</span>
     </div>
 </div>

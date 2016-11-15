@@ -6,6 +6,10 @@ routerApp.config(function($stateProvider, $urlRouterProvider, $cookiesProvider) 
 
     $stateProvider
         // MAIN PAGE STATES AND NESTED VIEWS OF USER'S PANEL ========================================
+        .state('main', {
+            url: '/',
+            controller: 'mainPageController'
+        })
         .state('login', {
             url: '/login',
             templateUrl: 'resources/static/views/login.html',
@@ -33,7 +37,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider, $cookiesProvider) 
             controller: 'resetPassController'
         })
         .state('resetpasswordPage', {
-                    url: '/resetpasswordpage:token',
+                    url: '/resetpasswordpage/:token',
                     templateUrl: 'resources/static/views/resetpasswordPage.html',
                     controller: 'resetPassPageController'
                 })
@@ -43,10 +47,10 @@ routerApp.config(function($stateProvider, $urlRouterProvider, $cookiesProvider) 
             controller: 'registrationController'
         })
         .state('registrationConfirm', {
-                    url: '/registrationConfirm?token',
-                    templateUrl: 'resources/static/views/registrationConfirm.html',
-                    controller: 'registrationConfirmController'
-                })
+            url: '/registrationconfirm/:token',
+            templateUrl: 'resources/static/views/registrationConfirm.html',
+            controller: 'registrationConfirmController'
+        })
         .state('resendactivation', {
             url: '/resendactivation',
             templateUrl: 'resources/static/views/resendactivation.html',
