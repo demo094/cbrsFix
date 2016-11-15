@@ -59,14 +59,19 @@ public class UserController {
         return new CommonResponse("Email sent!");
     }
 
-    @RequestMapping(value = "/resetPassData", method = RequestMethod.POST)
-    public CommonResponse angularResetData(@RequestBody ResetPasswordRequest resetPasswordRequest) throws CbrsException {
+    @RequestMapping(value = "/resetPassData/{token}", method = RequestMethod.POST)
+    public CommonResponse angularResetData(@PathVariable("token") String token, @RequestBody ResetPasswordRequest resetPasswordRequest) throws CbrsException {
+        Token resetToken = userService.findTokenByBody(token);
+        if (resetToken == null){
+            throw new InvalidTokenException();
+        }
+        User user = resetToken.getUser();
+        if(user == null){
+            throw new UserNotFoundException();
+        }
+
         if (!resetPasswordRequest.getPassword().equals(resetPasswordRequest.getPasswordRetype())) {
             return new CommonResponse("The passwords must match!");
-        }
-        User user = userService.findByEmail(resetPasswordRequest.getEmail());
-        if (user == null) {
-            throw new UserNotFoundException();
         }
         userService.updatePasswordHash(user, resetPasswordRequest.getPassword());
         return new CommonResponse("Password reset successful!");
@@ -108,8 +113,8 @@ public class UserController {
         return new CommonResponse("Login ok!");
     }
 
-    @RequestMapping(value = "/registrationConfirm", method = RequestMethod.GET)
-    public CommonResponse confirmationPage(@RequestParam String token) throws CbrsException {
+    @RequestMapping(value = "/registrationConfirm/{token}", method = RequestMethod.GET)
+    public CommonResponse confirmationPage(@PathVariable("token") String token) throws CbrsException {
         Token storedToken = userService.findTokenByBody(token);
         if (storedToken == null) {
             throw new InvalidTokenException();
@@ -117,10 +122,10 @@ public class UserController {
         User user = storedToken.getUser();
         Calendar calendar = Calendar.getInstance();
         if (storedToken.getExpirationDate().getTime() - calendar.getTime().getTime() <= 0) {
-            return new CommonResponse("Account not activated!");
+            return new CommonResponse("Token has expired!");
         } else {
             userService.setUserActivated(user, true);
-            return new CommonResponse("Account activated");
+            return new CommonResponse("Account activated. You can now log in.");
         }
     }
 

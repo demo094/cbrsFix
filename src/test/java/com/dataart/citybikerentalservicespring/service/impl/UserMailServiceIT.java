@@ -45,7 +45,7 @@ public class UserMailServiceIT {
         Map<String, Object> model = new HashMap<>();
         model.put("email", email);
         model.put("creationDate", new Date().toString());
-        model.put("actLink", WebUtil.createTestActivationLink(token));
+        model.put("actLink", WebUtil.createActivationLink(token));
         model.put("date", new Date().toString());
         userMailService.send(email,"Registration test", "registration.ftl", model);
     }

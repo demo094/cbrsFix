@@ -8,13 +8,13 @@
     <form class="form-inline" ng-controller="resendActTokenController" ng-submit="resend()">
         <input type="email" class="form-control" ng-model="resendtoken.email" placeholder="Email address"/>
         <input type="hidden" ng-model="resendtoken.csrf" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        <input class="btn btn-default" type="submit"/>
+        <input class="btn btn-default" type="submit" value="Send"/>
     </form>
     <br>
     <div id="response"></div>
     <div class="panel panel-danger" ng-show="error != null">
         <div id="warning" class="panel-heading" ng-show="error.cause != null"><br>{{error.cause}}</div>
-        <div id="warningStatus" class="panel-heading" ng-show="error.status != null">Error</div>
+        <div id="warningStatus" class="panel-heading" ng-show="error.message != null">Error</div>
         <div class="panel-body">
             {{error.message}}
         </div>

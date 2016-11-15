@@ -35,7 +35,7 @@ public class JsonWebTokenAuthenticationFilter extends AbstractAuthenticationProc
                 .filter(cookie -> cookie.getName().equals("accessToken"))
                 .findAny()
                 .map(Cookie::getValue)
-                .orElseThrow(()->new JsonWebTokenMissingException("No token found"));
+                .orElseThrow(()->new JsonWebTokenMissingException("No token found. Please log in first!"));
 
 
         JsonWebAuthenticationToken authenticationToken = new JsonWebAuthenticationToken(token);

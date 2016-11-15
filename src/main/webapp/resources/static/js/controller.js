@@ -1,3 +1,11 @@
+routerApp.controller('mainPageController', function($scope, $http, $location){
+    $http.get('api/userpanel').then(function(response){
+        $scope.user = response.data;
+    }, function(response){
+        $scope.info = "Log in."
+    });
+});
+
 routerApp.controller('userpanelController', function($scope, $http, $cookies, $window, $interval){
     $scope.headingTitle = "User panel";
     var bike;
@@ -27,7 +35,7 @@ routerApp.controller('userpanelController', function($scope, $http, $cookies, $w
 
     $scope.logout = function(){
         $cookies.remove('accessToken');
-        $window.location.href = "index";
+        $window.location.href = 'index';
     };
 });
 
@@ -76,18 +84,17 @@ routerApp.controller('rentalController', function($scope, $http, $state){
                    $http.post(url)
                    .then(function(response){
                         document.getElementById("server_response").innerHTML = response.data.rentStatus;
-
                         $state.reload();
                        }, function(response){
                         $scope.rentalError = response.data;
                    });
-              };
+       };
    });
 
-routerApp.controller('loginController', function($scope, $http, $location){
+routerApp.controller('loginController', function($scope, $http, $window){
     $scope.login = function(){
         $http.post('login', $scope.credentials).then(function(response){
-            $location.path('userpanel');
+            $window.location.href = '#/userpanel';
         }, function(response){
             $scope.loginError = response.data;
         });
@@ -98,7 +105,7 @@ routerApp.controller('loginController', function($scope, $http, $location){
 routerApp.controller('resetPassController', function($scope, $http, $window){
     $scope.sendPasswordMail = function(){
             $http.post('resetPassEmail', $scope.form).then(function(response){
-                document.getElementById("response").innerHTML = response.data.status;
+                document.getElementById("response").innerHTML = response.data.message;
                 $window.location.href = "index";
             }, function(response){
                 $scope.error = response.data;
@@ -106,9 +113,9 @@ routerApp.controller('resetPassController', function($scope, $http, $window){
     };
 });
 
-routerApp.controller('resetPassPageController', function($scope, $http){
+routerApp.controller('resetPassPageController', function($scope, $http, $window, $stateParams){
     $scope.resetPassword = function(){
-        $http.post('resetPassData', $scope.newPassword).then(function(response){
+        $http.post('resetPassData/' + $stateParams.token, $scope.newPassword).then(function(response){
             $scope.resetResponse = response.data;
         }, function(response){
             $scope.resetError = response.data;
@@ -116,29 +123,30 @@ routerApp.controller('resetPassPageController', function($scope, $http){
     }
 });
 
-routerApp.controller('registrationController', function($scope, $http, $window, $timeout){
+routerApp.controller('registrationController', function($scope, $http, $window){
     $scope.registration = function(){
             $http.post('register', $scope.register).then(function(response){
-                document.getElementById("response").innerHTML = response.data.status;
-                $timeout(function(){
-                    $window.location.href = "index";
-                }, 5000);
+                document.getElementById("response").innerHTML = response.data.message;
+
             }, function(response){
                 $scope.error = response.data;
             });
     };
 });
 
-routerApp.controller('registrationConfirmController', function($scope, $http){
-    $http.get('registrationConfirm?token').then(function(response){
-        $scope.confirmed.status = response.data.status;
+routerApp.controller('registrationConfirmController', function($scope, $http, $stateParams){
+    $http.get('registrationConfirm/' + $stateParams.token)
+    .then(function(response){
+        $scope.confirmed = response.data.message;
+    }, function(response){
+        $scope.error = response.data;
     });
 });
 
 routerApp.controller('resendActTokenController', function($scope, $http, $window, $timeout){
        $scope.resend = function(){
                $http.post('resendActToken', $scope.resendtoken).then(function(response){
-                   document.getElementById("response").innerHTML = response.data.status;
+                   document.getElementById("response").innerHTML = response.data.message;
                    $timeout(function(){
                        $window.location.href = "index";
                    }, 5000);
@@ -157,7 +165,7 @@ routerApp.controller('paymentController', function($scope, $http, $state){
     $scope.paymentSubmit = function(){
         $scope.payment.idUser = userId;
         $http.post('api/paymentData', $scope.payment).then(function(response){
-            document.getElementById("response").innerHTML = response.data.status;
+            document.getElementById("response").innerHTML = response.data.message;
             $state.reload();
         }, function(response){
             $scope.error = response.data;

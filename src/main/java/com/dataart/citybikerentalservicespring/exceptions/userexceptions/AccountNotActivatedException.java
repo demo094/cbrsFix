@@ -7,6 +7,6 @@ import org.springframework.security.core.AuthenticationException;
  */
 public class AccountNotActivatedException extends AuthenticationException {
     public AccountNotActivatedException() {
-        super("Account is not activated");
+        super("Account is not activated. Please use the link sent to you in the e-mail.");
     }
 }

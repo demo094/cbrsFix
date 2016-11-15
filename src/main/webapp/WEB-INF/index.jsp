@@ -77,6 +77,18 @@
             </div>
         </div>
             <div class="panel panel-default col-sm-8 text-left" ui-view></div>
+
+            <div ng-controller="mainPageController" class="panel panel-default col-sm-2 sidenav">
+                <div class=panel-heading>
+                    <h4>Useful links</h4>
+                </div>
+                <div class="panel-body">
+                    <a ng-show="user != null" href="#/userpanel">
+                    Userpanel
+                    </a>
+                    <span ng-show="user == null">{{info}}</span>
+                </div>
+            </div>
         </div>
     </div>
     <br>

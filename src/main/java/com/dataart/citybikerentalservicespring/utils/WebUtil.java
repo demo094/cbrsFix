@@ -21,10 +21,10 @@ public class WebUtil {
         return String.format("redirect:/infopage/%d", userMessage.getId());
     }
 
-    public static String createTestActivationLink(String token) {
+    public static String createActivationLink(String token) {
 //        remember to create some configuration
         String applicationURL = "http://localhost:8080/citybikerentalservicespring";
-        return String.format("%s/registrationConfirm?token=%s", applicationURL, token);
+        return String.format("%s/#/registrationconfirm/%s", applicationURL, token);
     }
 
     public static Date calculateTokenExpiryDate() {
@@ -38,8 +38,8 @@ public class WebUtil {
         return (int) Duration.between(date, Instant.now()).toMillis() / 1000;
     }
 
-    public static String createTestPasswordResetLink(String tokenBody) {
+    public static String createPasswordResetLink(String tokenBody) {
         String applicationURL = "http://localhost:8080/citybikerentalservicespring";
-        return String.format("%s/resetpasswordpage?token=%s", applicationURL, tokenBody);
+        return String.format("%s/#/resetpasswordpage/%s", applicationURL, tokenBody);
     }
 }
