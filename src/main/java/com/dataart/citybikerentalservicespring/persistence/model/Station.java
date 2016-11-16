@@ -1,6 +1,8 @@
 package com.dataart.citybikerentalservicespring.persistence.model;
 
+
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -20,6 +22,10 @@ public class Station {
     private String address;
     @Column(nullable = false)
     private String city;
+    @Column
+    private BigDecimal latitude;
+    @Column
+    private BigDecimal longitude;
     @OneToMany(targetEntity = Slot.class, mappedBy = "station", fetch = FetchType.LAZY)
     private List<Slot> slotList;
 //    later impl
@@ -94,6 +100,22 @@ public class Station {
         this.city = city;
     }
 
+    public BigDecimal getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(BigDecimal latitude) {
+        this.latitude = latitude;
+    }
+
+    public BigDecimal getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(BigDecimal longitude) {
+        this.longitude = longitude;
+    }
+
     public List<Slot> getSlotList() {
         return slotList;
     }
@@ -101,13 +123,4 @@ public class Station {
     public void setSlotList(List<Slot> slotList) {
         this.slotList = slotList;
     }
-
-    //    will be implemented later
-//    public Point2D getGpsCoordinates() {
-//        return gpsCoordinates;
-//    }
-//
-//    public void setGpsCoordinates(Point2D gpsCoordinates) {
-//        this.gpsCoordinates = gpsCoordinates;
-//    }
 }

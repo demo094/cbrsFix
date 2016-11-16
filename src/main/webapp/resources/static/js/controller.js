@@ -41,13 +41,49 @@ routerApp.controller('userpanelController', function($scope, $http, $cookies, $w
 
 
 routerApp.controller('stationsController', function($scope, $http){
+       var stations = [];
+       var infoWindow = new google.maps.InfoWindow();
+       $scope.stationMarkers = [];
        $scope.headingTitle = "List of available stations";
-       $http.get('api/stations')
-           .then(function(response){
-               $scope.stationTOs = response.data;
+
+       $scope.map = new google.maps.Map(document.getElementById("stationMap"), {
+           zoom: 12,
+           center: new google.maps.LatLng(51.2454209,22.5727518),
+           mapTypeId: 'terrain'
+       });
+
+       var addStationMarker = function(station){
+           var marker = new google.maps.Marker({
+               map: $scope.map,
+               position: new google.maps.LatLng(station.latitude, station.longitude),
+               title: station.stationName,
+               icon: 'resources/static/img/1479327321_biker.png'
+           });
+
+           marker.content = station.stationId;
+
+           google.maps.event.addListener(marker, 'click', function(){
+               infoWindow.setContent('<h4><a ui-sref=".station({id:' + marker.content + '})">' + marker.title + '</a></h4>');
+               infoWindow.open($scope.map, marker);
+           });
+
+           $scope.stationMarkers.push(marker);
+        };
+
+       $http.get('api/stations').then(function(response){
+               stations = response.data;
+               $scope.stationTOs = stations;
+               for(var i = 0; i < stations.length; i++){
+                   addStationMarker(stations[i]);
+               }
            }, function(response){
                 $scope.error = response.data;
            });
+
+       $scope.openStationWindow = function(e, selectedMarker){
+            e.preventDefault();
+            google.maps.event.trigger(selectedMarker, 'click');
+       }
    });
 
 routerApp.controller('slotController', function($scope, $http, $stateParams){
