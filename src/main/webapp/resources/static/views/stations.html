@@ -2,10 +2,15 @@
     <h4>{{headingTitle}}</h4>
 </div>
 <div class="panel-body"  ng-controller = "stationsController">
-    <div id="stationList">
+    <div id="stationList" ng-show="map == null">
         <p ng-repeat="stationTO in stationTOs" ng-if="$index >= 0">
             <a ui-sref=".station({id:stationTO.stationId})">{{stationTO.stationName}}</a>
         </p>
+    </div>
+
+    <div id="stationMap" ng-show="map != null"></div>
+    <div id="class" ng-repeat="marker in stationMarkers" ng-if="$index >= 0">
+        <a ng-click="openStationWindow($event, marker)"></a>
     </div>
     <div class="panel panel-danger" ng-show="error != null">
         <div id="warning" class="panel-heading" ng-show="error.cause != null"><br>{{error.cause}}</div>

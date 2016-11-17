@@ -39,6 +39,11 @@ body {
     background: linear-gradient(#FFA591, #4A2D1F);
 }
 
+#stationMap {
+    width: 760px;
+    height: 400px;
+}
+
 .row.content {
     height: 450px;
 }

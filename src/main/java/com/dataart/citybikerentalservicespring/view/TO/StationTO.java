@@ -1,10 +1,13 @@
 package com.dataart.citybikerentalservicespring.view.TO;
 
-import com.dataart.citybikerentalservicespring.persistence.model.Slot;
 import com.dataart.citybikerentalservicespring.persistence.model.Station;
+import com.vividsolutions.jts.geom.Point;
+import org.geolatte.geom.Geometry;
 
-import java.util.ArrayList;
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
+
 
 /**
  * Created by mkrasowski on 22.09.2016.
@@ -16,7 +19,8 @@ public class StationTO {
     private String stationType;
     private String stationAddress;
     private String stationCity;
-//    private String stationCoordinates;
+    private BigDecimal latitude;
+    private BigDecimal longitude;
     private List<SlotTO> slotTOs;
 
     public StationTO() {
@@ -28,8 +32,9 @@ public class StationTO {
         this.stationType = station.getType();
         this.stationAddress = station.getAddress();
         this.stationCity = station.getCity();
-//        this.stationCoordinates = null;
-        if(station.getSlotList() != null){
+        this.latitude = station.getLatitude();
+        this.longitude = station.getLongitude();
+        if (station.getSlotList() != null) {
             this.slotTOs = returnSlotTOs(station);
         }
     }
@@ -58,12 +63,8 @@ public class StationTO {
         this.stationName = stationName;
     }
 
-    private List<SlotTO> returnSlotTOs(Station station){
-        List<SlotTO> slotTOs = new ArrayList<>();
-        for (Slot slot : station.getSlotList()){
-            slotTOs.add(new SlotTO(slot.getBike(),slot));
-        }
-        return slotTOs;
+    private List<SlotTO> returnSlotTOs(Station station) {
+        return station.getSlotList().stream().map(slot -> new SlotTO(slot.getBike(), slot)).collect(Collectors.toList());
     }
 
     public String getStationType() {
@@ -89,12 +90,20 @@ public class StationTO {
     public void setStationCity(String stationCity) {
         this.stationCity = stationCity;
     }
-//
-//    public String getStationCoordinates() {
-//        return stationCoordinates;
-//    }
-//
-//    public void setStationCoordinates(String stationCoordinates) {
-//        this.stationCoordinates = stationCoordinates;
-//    }
+
+    public BigDecimal getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(BigDecimal latitude) {
+        this.latitude = latitude;
+    }
+
+    public BigDecimal getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(BigDecimal longitude) {
+        this.longitude = longitude;
+    }
 }
