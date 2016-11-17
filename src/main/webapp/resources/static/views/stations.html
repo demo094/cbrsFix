@@ -3,6 +3,7 @@
 </div>
 <div class="panel-body"  ng-controller = "stationsController">
     <div id="stationList" ng-show="map == null">
+        It seems that the map of stations is currently unavailable. To rent or return a bike you can use this list instead.
         <p ng-repeat="stationTO in stationTOs" ng-if="$index >= 0">
             <a ui-sref=".station({id:stationTO.stationId})">{{stationTO.stationName}}</a>
         </p>
