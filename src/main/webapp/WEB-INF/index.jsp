@@ -26,13 +26,12 @@
     <script src="webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
     <script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.min.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2FSxC8WmlIEegJ3-DOKWc_f3CNoAhxzo"></script>
+    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.6.0.js" type="text/javascript"></script>
+    <script src="http://m-e-conroy.github.io/angular-dialog-service/javascripts/dialogs.min.js" type="text/javascript"></script>
     <script src="resources/static/js/routerApp.js"></script>
     <script src="resources/static/js/controller.js"></script>
     <script src="resources/static/js/admincontroller.js"></script>
     <script src="resources/static/js/angularTimer.js"></script>
-
-
-
 
     <title>Bike rental service</title>
 </head>
