@@ -20,14 +20,15 @@
     <script src="webjars/angularjs/1.5.8/angular-resource.js"></script>
     <script src="webjars/angularjs/1.5.8/angular-route.js"></script>
     <script src="webjars/angularjs/1.5.8/angular-cookies.js"></script>
+    <script src="webjars/angularjs/1.5.8/angular-animate.js"></script>
+    <script src="webjars/angularjs/1.5.8/angular-touch.js"></script>
     <script src="webjars/momentjs/2.15.1/min/moment.min.js"></script>
     <script src="webjars/momentjs/2.15.1/min/locales.min.js"></script>
     <script src="webjars/humanize-duration/3.7.1/humanize-duration.js"></script>
     <script src="webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
     <script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.min.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2FSxC8WmlIEegJ3-DOKWc_f3CNoAhxzo"></script>
-    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.6.0.js" type="text/javascript"></script>
-    <script src="http://m-e-conroy.github.io/angular-dialog-service/javascripts/dialogs.min.js" type="text/javascript"></script>
+    <script src="resources/static/js/ui-bootstrap-tpls-2.2.0.min.js"></script>
     <script src="resources/static/js/routerApp.js"></script>
     <script src="resources/static/js/controller.js"></script>
     <script src="resources/static/js/admincontroller.js"></script>
