@@ -42,7 +42,6 @@ routerApp.controller('userpanelController', function($scope, $http, $cookies, $w
 
 routerApp.controller('stationsController', function($scope, $http, $uibModal){
        var stations = [];
-       var infoWindow = new google.maps.InfoWindow();
        $scope.stationMarkers = [];
        $scope.headingTitle = "Available stations";
 
@@ -63,8 +62,6 @@ routerApp.controller('stationsController', function($scope, $http, $uibModal){
                icon: 'resources/static/img/1479327321_biker.png'
            });
 
-           marker.content = station.stationId;
-
            google.maps.event.addListener(marker, 'click', function(){
                $uibModal.open({
                    ariaLabelledBy: 'modal-title',
@@ -72,11 +69,9 @@ routerApp.controller('stationsController', function($scope, $http, $uibModal){
                    templateUrl: 'resources/static/views/stationModal.html',
                    controller: 'modalSlotController',
                    resolve: {
-                       data: marker.content
+                       data: station.stationId
                    }
                });
-               infoWindow.setContent(marker.title);
-               infoWindow.open($scope.map, marker);
            });
 
            google.maps.event.addDomListener(window, "resize", function() {
