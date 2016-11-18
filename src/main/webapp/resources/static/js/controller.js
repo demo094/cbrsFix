@@ -1,3 +1,4 @@
+
 routerApp.controller('mainPageController', function($scope, $http, $location){
     $http.get('api/userpanel').then(function(response){
         $scope.user = response.data;
@@ -39,8 +40,9 @@ routerApp.controller('userpanelController', function($scope, $http, $cookies, $w
     };
 });
 
+var modalInstance;
 
-routerApp.controller('stationsController', function($scope, $http, $uibModal){
+routerApp.controller('stationsController', function($scope, $http, $state, $uibModal){
        var stations = [];
        $scope.stationMarkers = [];
        $scope.headingTitle = "Available stations";
@@ -62,8 +64,9 @@ routerApp.controller('stationsController', function($scope, $http, $uibModal){
                icon: 'resources/static/img/1479327321_biker.png'
            });
 
+           marker.content = station.stationId;
            google.maps.event.addListener(marker, 'click', function(){
-               $uibModal.open({
+               modalInstance = $uibModal.open({
                    ariaLabelledBy: 'modal-title',
                    ariaDescribedBy: 'modal-body',
                    templateUrl: 'resources/static/views/stationModal.html',
@@ -72,6 +75,11 @@ routerApp.controller('stationsController', function($scope, $http, $uibModal){
                        data: station.stationId
                    }
                });
+//               if($state.current.name == 'userpanel.stations'){
+//                   $state.go('.station', {id: marker.content});
+//               } else {
+//                   $state.go('^.station', {id: marker.content});
+//               }
            });
 
            google.maps.event.addDomListener(window, "resize", function() {
@@ -103,11 +111,11 @@ routerApp.controller('stationsController', function($scope, $http, $uibModal){
         });
    });
 
-routerApp.controller('modalSlotController', function($scope, $http, $uibModalInstance, data){
+routerApp.controller('modalSlotController', function($scope, $http, data){
     var id = data;
     $scope.headingTitle = "List of slots on the station";
     $scope.close = function(){
-        $uibModalInstance.dismiss('cancel');
+        modalInstance.dismiss('cancel');
     };
 
     $http.get('api/station/' + id)
@@ -148,6 +156,7 @@ routerApp.controller('rentalController', function($scope, $http, $state){
             $http.post(url)
             .then(function(response){
                 document.getElementById("server_response").innerHTML = response.data.rentStatus;
+                modalInstance.close();
                 $state.reload();
             }, function(response){
                 $scope.rentalError = response.data;
@@ -159,6 +168,7 @@ routerApp.controller('rentalController', function($scope, $http, $state){
                    $http.post(url)
                    .then(function(response){
                         document.getElementById("server_response").innerHTML = response.data.rentStatus;
+                        modalInstance.close();
                         $state.reload();
                        }, function(response){
                         $scope.rentalError = response.data;
