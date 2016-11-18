@@ -1,47 +1,41 @@
-<!--<div class="modal">-->
-    <!--<div class="modal-dialog">-->
-        <!--<div class="modal-content">-->
-            <div class="modal-header">
-                <h4 class="modal-title pull-left">Slots on the station {{stationTO.stationName}}</h4>
+<div class="modal-header">
+    <h4 class="modal-title pull-left">Slots on the station {{stationTO.stationName}}</h4>
 
-                <a ng-click="close()"><span class="glyphicon glyphicon-remove pull-right"></span></a>
-                <div class="clearfix"></div>
-            </div>
-            <div class="modal-body">
-                <div ng-repeat="item in stationTO.slotTOs" ng-if="$index >= 0">
-                    <form ng-if="item.bikeId != null" ng-controller="rentalController">
-                        <input type="hidden" ng-model="item.slotId"/>
-                        <table class="table table-hover table-compact">
-                            <tr>
-                                <td>occupied</td>
-                                <td ng-if="userBikeTO.bikeId == null">
-                                    <button type="submit" ng-click="rentBike()">Rent</button>
-                                </td>
-                            </tr>
-                        </table>
-                    </form>
-                    <form ng-if="item.bikeId == null" ng-controller="rentalController">
-                        <input type="hidden" ng-model="item.slotId"/>
-                        <table class="table table-hover table-compact">
-                            <tr>
-                                <td>empty</td>
-                                <td ng-if="userBikeTO.bikeId != null">
-                                    <button type="submit" ng-click="returnBike()">Return</button>
-                                </td>
-                            </tr>
-                        </table>
-                    </form>
-                </div>
-                <br>
-                <div id="server_response" style="color: green; font-size: 20px; font-weight: bold;"></div>
-            </div>
-            <div class="panel panel-danger" ng-show="rentalError != null">
-                <div id="warning" class="panel-heading" ng-show="error.cause != null"><br>{{rentalError.cause}}</div>
-                <div id="warningStatus" class="panel-heading" ng-show="rentalError.message != null">Error</div>
-                <div class="panel-body">
-                    {{rentalError.message}}
-                </div>
-            </div>
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
+    <a ng-click="close()"><span class="glyphicon glyphicon-remove pull-right"></span></a>
+    <div class="clearfix"></div>
+</div>
+<div class="modal-body">
+    <div ng-repeat="item in stationTO.slotTOs" ng-if="$index >= 0">
+        <form ng-if="item.bikeId != null" ng-controller="rentalController">
+            <input type="hidden" ng-model="item.slotId"/>
+            <table class="table table-hover table-compact">
+                <tr>
+                    <td>occupied</td>
+                    <td ng-if="userBikeTO.bikeId == null">
+                        <button type="submit" ng-click="rentBike()">Rent</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <form ng-if="item.bikeId == null" ng-controller="rentalController">
+            <input type="hidden" ng-model="item.slotId"/>
+            <table class="table table-hover table-compact">
+                <tr>
+                    <td>empty</td>
+                    <td ng-if="userBikeTO.bikeId != null">
+                        <button type="submit" ng-click="returnBike()">Return</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <br>
+    <div id="server_response" style="color: green; font-size: 20px; font-weight: bold;"></div>
+</div>
+<div class="panel panel-danger" ng-show="rentalError != null">
+    <div id="warning" class="panel-heading" ng-show="error.cause != null"><br>{{rentalError.cause}}</div>
+    <div id="warningStatus" class="panel-heading" ng-show="rentalError.message != null">Error</div>
+    <div class="panel-body">
+        {{rentalError.message}}
+    </div>
+</div>
