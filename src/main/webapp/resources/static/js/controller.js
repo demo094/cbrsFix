@@ -40,7 +40,7 @@ routerApp.controller('userpanelController', function($scope, $http, $cookies, $w
 });
 
 
-routerApp.controller('stationsController', function($scope, $http, $dialogs){
+routerApp.controller('stationsController', function($scope, $http, $uibModal){
        var stations = [];
        var infoWindow = new google.maps.InfoWindow();
        $scope.stationMarkers = [];
@@ -66,7 +66,15 @@ routerApp.controller('stationsController', function($scope, $http, $dialogs){
            marker.content = station.stationId;
 
            google.maps.event.addListener(marker, 'click', function(){
-               $dialogs.create('resources/static/views/stationModal.html', 'modalSlotController', marker.content, {key: true, backdrop: true});
+               $uibModal.open({
+                   ariaLabelledBy: 'modal-title',
+                   ariaDescribedBy: 'modal-body',
+                   templateUrl: 'resources/static/views/stationModal.html',
+                   controller: 'modalSlotController',
+                   resolve: {
+                       data: marker.content
+                   }
+               });
                infoWindow.setContent(marker.title);
                infoWindow.open($scope.map, marker);
            });
@@ -100,11 +108,11 @@ routerApp.controller('stationsController', function($scope, $http, $dialogs){
         });
    });
 
-routerApp.controller('modalSlotController', function($scope, $http, $modalInstance, data){
+routerApp.controller('modalSlotController', function($scope, $http, $uibModalInstance, data){
     var id = data;
     $scope.headingTitle = "List of slots on the station";
     $scope.close = function(){
-        $modalInstance.dismiss('canceled');
+        $uibModalInstance.dismiss('cancel');
     };
 
     $http.get('api/station/' + id)
