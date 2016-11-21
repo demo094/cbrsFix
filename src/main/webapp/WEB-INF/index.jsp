@@ -74,8 +74,8 @@
             </div>
             <div class="panel-body">
                 <a href="#/resetpassword">Forgot password?</a>
-                <br><a href="#/resendactivation">Resend activation link</a>
-                <br><a href="#/adminmail">Send a mail to administration</a>
+                <a href="#/resendactivation">Resend activation link</a>
+                <a href="#/adminmail">Mail admins!</a>
             </div>
         </div>
             <div class="panel panel-default col-sm-8 text-left" ui-view></div>
@@ -85,7 +85,7 @@
                     <h4>Useful links</h4>
                 </div>
                 <div class="panel-body">
-                    <a ng-show="user != null" href="#/userpanel">
+                    <a class="btn btn-success" ng-show="user != null" href="#/userpanel">
                     Userpanel
                     </a>
                     <span ng-show="user == null">{{info}}</span>

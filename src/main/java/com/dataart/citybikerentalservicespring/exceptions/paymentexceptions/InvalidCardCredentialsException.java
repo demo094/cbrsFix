@@ -10,4 +10,8 @@ public class InvalidCardCredentialsException extends CbrsException {
     public InvalidCardCredentialsException() {
         super(UserMessage.INVALID_CARD_CREDENTIALS);
     }
+
+    public InvalidCardCredentialsException(String message){
+        super(message);
+    }
 }

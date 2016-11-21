@@ -2,12 +2,13 @@
     <h4>Payment service</h4>
 </div>
 <div class="panel-body" ng-controller="paymentController">
+    Please fill in the form correctly to perform payment.
     <form id="some_input" ng-submit="paymentSubmit()">
         <input type="hidden" ng-model="payment.idUser" name="idUser"/>
         <table>
-            <tr><td><input type="text" class="form-control" name="cardNo" placeholder="Credit card number"/></td></tr>
-            <tr><td><input type="text" class="form-control" name="cardExpDate" placeholder="Expiration date MM-YYYY"/></td></tr>
-            <tr><td><input type="text" class="form-control" name="cvvCode" placeholder="CVV code"/></td></tr>
+            <tr><td><input type="text" class="form-control" ng-model="payment.cardNo" name="cardNo" placeholder="Credit card number"/></td></tr>
+            <tr><td><input type="text" class="form-control" ng-model="payment.cardExpirationDate" name="cardExpDate" placeholder="Expiration date MM-YYYY"/></td></tr>
+            <tr><td><input type="text" class="form-control" ng-model="payment.cvvCode" name="cvvCode" placeholder="CVV code"/></td></tr>
             <tr><td><input type="text" class="form-control" ng-model="payment.amount" name="amount" placeholder="Cash amount"/></td></tr>
             <tr><td><input type="submit" class="btn btn-default" /></td></tr>
         </table>

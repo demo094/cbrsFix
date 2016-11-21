@@ -176,10 +176,11 @@ routerApp.controller('rentalController', function($scope, $http, $state){
        };
    });
 
-routerApp.controller('loginController', function($scope, $http, $window){
+routerApp.controller('loginController', function($scope, $http, $state){
     $scope.login = function(){
         $http.post('login', $scope.credentials).then(function(response){
-            $window.location.href = '#/userpanel';
+//              $window.location.href = '#/userpanel';
+                $state.go('userpanel');
         }, function(response){
             $scope.loginError = response.data;
         });

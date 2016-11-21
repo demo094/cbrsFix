@@ -51,6 +51,22 @@ body {
     min-width: 200px;
 }
 
+#stations {
+    margin-left: 15px;
+}
+
+#payments {
+    margin-left: 5px;
+}
+
+#navRow .col-sm-2 .btn .btn-success {
+    display: inline;
+}
+
+a .btn .btn-warning {
+    margin-top: 5px;
+}
+
 .row.content {
     height: 450px;
 }
