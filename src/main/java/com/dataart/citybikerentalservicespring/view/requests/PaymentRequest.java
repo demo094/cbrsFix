@@ -1,11 +1,11 @@
 package com.dataart.citybikerentalservicespring.view.requests;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import java.math.BigDecimal;
-import java.time.Instant;
 
 /**
  * Created by mkrasowski on 16.09.2016.
@@ -14,17 +14,21 @@ public class PaymentRequest {
     @NotNull
     private Integer idUser;
     @NotNull(message = "No card number provided.")
+    @NotEmpty(message = "No card number provided.")
     @Pattern(regexp = "((?=.*\\d).{16})", message = "Incorrect card number! Should contain 16 number characters.")
     private String cardNo;
     @NotNull(message = "No expiration date provided.")
+    @NotEmpty(message = "No expiration date provided.")
 //    There is nice annotation for checking the Instant date objects for being in the past or the future
 //    but the problem is the jackson library doesn't parse the Instants yet. Maybe I could work it around
 //    using some parsing on the method level and annotate the method
     private String cardExpirationDate;
     @NotNull(message = "No cvv card code provided.")
+    @NotEmpty(message = "No cvv card code provided.")
     @Pattern(regexp = "((?=.*\\d).{3})", message = "Cvv code should have 3 number characters.")
     private String cvvCode;
-    @NotNull(message = "Provide amount to add to account!")
+    @NotNull(message = "Provide an amount to add!")
+//    @NotEmpty(message = "Provide an amount to add!")
     @Min(value = 0, message = "Value must be greater than zero!")
     private BigDecimal amount;
 

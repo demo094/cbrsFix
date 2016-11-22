@@ -58,7 +58,7 @@
                 <li><a href="#/contact">Contact</a></li>
             </ul>
 
-            <ul class="nav navbar-nav navbar-right">
+            <ul ng-controller="mainPageController" ng-show="user == null" class="nav navbar-nav navbar-right">
                 <li><a href="#/registration"><span class="glyphicon glyphicon-user"></span> Register</a></li>
                 <li><a href="#/login"><span class="glyphicon glyphicon-log-in"></span> Log in</a></li>
             </ul>
@@ -72,23 +72,23 @@
             <div class="panel-heading">
                 <h4>Support menu</h4>
             </div>
-            <div class="panel-body">
-                <a href="#/resetpassword">Forgot password?</a>
-                <a href="#/resendactivation">Resend activation link</a>
+            <div ng-controller="mainPageController" class="panel-body">
+                <a ng-show="user == null" href="#/resetpassword">Forgot password?</a>
+                <a ng-show="user == null" href="#/resendactivation">Resend activation link</a>
                 <a href="#/adminmail">Mail admins!</a>
             </div>
         </div>
             <div class="panel panel-default col-sm-8 text-left" ui-view></div>
 
-            <div ng-controller="mainPageController" class="panel panel-default col-sm-2 sidenav">
+            <div ng-controller="mainPageController" ng-show="user != null" class="panel panel-default col-sm-2 sidenav">
                 <div class=panel-heading>
-                    <h4>Useful links</h4>
+                    <h4>User menu</h4>
                 </div>
                 <div class="panel-body">
-                    <a class="btn btn-success" ng-show="user != null" href="#/userpanel">
+                    <a class="btn btn-success" href="#/userpanel">
                     Userpanel
                     </a>
-                    <span ng-show="user == null">{{info}}</span>
+                    <button class="btn btn-default" ng-click="logout()">Logout</button>
                 </div>
             </div>
         </div>
