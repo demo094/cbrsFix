@@ -2,23 +2,45 @@
     <h4>Payment service</h4>
 </div>
 <div class="panel-body" ng-controller="paymentController">
+    Please fill in the form correctly to perform payment.
     <form id="some_input" ng-submit="paymentSubmit()">
         <input type="hidden" ng-model="payment.idUser" name="idUser"/>
         <table>
-            <tr><td><input type="text" class="form-control" name="cardNo" placeholder="Credit card number"/></td></tr>
-            <tr><td><input type="text" class="form-control" name="cardExpDate" placeholder="Expiration date MM-YYYY"/></td></tr>
-            <tr><td><input type="text" class="form-control" name="cvvCode" placeholder="CVV code"/></td></tr>
-            <tr><td><input type="text" class="form-control" ng-model="payment.amount" name="amount" placeholder="Cash amount"/></td></tr>
-            <tr><td><input type="submit" class="btn btn-default" /></td></tr>
+            <tr>
+                <td><input type="text" class="form-control" ng-model="payment.cardNo" name="cardNo"
+                           placeholder="Credit card number"/></td>
+                <td ng-show="fieldErrors.cardNo != null">
+                    <span class="bg-danger">{{fieldErrors.cardNo.message}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="text" class="form-control" ng-model="payment.cardExpirationDate" name="cardExpDate"
+                           placeholder="Expiration date MM-YYYY"/></td>
+                <td ng-show="fieldErrors.cardExpirationDate != null">
+                    <span class="bg-danger">{{fieldErrors.cardExpirationDate.message}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="text" class="form-control" ng-model="payment.cvvCode" name="cvvCode"
+                           placeholder="CVV code"/></td>
+                <td ng-show="fieldErrors.cvvCode != null">
+                    <span class="bg-danger">{{fieldErrors.cvvCode.message}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="text" class="form-control" ng-model="payment.amount" name="amount"
+                           placeholder="Cash amount"/></td>
+                <td ng-show="fieldErrors.amount != null">
+                    <span class="bg-danger">{{fieldErrors.amount.message}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="submit" class="btn btn-default"/></td>
+            </tr>
         </table>
     </form>
     <br>
     <div id="response"></div>
-    <div class="panel panel-danger" ng-show="error != null">
-        <div id="warningStatus" class="panel-heading" >An error occured!</div>
-        <div class="panel-body">
-            {{error.message}}
-        </div>
-    </div>
 
 </div>
+

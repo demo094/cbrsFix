@@ -1,13 +1,13 @@
 <div class="panel-heading">
     <h4 class="pull-left">{{headingTitle}}</h4>
-    <button ng-show="userPanelTO != null" class="btn btn-default pull-right" ng-click="logout()">Logout</button>
     <div class="clearfix"></div>
 </div>
 <div class="panel-body" ng-show="userPanelTO != null">
-    <a ui-sref=".stations">List of stations</a>
-    <br><a ui-sref=".payments">Payment service</a>
-    <br>
-    <br>
+    <div id="navRow" class="row">
+        <a id="stations" class="col-sm-2 btn btn-success" ui-sref=".stations">See the stations</a>
+        <a id="payments" class="col-sm-2 btn btn-success" ui-sref=".payments">Add funds</a>
+    </div>
+    <div class="clearfix"></div>
     Your current balance is: {{userPanelTO.userBalance}}
     <br>Last trip price: {{userPanelTO.paymentMoney}}
     <br>

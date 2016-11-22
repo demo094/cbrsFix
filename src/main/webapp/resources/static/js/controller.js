@@ -1,13 +1,18 @@
 
-routerApp.controller('mainPageController', function($scope, $http, $location){
+routerApp.controller('mainPageController', function($scope, $http, $location, $cookies, $window){
     $http.get('api/userpanel').then(function(response){
         $scope.user = response.data;
     }, function(response){
         $scope.info = "Log in."
     });
+
+    $scope.logout = function(){
+            $cookies.remove('accessToken');
+            $window.location.href = 'index';
+        };
 });
 
-routerApp.controller('userpanelController', function($scope, $http, $cookies, $window, $interval){
+routerApp.controller('userpanelController', function($scope, $http, $window, $interval){
     $scope.headingTitle = "User panel";
     var bike;
 
@@ -34,10 +39,7 @@ routerApp.controller('userpanelController', function($scope, $http, $cookies, $w
     }, 5000);
 
 
-    $scope.logout = function(){
-        $cookies.remove('accessToken');
-        $window.location.href = 'index';
-    };
+
 });
 
 var modalInstance;
@@ -179,7 +181,7 @@ routerApp.controller('rentalController', function($scope, $http, $state){
 routerApp.controller('loginController', function($scope, $http, $window){
     $scope.login = function(){
         $http.post('login', $scope.credentials).then(function(response){
-            $window.location.href = '#/userpanel';
+                $window.location.href = '#/userpanel';
         }, function(response){
             $scope.loginError = response.data;
         });
@@ -253,7 +255,7 @@ routerApp.controller('paymentController', function($scope, $http, $state){
             document.getElementById("response").innerHTML = response.data.message;
             $state.reload();
         }, function(response){
-            $scope.error = response.data;
+            $scope.fieldErrors = response.data.fieldErrors;
         });
     };
 

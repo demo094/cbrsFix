@@ -20,7 +20,6 @@ import com.dataart.citybikerentalservicespring.view.requests.RegistrationRequest
 import com.dataart.citybikerentalservicespring.view.requests.ResendTokenRequest;
 import com.dataart.citybikerentalservicespring.view.requests.ResetPasswordRequest;
 import com.dataart.citybikerentalservicespring.view.responses.CommonResponse;
-import com.dataart.citybikerentalservicespring.view.responses.ErrorResponse;
 import com.dataart.citybikerentalservicespring.view.responses.RentalSynchroResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -28,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.Calendar;
 
 /**
@@ -47,10 +47,10 @@ public class UserController {
     @PreAuthorize("hasRole('USER')")
     public UserPanelTO userPanelTO() throws CbrsException {
         AuthenticatedUser authUser = AuthenticationContext.getAuthenticatedUser();
-            User user = userService.findById(authUser.getId());
-            RentalHistory rentalHistory = rentalService.getLastRental(user);
-            Payment payment = rentalService.getLastTripPrice(user);
-            return new UserPanelTO(user, rentalHistory, payment);
+        User user = userService.findById(authUser.getId());
+        RentalHistory rentalHistory = rentalService.getLastRental(user);
+        Payment payment = rentalService.getLastTripPrice(user);
+        return new UserPanelTO(user, rentalHistory, payment);
     }
 
     @RequestMapping(value = "/resetPassEmail", method = RequestMethod.POST)
@@ -62,11 +62,11 @@ public class UserController {
     @RequestMapping(value = "/resetPassData/{token}", method = RequestMethod.POST)
     public CommonResponse angularResetData(@PathVariable("token") String token, @RequestBody ResetPasswordRequest resetPasswordRequest) throws CbrsException {
         Token resetToken = userService.findTokenByBody(token);
-        if (resetToken == null){
+        if (resetToken == null) {
             throw new InvalidTokenException();
         }
         User user = resetToken.getUser();
-        if(user == null){
+        if (user == null) {
             throw new UserNotFoundException();
         }
 
@@ -102,14 +102,14 @@ public class UserController {
 
     @RequestMapping(value = "/api/paymentData", method = RequestMethod.POST)
     @PreAuthorize("hasRole('USER')")
-    public CommonResponse angularPaymentSubmit(@RequestBody PaymentRequest paymentRequest) throws CbrsException {
+    public CommonResponse angularPayment(@Valid @RequestBody PaymentRequest paymentRequest) throws CbrsException {
         userService.updateBalance(paymentRequest.getIdUser(), paymentRequest.getAmount());
         return new CommonResponse("Payment done!");
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public CommonResponse userAuthentication(@RequestBody AuthenticationTO authenticationTO, HttpServletResponse response) {
-        response.addCookie(new Cookie("accessToken" ,loginService.createAuthenticationToken(authenticationTO)));
+        response.addCookie(new Cookie("accessToken", loginService.createAuthenticationToken(authenticationTO)));
         return new CommonResponse("Login ok!");
     }
 
@@ -131,7 +131,7 @@ public class UserController {
 
     @RequestMapping(value = "/api/rent/status", method = RequestMethod.GET)
     @PreAuthorize("hasRole('USER')")
-    public RentalSynchroResponse rentStatus(){
+    public RentalSynchroResponse rentStatus() {
         AuthenticatedUser authenticatedUser = AuthenticationContext.getAuthenticatedUser();
         User user = userService.findById(authenticatedUser.getId());
         RentalHistory rentalHistory = rentalService.getLastRental(user);

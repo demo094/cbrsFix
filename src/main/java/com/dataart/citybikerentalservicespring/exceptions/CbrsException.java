@@ -18,6 +18,10 @@ public class CbrsException extends Exception {
         this.userMessage = userMessage;
     }
 
+    public CbrsException(String message){
+        super(message);
+    }
+
     public UserMessage getUserMessage() {
         return userMessage;
     }

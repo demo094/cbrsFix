@@ -26,8 +26,6 @@ import java.util.Properties;
 @PropertySource(value = "/resources/conf/security.properties")
 public class SpringMvcConfig extends WebMvcConfigurerAdapter {
 
-
-
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/static/**")
