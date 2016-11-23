@@ -250,11 +250,17 @@ routerApp.controller('paymentController', function($scope, $http, $state){
     });
 
     $scope.paymentSubmit = function(){
+        if($scope.payment == null){
+            $scope.paymentError = "You have to fill the form!";
+        }
         $scope.payment.idUser = userId;
         $http.post('api/paymentData', $scope.payment).then(function(response){
             document.getElementById("response").innerHTML = response.data.message;
             $state.reload();
         }, function(response){
+            if(response.data.status != null){
+                $scope.paymentError = response.data.message;
+            }
             $scope.fieldErrors = response.data.fieldErrors;
         });
     };
