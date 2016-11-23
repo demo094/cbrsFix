@@ -4,8 +4,8 @@ import com.dataart.citybikerentalservicespring.exceptions.CbrsException;
 import com.dataart.citybikerentalservicespring.exceptions.CbrsRuntimeException;
 import com.dataart.citybikerentalservicespring.view.TO.ApiErrorTO;
 import com.dataart.citybikerentalservicespring.view.TO.ValidationErrorTO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -32,7 +32,7 @@ public class AppExceptionHandler {
         this.messageSource = messageSource;
     }
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AppExceptionHandler.class);
+    private static final Logger LOGGER = LogManager.getLogger(AppExceptionHandler.class);
 
     @ExceptionHandler(CbrsException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

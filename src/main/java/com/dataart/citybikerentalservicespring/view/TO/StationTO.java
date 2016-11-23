@@ -1,8 +1,6 @@
 package com.dataart.citybikerentalservicespring.view.TO;
 
 import com.dataart.citybikerentalservicespring.persistence.model.Station;
-import com.vividsolutions.jts.geom.Point;
-import org.geolatte.geom.Geometry;
 
 import java.math.BigDecimal;
 import java.util.List;
