@@ -13,7 +13,11 @@ public class RentalSynchroResponse {
     private Bike bike;
 
     public RentalSynchroResponse(User user, RentalHistory rentalHistory) {
-        this.rentalBeginTime = rentalHistory.getBeginTime().toEpochMilli();
+        if(rentalHistory != null) {
+            this.rentalBeginTime = rentalHistory.getBeginTime().toEpochMilli();
+        } else {
+            this.rentalBeginTime = null;
+        }
         this.bike = user.getBike();
     }
 
