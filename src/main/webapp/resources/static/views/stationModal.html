@@ -10,7 +10,7 @@
             <input type="hidden" ng-model="item.slotId"/>
             <table class="table table-hover table-compact">
                 <tr>
-                    <td>occupied</td>
+                    <td>Slot has bike available</td>
                     <td ng-if="userBikeTO.bikeId == null">
                         <button type="submit" ng-click="rentBike()">Rent</button>
                     </td>
@@ -21,7 +21,7 @@
             <input type="hidden" ng-model="item.slotId"/>
             <table class="table table-hover table-compact">
                 <tr>
-                    <td>empty</td>
+                    <td>Slot is empty</td>
                     <td ng-if="userBikeTO.bikeId != null">
                         <button type="submit" ng-click="returnBike()">Return</button>
                     </td>

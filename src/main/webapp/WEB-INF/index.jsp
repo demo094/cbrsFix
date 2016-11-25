@@ -58,9 +58,13 @@
                 <li><a href="#/contact">Contact</a></li>
             </ul>
 
-            <ul ng-controller="mainPageController" ng-show="user == null" class="nav navbar-nav navbar-right">
+            <ul ng-controller="userpanelController" ng-show="userPanelTO == null" class="nav navbar-nav navbar-right">
                 <li><a href="#/registration"><span class="glyphicon glyphicon-user"></span> Register</a></li>
                 <li><a href="#/login"><span class="glyphicon glyphicon-log-in"></span> Log in</a></li>
+            </ul>
+            <ul ng-controller="userpanelController" ng-show="userPanelTO != null" class="nav navbar-nav navbar-right">
+                <li><a href="#/userpanel"><span class="glyphicon glyphicon-user"></span> User panel</a></li>
+                <li><a href="#" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
             </ul>
             </div>
         </div>
@@ -72,26 +76,15 @@
             <div class="panel-heading">
                 <h4>Support menu</h4>
             </div>
-            <div ng-controller="mainPageController" class="panel-body">
-                <a ng-show="user == null" href="#/resetpassword">Forgot password?</a>
-                <a ng-show="user == null" href="#/resendactivation">Resend activation link</a>
+            <div ng-controller="userpanelController" class="panel-body">
+                <a ng-show="userPanelTO == null" href="#/resetpassword">Forgot password?</a>
+                <a ng-show="userPanelTO == null" href="#/resendactivation">Resend activation link</a>
                 <a href="#/adminmail">Mail admins!</a>
             </div>
         </div>
             <div class="panel panel-default col-sm-8 text-left" ui-view></div>
 
-            <div ng-controller="mainPageController" ng-show="user != null" class="panel panel-default col-sm-2 sidenav">
-                <div class=panel-heading>
-                    <h4>User menu</h4>
-                </div>
-                <div class="panel-body">
-                    <a class="btn btn-success" href="#/userpanel">
-                    Userpanel
-                    </a>
-                    <button class="btn btn-default" ng-click="logout()">Logout</button>
-                </div>
-            </div>
-        </div>
+
     </div>
     <br>
         <div class="panel panel-danger" ng-show="error != null">
