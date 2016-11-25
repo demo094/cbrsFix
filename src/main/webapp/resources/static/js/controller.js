@@ -17,12 +17,14 @@ routerApp.controller('userpanelController', function($scope, $http, $window, $in
         bike = response.data.bike;
         $scope.serverTimeMillis = response.data.rentalBeginTime;
         if(bike == null){
-            $scope.serverTimeMillis = null;
             $interval.cancel(updateInterval);
+            $scope.userPanelTO.bikeId = null;
+            $scope.serverTimeMillis = null;
             }
         }, function(response){
-            $scope.serverTimeMillis = null;
             $interval.cancel(updateInterval);
+            $scope.userPanelTO.bikeId = null;
+            $scope.serverTimeMillis = null;
         });
     }, 5000);
 
@@ -155,7 +157,7 @@ routerApp.controller('rentalController', function($scope, $http, $state){
                 modalInstance.close();
                 $state.reload();
             }, function(response){
-                $scope.rentalError = response.data;
+                $scope.error = response.data;
             });
        };
 
@@ -167,7 +169,7 @@ routerApp.controller('rentalController', function($scope, $http, $state){
                         modalInstance.close();
                         $state.reload();
                        }, function(response){
-                        $scope.rentalError = response.data;
+                        $scope.error = response.data;
                    });
        };
    });

@@ -15,10 +15,10 @@
         You have not enough money to rent a bike for a longer time!
     </div>
     <br>
-    <div ng-if="userPanelTO.bikeId!=null">
+    <div ng-show="userPanelTO.bikeId!=null">
         Currently you are renting bike number {{userPanelTO.bikeId}}.
         <br>
-        <timer interval="1000" start-time="serverTimeMillis">
+        <timer ng-show="serverTimeMillis != null" interval="1000" start-time="serverTimeMillis">
             {{hhours}} : {{mminutes}} : {{sseconds}}
         </timer>
     </div>

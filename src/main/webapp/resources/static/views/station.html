@@ -11,6 +11,7 @@
                             <button type="submit" ng-click="rentBike()">Rent</button>
                         </td>
                     </tr>
+                    <tr ng-show="error != null"><td><span class="bg-danger">{{error.message}}</span></td></tr>
                 </table>
             </form>
             <form ng-if="item.bikeId == null" ng-controller="rentalController">
@@ -22,17 +23,18 @@
                             <button type="submit" ng-click="returnBike()">Return</button>
                         </td>
                     </tr>
+                    <tr ng-show="error != null"><td><span class="bg-danger">{{error.message}}</span></td></tr>
                 </table>
             </form>
         </div>
         <br>
         <div id="server_response" style="color: green; font-size: 20px; font-weight: bold;"></div>
     </div>
-    <div class="panel panel-danger" ng-show="rentalError != null">
-        <div id="warning" class="panel-heading" ng-show="error.cause != null"><br>{{rentalError.cause}}</div>
-        <div id="warningStatus" class="panel-heading" ng-show="rentalError.message != null">Error</div>
+    <div class="panel panel-danger" ng-show="error != null">
+        <div id="warning" class="panel-heading" ng-show="error.cause != null"><br>{{error.cause}}</div>
+        <div id="warningStatus" class="panel-heading" ng-show="error.message != null">Error</div>
         <div class="panel-body">
-            {{rentalError.message}}
+            {{error.message}}
         </div>
     </div>
 </div>
