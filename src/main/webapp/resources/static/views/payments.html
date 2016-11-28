@@ -3,7 +3,7 @@
 </div>
 <div class="panel-body" ng-controller="paymentController">
     Please fill in the form correctly to perform payment.
-    <form id="some_input" ng-submit="paymentSubmit()">
+    <form id="some_input" name="paymentForm" ng-submit="paymentSubmit()">
         <input type="hidden" ng-model="payment.idUser" name="idUser"/>
         <table>
             <tr>
@@ -40,7 +40,9 @@
         </table>
     </form>
     <br>
-    <div id="response"></div>
+    <div class="alert alert-success" ng-show="paymentResponse != null">
+        <strong>{{paymentResponse}}</strong>
+    </div>
     <div ng-show="paymentError != null"><span class="bg-danger">{{paymentError}}</span></div>
 </div>
 
