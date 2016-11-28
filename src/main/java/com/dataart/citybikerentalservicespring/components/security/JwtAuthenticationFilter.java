@@ -16,10 +16,10 @@ import java.util.Arrays;
 /**
  * Created by mkrasowski on 18.10.2016.
  */
-public class JsonWebTokenAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
+public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
 
-    public JsonWebTokenAuthenticationFilter() {
+    public JwtAuthenticationFilter() {
         super("/api/**");
     }
 
@@ -38,7 +38,7 @@ public class JsonWebTokenAuthenticationFilter extends AbstractAuthenticationProc
                 .orElseThrow(()->new JsonWebTokenMissingException("No token found. Please log in first!"));
 
 
-        JsonWebAuthenticationToken authenticationToken = new JsonWebAuthenticationToken(token);
+        JwtAuthenticationToken authenticationToken = new JwtAuthenticationToken(token);
 
         return getAuthenticationManager().authenticate(authenticationToken);
     }

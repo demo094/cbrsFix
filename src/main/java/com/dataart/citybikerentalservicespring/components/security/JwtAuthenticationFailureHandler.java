@@ -15,8 +15,8 @@ import java.io.IOException;
 /**
  * Created by mkrasowski on 31.10.2016.
  */
-public class JsonWebTokenAuthenticationFailureHandler implements AuthenticationFailureHandler {
-    private static final Logger LOGGER = LoggerFactory.getLogger(JsonWebTokenAuthenticationFailureHandler.class);
+public class JwtAuthenticationFailureHandler implements AuthenticationFailureHandler {
+    private static final Logger LOGGER = LoggerFactory.getLogger(JwtAuthenticationFailureHandler.class);
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {

@@ -8,17 +8,20 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by mkrasowski on 18.10.2016.
  */
 @Component
-public class JsonWebTokenHelper {
+public class JwtHelper {
     @Value("${secret}")
     private String secret;
 
@@ -32,6 +35,7 @@ public class JsonWebTokenHelper {
                     .getBody();
 
             UserDetailsTO userDetailsTO = new UserDetailsTO();
+            userDetailsTO.setEmail(body.getSubject());
             userDetailsTO.setId(Integer.parseInt((String) body.get("id")));
             userDetailsTO.setRoles((List<String>) body.get("userRoleList"));
             userDetailsTO.setTokenIssueTime(Instant.ofEpochMilli((Long) body.get("issueTime")));
@@ -45,6 +49,7 @@ public class JsonWebTokenHelper {
     public String generateToken(User user) {
         UserDetailsTO userDetailsTO = new UserDetailsTO(user);
         Claims claims = Jwts.claims();
+        claims.setSubject(userDetailsTO.getEmail());
         claims.put("id", userDetailsTO.getId() + "");
         claims.put("userRoleList", userDetailsTO.getRoles());
         claims.put("issueTime", new Date());
@@ -53,4 +58,9 @@ public class JsonWebTokenHelper {
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
     }
+
+//    public String generateToken(UserDetails userDetails) {
+//        Map<String, Object> claims = new HashMap<>();
+//        claims.put("email", userDetails.getUsername());
+//    }
 }

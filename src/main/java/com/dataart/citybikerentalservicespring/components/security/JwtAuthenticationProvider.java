@@ -22,16 +22,16 @@ import java.util.stream.Collectors;
  * Created by mkrasowski on 18.10.2016.
  */
 @Component
-public class JsonWebTokenAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
+public class JwtAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
 
     @Autowired
-    private JsonWebTokenHelper jsonWebTokenHelper;
+    private JwtHelper jwtHelper;
     @Value("${tokenLifeTime}")
     private long tokenLifeTime;
 
     @Override
     public boolean supports(Class<?> authentication) {
-        return (JsonWebAuthenticationToken.class.isAssignableFrom(authentication));
+        return (JwtAuthenticationToken.class.isAssignableFrom(authentication));
     }
 
     @Override
@@ -41,8 +41,8 @@ public class JsonWebTokenAuthenticationProvider extends AbstractUserDetailsAuthe
 
     @Override
     protected UserDetails retrieveUser(String username, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
-        JsonWebAuthenticationToken jsonWebAuthenticationToken = (JsonWebAuthenticationToken) authentication;
-        UserDetailsTO userDetailsTO = jsonWebTokenHelper.parseToken(jsonWebAuthenticationToken.getToken());
+        JwtAuthenticationToken jwtAuthenticationToken = (JwtAuthenticationToken) authentication;
+        UserDetailsTO userDetailsTO = jwtHelper.parseToken(jwtAuthenticationToken.getToken());
         if (userDetailsTO == null) {
             throw new JsonWebTokenMissingException("No token found");
         }
@@ -52,7 +52,7 @@ public class JsonWebTokenAuthenticationProvider extends AbstractUserDetailsAuthe
         }
 
         List<GrantedAuthority> authorities = getGrantedAuthorities(userDetailsTO);
-        return new AuthenticatedUser(userDetailsTO.getId(), authorities);
+        return new AuthenticatedUser(userDetailsTO.getId(), userDetailsTO.getEmail(), authorities);
     }
 
     private List<GrantedAuthority> getGrantedAuthorities(UserDetailsTO userDetailsTO) {

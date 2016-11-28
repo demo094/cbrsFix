@@ -13,11 +13,13 @@ import java.util.List;
 public class AuthenticatedUser implements UserDetails {
 
     private final Integer id;
+    private final String email;
     private final List<GrantedAuthority> authorities;
 
 
-    public AuthenticatedUser(Integer id, List<GrantedAuthority> authorities) {
+    public AuthenticatedUser(Integer id, String email, List<GrantedAuthority> authorities) {
         this.id = id;
+        this.email = email;
         this.authorities = authorities;
     }
 
@@ -37,9 +39,8 @@ public class AuthenticatedUser implements UserDetails {
     }
 
     @Override
-    @JsonIgnore
     public String getUsername() {
-        return null;
+        return email;
     }
 
     @Override
