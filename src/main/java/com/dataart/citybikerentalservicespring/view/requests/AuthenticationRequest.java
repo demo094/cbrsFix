@@ -1,14 +1,14 @@
-package com.dataart.citybikerentalservicespring.view.TO;
+package com.dataart.citybikerentalservicespring.view.requests;
 
 /**
  * Created by mkrasowski on 18.10.2016.
  */
-public class AuthenticationTO {
+public class AuthenticationRequest {
 
     private String email;
     private String password;
 
-    public AuthenticationTO() {
+    public AuthenticationRequest() {
     }
 
     public void setEmail(String email) {

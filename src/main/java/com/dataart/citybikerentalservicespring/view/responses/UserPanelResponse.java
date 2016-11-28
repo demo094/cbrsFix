@@ -1,4 +1,4 @@
-package com.dataart.citybikerentalservicespring.view.TO;
+package com.dataart.citybikerentalservicespring.view.responses;
 
 import com.dataart.citybikerentalservicespring.persistence.model.Payment;
 import com.dataart.citybikerentalservicespring.persistence.model.RentalHistory;
@@ -10,17 +10,17 @@ import java.time.Instant;
 /**
  * Created by mkrasowski on 22.09.2016.
  */
-public class UserPanelTO {
+public class UserPanelResponse {
     private BigDecimal userBalance;
     private BigDecimal paymentMoney;
     private Integer bikeId;
     private Long serverTime;
 
 
-    public UserPanelTO() {
+    public UserPanelResponse() {
     }
 
-    public UserPanelTO(User user, RentalHistory rentalHistory, Payment payment) {
+    public UserPanelResponse(User user, RentalHistory rentalHistory, Payment payment) {
         if (rentalHistory != null) {
             this.serverTime = rentalHistory.getBeginTime().toEpochMilli();
         }

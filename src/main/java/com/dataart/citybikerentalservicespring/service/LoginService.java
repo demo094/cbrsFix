@@ -4,7 +4,7 @@ import com.dataart.citybikerentalservicespring.components.security.JsonWebTokenH
 import com.dataart.citybikerentalservicespring.exceptions.userexceptions.AccountNotActivatedException;
 import com.dataart.citybikerentalservicespring.exceptions.userexceptions.UnexpectedAuthenticationException;
 import com.dataart.citybikerentalservicespring.persistence.model.User;
-import com.dataart.citybikerentalservicespring.view.TO.AuthenticationTO;
+import com.dataart.citybikerentalservicespring.view.requests.AuthenticationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
@@ -23,10 +23,10 @@ public class LoginService {
     @Autowired
     private JsonWebTokenHelper jsonWebTokenHelper;
 
-    public String createAuthenticationToken(AuthenticationTO authenticationTO){
+    public String createAuthenticationToken(AuthenticationRequest authenticationRequest){
         try {
-            String email = authenticationTO.getEmail();
-            String password = authenticationTO.getPassword();
+            String email = authenticationRequest.getEmail();
+            String password = authenticationRequest.getPassword();
             if (email == null || password == null || email.isEmpty() || password.isEmpty()) {
                 throw new BadCredentialsException("Empty credentials provided.");
             }

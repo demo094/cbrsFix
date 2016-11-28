@@ -1,13 +1,13 @@
-package com.dataart.citybikerentalservicespring.view.TO;
+package com.dataart.citybikerentalservicespring.view.responses;
 
 /**
  * Created by mkrasowski on 28.10.2016.
  */
-public class ApiErrorTO {
+public class StatusErrorResponse {
     private int status;
     private String message;
 
-    public ApiErrorTO(int status, String message) {
+    public StatusErrorResponse(int status, String message) {
         this.status = status;
         this.message = message;
     }

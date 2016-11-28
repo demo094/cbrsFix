@@ -7,12 +7,12 @@ import com.dataart.citybikerentalservicespring.persistence.model.User;
 /**
  * Created by mkrasowski on 09.11.2016.
  */
-public class RentalSynchroResponse {
+public class RentalStatusResponse {
     private Long rentalBeginTime;
 
     private Bike bike;
 
-    public RentalSynchroResponse(User user, RentalHistory rentalHistory) {
+    public RentalStatusResponse(User user, RentalHistory rentalHistory) {
         if(rentalHistory != null) {
             this.rentalBeginTime = rentalHistory.getBeginTime().toEpochMilli();
         } else {

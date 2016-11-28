@@ -2,13 +2,12 @@ package com.dataart.citybikerentalservicespring.service;
 
 import com.dataart.citybikerentalservicespring.persistence.model.PriceInterval;
 import com.dataart.citybikerentalservicespring.persistence.repo.PriceIntervalRepository;
-import com.dataart.citybikerentalservicespring.view.TO.PriceIntervalTO;
+import com.dataart.citybikerentalservicespring.view.responses.PriceIntervalResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,8 +18,8 @@ public class PriceIntervalService {
     private PriceIntervalRepository priceIntervalRepository;
 
     @Transactional
-    public List<PriceIntervalTO> getPriceIntervalTOs() {
-        return priceIntervalRepository.findAll().stream().map(PriceIntervalTO::new).collect(Collectors.toList());
+    public List<PriceIntervalResponse> getPriceIntervalTOs() {
+        return priceIntervalRepository.findAll().stream().map(PriceIntervalResponse::new).collect(Collectors.toList());
     }
 
     @Transactional

@@ -12,15 +12,15 @@ import com.dataart.citybikerentalservicespring.service.LoginService;
 import com.dataart.citybikerentalservicespring.service.RentalService;
 import com.dataart.citybikerentalservicespring.service.UserService;
 import com.dataart.citybikerentalservicespring.utils.AuthenticationContext;
-import com.dataart.citybikerentalservicespring.view.TO.AuthenticationTO;
-import com.dataart.citybikerentalservicespring.view.TO.PaymentTO;
-import com.dataart.citybikerentalservicespring.view.TO.UserPanelTO;
+import com.dataart.citybikerentalservicespring.view.requests.AuthenticationRequest;
+import com.dataart.citybikerentalservicespring.view.responses.PaymentResponse;
+import com.dataart.citybikerentalservicespring.view.responses.UserPanelResponse;
 import com.dataart.citybikerentalservicespring.view.requests.PaymentRequest;
 import com.dataart.citybikerentalservicespring.view.requests.RegistrationRequest;
 import com.dataart.citybikerentalservicespring.view.requests.ResendTokenRequest;
 import com.dataart.citybikerentalservicespring.view.requests.ResetPasswordRequest;
 import com.dataart.citybikerentalservicespring.view.responses.CommonResponse;
-import com.dataart.citybikerentalservicespring.view.responses.RentalSynchroResponse;
+import com.dataart.citybikerentalservicespring.view.responses.RentalStatusResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -45,12 +45,12 @@ public class UserController {
 
     @RequestMapping(value = "/api/userpanel", method = RequestMethod.GET)
     @PreAuthorize("hasRole('USER')")
-    public UserPanelTO userPanelTO() throws CbrsException {
+    public UserPanelResponse userPanelTO() throws CbrsException {
         AuthenticatedUser authUser = AuthenticationContext.getAuthenticatedUser();
         User user = userService.findById(authUser.getId());
         RentalHistory rentalHistory = rentalService.getLastRental(user);
         Payment payment = rentalService.getLastTripPrice(user);
-        return new UserPanelTO(user, rentalHistory, payment);
+        return new UserPanelResponse(user, rentalHistory, payment);
     }
 
     @RequestMapping(value = "/resetPassEmail", method = RequestMethod.POST)
@@ -96,8 +96,8 @@ public class UserController {
 
     @RequestMapping(value = "/api/payment", method = RequestMethod.GET)
     @PreAuthorize("hasRole('USER')")
-    public PaymentTO angularPaymentData() {
-        return new PaymentTO(AuthenticationContext.getAuthenticatedUser());
+    public PaymentResponse paymentData() {
+        return new PaymentResponse(AuthenticationContext.getAuthenticatedUser());
     }
 
     @RequestMapping(value = "/api/paymentData", method = RequestMethod.POST)
@@ -108,8 +108,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public CommonResponse userAuthentication(@RequestBody AuthenticationTO authenticationTO, HttpServletResponse response) {
-        response.addCookie(new Cookie("accessToken", loginService.createAuthenticationToken(authenticationTO)));
+    public CommonResponse userAuthentication(@RequestBody AuthenticationRequest authenticationRequest, HttpServletResponse response) {
+        response.addCookie(new Cookie("accessToken", loginService.createAuthenticationToken(authenticationRequest)));
         return new CommonResponse("Login ok!");
     }
 
@@ -131,11 +131,11 @@ public class UserController {
 
     @RequestMapping(value = "/api/rent/status", method = RequestMethod.GET)
     @PreAuthorize("hasRole('USER')")
-    public RentalSynchroResponse rentStatus() {
+    public RentalStatusResponse rentStatus() {
         AuthenticatedUser authenticatedUser = AuthenticationContext.getAuthenticatedUser();
         User user = userService.findById(authenticatedUser.getId());
         RentalHistory rentalHistory = rentalService.getLastRental(user);
 
-        return new RentalSynchroResponse(user, rentalHistory);
+        return new RentalStatusResponse(user, rentalHistory);
     }
 }

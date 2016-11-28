@@ -3,11 +3,11 @@ package com.dataart.citybikerentalservicespring.view.responses;
 /**
  * Created by mkrasowski on 31.10.2016.
  */
-public class ErrorResponse {
+public class AuthenticationErrorResponse {
     private String message;
     private Exception exception;
 
-    public ErrorResponse(String message, Exception exception) {
+    public AuthenticationErrorResponse(String message, Exception exception) {
         this.message = message;
         this.exception = exception;
     }
