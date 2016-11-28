@@ -237,7 +237,7 @@ routerApp.controller('resendActTokenController', function($scope, $http, $window
        };
    });
 
-routerApp.controller('paymentController', function($scope, $http, $state){
+routerApp.controller('paymentController', function($scope, $http, $state, $timeout){
     var userId;
     $http.get('api/payment').then(function(response){
         userId = response.data.userId;
@@ -249,8 +249,12 @@ routerApp.controller('paymentController', function($scope, $http, $state){
         }
         $scope.payment.idUser = userId;
         $http.post('api/paymentData', $scope.payment).then(function(response){
-            document.getElementById("response").innerHTML = response.data.message;
-            $state.reload();
+            $scope.paymentResponse = response.data.message;
+            $scope.paymentForm.$setPristine();
+            $scope.payment = {};
+            $timeout(function(){
+                $state.reload();
+            }, 3000);
         }, function(response){
             if(response.data.status != null){
                 $scope.paymentError = response.data.message;
