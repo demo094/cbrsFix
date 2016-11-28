@@ -2,8 +2,8 @@ package com.dataart.citybikerentalservicespring.view.controller.mainpage;
 
 import com.dataart.citybikerentalservicespring.exceptions.CbrsException;
 import com.dataart.citybikerentalservicespring.exceptions.CbrsRuntimeException;
-import com.dataart.citybikerentalservicespring.view.TO.ApiErrorTO;
-import com.dataart.citybikerentalservicespring.view.TO.ValidationErrorTO;
+import com.dataart.citybikerentalservicespring.view.responses.StatusErrorResponse;
+import com.dataart.citybikerentalservicespring.view.responses.ValidationErrorResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,28 +36,28 @@ public class AppExceptionHandler {
 
     @ExceptionHandler(CbrsException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiErrorTO handleCheckedExceptions(CbrsException ex) {
+    public StatusErrorResponse handleCheckedExceptions(CbrsException ex) {
         LOGGER.error("There was some problem on the site.", ex);
-        return new ApiErrorTO(HttpStatus.BAD_REQUEST.value(), ex.getUserMessage().getMessage());
+        return new StatusErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getUserMessage().getMessage());
     }
 
     @ExceptionHandler(AuthenticationException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ApiErrorTO handleAuthenticationExceptions(AuthenticationException ex) {
+    public StatusErrorResponse handleAuthenticationExceptions(AuthenticationException ex) {
         LOGGER.error("There was an authentication problem!", ex);
-        return new ApiErrorTO(HttpStatus.UNAUTHORIZED.value(), ex.getMessage());
+        return new StatusErrorResponse(HttpStatus.UNAUTHORIZED.value(), ex.getMessage());
     }
 
     @ExceptionHandler(CbrsRuntimeException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiErrorTO handleCbrsRuntimeException(CbrsRuntimeException ex) {
+    public StatusErrorResponse handleCbrsRuntimeException(CbrsRuntimeException ex) {
         LOGGER.error("An error occurred!", ex);
-        return new ApiErrorTO(HttpStatus.BAD_REQUEST.value(), (ex.getUserMessage().getMessage()));
+        return new StatusErrorResponse(HttpStatus.BAD_REQUEST.value(), (ex.getUserMessage().getMessage()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ValidationErrorTO processValidationError(MethodArgumentNotValidException ex) {
+    public ValidationErrorResponse processValidationError(MethodArgumentNotValidException ex) {
         LOGGER.error("Validation problem occured", ex);
         BindingResult result = ex.getBindingResult();
         List<FieldError> fieldErrors = result.getFieldErrors();
@@ -65,8 +65,8 @@ public class AppExceptionHandler {
         return processFieldValidationErrors(fieldErrors);
     }
 
-    private ValidationErrorTO processFieldValidationErrors(List<FieldError> fieldErrors) {
-        ValidationErrorTO errorTO = new ValidationErrorTO();
+    private ValidationErrorResponse processFieldValidationErrors(List<FieldError> fieldErrors) {
+        ValidationErrorResponse errorTO = new ValidationErrorResponse();
         for (FieldError fieldError : fieldErrors){
             String localizedErrorMessage = resolveValidationErrorMessage(fieldError);
             errorTO.addFieldError(fieldError.getField(), localizedErrorMessage);
@@ -80,9 +80,9 @@ public class AppExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ApiErrorTO handleRuntimeExceptions(RuntimeException ex) {
+    public StatusErrorResponse handleRuntimeExceptions(RuntimeException ex) {
         LOGGER.error("An error occurred!", ex);
-        return new ApiErrorTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Severe system problem occurred. Please contact with administation.");
+        return new StatusErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Severe system problem occurred. Please contact with administation.");
     }
 
 }

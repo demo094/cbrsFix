@@ -1,20 +1,23 @@
-package com.dataart.citybikerentalservicespring.view.TO;
+package com.dataart.citybikerentalservicespring.view.responses;
+
+import com.dataart.citybikerentalservicespring.view.TO.SlotTO;
+import com.dataart.citybikerentalservicespring.view.TO.StationTO;
 
 import java.util.List;
 
 /**
  * Created by mkrasowski on 26.10.2016.
  */
-public class EditBikeTO {
+public class EditBikeResponse {
     private SlotTO slotTO;
     private List<StationTO> stationTOs;
 
-    public EditBikeTO(SlotTO slotTO, List<StationTO> stationTOs) {
+    public EditBikeResponse(SlotTO slotTO, List<StationTO> stationTOs) {
         this.slotTO = slotTO;
         this.stationTOs = stationTOs;
     }
 
-    public EditBikeTO() {
+    public EditBikeResponse() {
     }
 
     public SlotTO getSlotTO() {

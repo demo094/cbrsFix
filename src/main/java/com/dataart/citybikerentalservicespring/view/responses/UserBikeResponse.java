@@ -1,16 +1,16 @@
-package com.dataart.citybikerentalservicespring.view.TO;
+package com.dataart.citybikerentalservicespring.view.responses;
 
 import com.dataart.citybikerentalservicespring.persistence.model.User;
 
 /**
  * Created by mkrasowski on 27.09.2016.
  */
-public class UserBikeTO {
+public class UserBikeResponse {
 
     private Integer userId;
     private Integer bikeId;
 
-    public UserBikeTO(User user) {
+    public UserBikeResponse(User user) {
         this.userId = user.getId();
         if(user.getBike() != null){
             this.bikeId = user.getBike().getId();
