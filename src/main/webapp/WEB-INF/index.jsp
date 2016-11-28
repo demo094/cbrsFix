@@ -37,60 +37,7 @@
     <title>Bike rental service</title>
 </head>
 <body ng-app="routerApp" class="no-js">
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNavbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-
-                <a class="navbar-brand" href="#/">City bike rental service</a>
-
-            </div>
-
-            <div class="collapse navbar-collapse" id="mainNavbar">
-            <ul class="nav navbar-nav">
-                <li><a href="#/about">About</a></li>
-                <li><a href="#/news">News</a></li>
-                <li><a href="#/gallery">Gallery</a></li>
-                <li><a href="#/contact">Contact</a></li>
-            </ul>
-
-            <ul ng-controller="userpanelController" ng-show="userPanelTO == null" class="nav navbar-nav navbar-right">
-                <li><a href="#/registration"><span class="glyphicon glyphicon-user"></span> Register</a></li>
-                <li><a href="#/login"><span class="glyphicon glyphicon-log-in"></span> Log in</a></li>
-            </ul>
-            <ul ng-controller="userpanelController" ng-show="userPanelTO != null" class="nav navbar-nav navbar-right">
-                <li><a href="#/userpanel"><span class="glyphicon glyphicon-user"></span> User panel</a></li>
-                <li><a href="#" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-            </ul>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container-fluid">
-    <div class="row content">
-        <div id="nav_menu_left" class="panel panel-default col-sm-2 sidenav">
-            <div class="panel-heading">
-                <h4>Support menu</h4>
-            </div>
-            <div ng-controller="userpanelController" class="panel-body">
-                <a ng-show="userPanelTO == null" href="#/resetpassword">Forgot password?</a>
-                <a ng-show="userPanelTO == null" href="#/resendactivation">Resend activation link</a>
-                <a href="#/adminmail">Mail admins!</a>
-            </div>
-        </div>
-            <div class="panel panel-default col-sm-8 text-left" ui-view></div>
-
-
-    </div>
-    <br>
-        <div class="panel panel-danger" ng-show="error != null">
-        <div ng-show="error.status != null">Error status {{error.status}}</div>
-        <div class="panel-heading" ng-show="error.cause != null">{{error.cause}}</div>
-         <div class="panel-body">{{error.message}}</div></div>
+    <div ui-view></div>
 </body>
 
 </html>
