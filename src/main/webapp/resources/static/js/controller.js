@@ -1,6 +1,7 @@
 var user;
+var main;
 
-routerApp.controller('userpanelController', function($scope, $http, $window, $interval, $cookies){
+routerApp.controller('userpanelController', function($scope, $http, $state, $interval, $cookies){
     $scope.headingTitle = "User panel";
     var bike;
 
@@ -30,12 +31,12 @@ routerApp.controller('userpanelController', function($scope, $http, $window, $in
 
     $scope.logout = function(){
         $cookies.remove('accessToken');
-        $window.location.href = '';
+        $state.reload();
     };
 });
 
-routerApp.controller('mainPageController', function($scope, $http, $cookies, $window){
-
+routerApp.controller('mainPageController', function($scope, $http, $cookies, $state){
+    main = $state;
 });
 
 var modalInstance;
@@ -174,10 +175,13 @@ routerApp.controller('rentalController', function($scope, $http, $state){
        };
    });
 
-var loginController = routerApp.controller('loginController', function($scope, $http, $window){
+var loginController = routerApp.controller('loginController', function($scope, $http, $state, $location){
     $scope.login = function(){
         $http.post('login', $scope.credentials).then(function(response){
-                $window.location.href = "#/userpanel";
+                $state.go('main.userpanel');
+                main.reload();
+//                $state.go('main.userpanel');
+//                $location.path('/userpanel');
         }, function(response){
             $scope.loginError = response.data;
         });
