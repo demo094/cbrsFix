@@ -18,11 +18,9 @@ import java.util.List;
  * Created by mkrasowski on 18.10.2016.
  */
 @Component
-public class JsonWebTokenHelper {
+public class JwtHelper {
     @Value("${secret}")
     private String secret;
-
-
 
     public UserDetailsTO parseToken(String token) throws JsonWebTokenException {
         try {
@@ -32,6 +30,7 @@ public class JsonWebTokenHelper {
                     .getBody();
 
             UserDetailsTO userDetailsTO = new UserDetailsTO();
+            userDetailsTO.setEmail(body.getSubject());
             userDetailsTO.setId(Integer.parseInt((String) body.get("id")));
             userDetailsTO.setRoles((List<String>) body.get("userRoleList"));
             userDetailsTO.setTokenIssueTime(Instant.ofEpochMilli((Long) body.get("issueTime")));
@@ -45,6 +44,7 @@ public class JsonWebTokenHelper {
     public String generateToken(User user) {
         UserDetailsTO userDetailsTO = new UserDetailsTO(user);
         Claims claims = Jwts.claims();
+        claims.setSubject(userDetailsTO.getEmail());
         claims.put("id", userDetailsTO.getId() + "");
         claims.put("userRoleList", userDetailsTO.getRoles());
         claims.put("issueTime", new Date());

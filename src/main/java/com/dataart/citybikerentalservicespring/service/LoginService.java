@@ -1,6 +1,6 @@
 package com.dataart.citybikerentalservicespring.service;
 
-import com.dataart.citybikerentalservicespring.components.security.JsonWebTokenHelper;
+import com.dataart.citybikerentalservicespring.components.security.JwtHelper;
 import com.dataart.citybikerentalservicespring.exceptions.userexceptions.AccountNotActivatedException;
 import com.dataart.citybikerentalservicespring.exceptions.userexceptions.UnexpectedAuthenticationException;
 import com.dataart.citybikerentalservicespring.persistence.model.User;
@@ -21,9 +21,9 @@ public class LoginService {
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
-    private JsonWebTokenHelper jsonWebTokenHelper;
+    private JwtHelper jwtHelper;
 
-    public String createAuthenticationToken(AuthenticationRequest authenticationRequest){
+    public String createAuthenticationToken(AuthenticationRequest authenticationRequest) {
         try {
             String email = authenticationRequest.getEmail();
             String password = authenticationRequest.getPassword();
@@ -40,7 +40,7 @@ public class LoginService {
             } else if (!user.isActivated()) {
                 throw new AccountNotActivatedException();
             } else {
-                return jsonWebTokenHelper.generateToken(user);
+                return jwtHelper.generateToken(user);
             }
         } catch (RuntimeException ex) {
             if (ex instanceof AuthenticationException) {

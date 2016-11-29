@@ -1,21 +1,18 @@
 package com.dataart.citybikerentalservicespring.configuration;
 
-import com.dataart.citybikerentalservicespring.components.security.*;
+import com.dataart.citybikerentalservicespring.components.security.JwtProvider;
+import com.dataart.citybikerentalservicespring.components.security.JwtTokenFilter;
+import com.dataart.citybikerentalservicespring.components.security.RestUnauthorizedEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.ProviderManager;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import java.util.Collections;
-
-import static org.hibernate.criterion.Restrictions.and;
 
 /**
  * Created by mkrasowski on 10.10.2016.
@@ -28,36 +25,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private RestUnauthorizedEntryPoint entryPoint;
     @Autowired
-    private JsonWebTokenAuthenticationProvider jsonWebTokenAuthenticationProvider;
+    private JwtProvider jwtProvider;
 
     @Bean
-    @Override
-    public AuthenticationManager authenticationManager() throws Exception {
-        return new ProviderManager(Collections.singletonList(jsonWebTokenAuthenticationProvider));
-    }
+    public JwtTokenFilter jwtTokenFilter() throws Exception {
 
-    @Bean
-    public JsonWebTokenAuthenticationFilter authenticationFilter() throws Exception{
-        JsonWebTokenAuthenticationFilter authenticationFilter = new JsonWebTokenAuthenticationFilter();
-        authenticationFilter.setAuthenticationManager(authenticationManager());
-        authenticationFilter.setAuthenticationSuccessHandler(new JsonWebTokenAuthenticationSuccessHandler());
-        authenticationFilter.setAuthenticationFailureHandler(new JsonWebTokenAuthenticationFailureHandler());
-        return authenticationFilter;
+        return new JwtTokenFilter();
     }
 
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-        http.authorizeRequests()
-                .and().exceptionHandling().authenticationEntryPoint(entryPoint).accessDeniedPage("/accessdenied")
+        http.exceptionHandling().authenticationEntryPoint(entryPoint)
                 .and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.addFilterBefore(authenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-                .authorizeRequests()
-                .antMatchers("/").permitAll()
+        http.authorizeRequests()
+                .antMatchers("/**").permitAll()
                 .antMatchers("/api/**").authenticated();
+        http.authenticationProvider(jwtProvider);
+        http.addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+
         http.headers().cacheControl();
     }
 }

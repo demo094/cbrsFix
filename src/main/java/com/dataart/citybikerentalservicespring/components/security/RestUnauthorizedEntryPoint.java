@@ -18,7 +18,7 @@ public class RestUnauthorizedEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
 
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Access to resource denied! You have to login before you can use the service.");
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Access to resource denied! It's possible that you have insufficient permission rights.");
     }
 
 

@@ -8,10 +8,10 @@ import java.util.Collection;
 /**
  * Created by mkrasowski on 18.10.2016.
  */
-public class JsonWebAuthenticationToken extends UsernamePasswordAuthenticationToken {
+public class JwtAuthenticationToken extends UsernamePasswordAuthenticationToken {
     private String token;
 
-    public JsonWebAuthenticationToken(String token) {
+    public JwtAuthenticationToken(String token) {
         super(null, null);
         this.token = token;
     }

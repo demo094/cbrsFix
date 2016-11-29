@@ -5,44 +5,34 @@ import com.dataart.citybikerentalservicespring.exceptions.jsonwebtokenexceptions
 import com.dataart.citybikerentalservicespring.view.TO.UserDetailsTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 /**
- * Created by mkrasowski on 18.10.2016.
+ * Created by mkrasowski on 29.11.2016.
  */
+
 @Component
-public class JsonWebTokenAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
+public class JwtProvider implements AuthenticationProvider {
 
     @Autowired
-    private JsonWebTokenHelper jsonWebTokenHelper;
+    private JwtHelper jwtHelper;
     @Value("${tokenLifeTime}")
-    private long tokenLifeTime;
+    private Long tokenLifeTime;
 
     @Override
-    public boolean supports(Class<?> authentication) {
-        return (JsonWebAuthenticationToken.class.isAssignableFrom(authentication));
-    }
-
-    @Override
-    protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
-
-    }
-
-    @Override
-    protected UserDetails retrieveUser(String username, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
-        JsonWebAuthenticationToken jsonWebAuthenticationToken = (JsonWebAuthenticationToken) authentication;
-        UserDetailsTO userDetailsTO = jsonWebTokenHelper.parseToken(jsonWebAuthenticationToken.getToken());
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        JwtAuthenticationToken jwtAuthenticationToken = (JwtAuthenticationToken) authentication;
+        UserDetailsTO userDetailsTO = jwtHelper.parseToken(jwtAuthenticationToken.getToken());
         if (userDetailsTO == null) {
             throw new JsonWebTokenMissingException("No token found");
         }
@@ -52,16 +42,17 @@ public class JsonWebTokenAuthenticationProvider extends AbstractUserDetailsAuthe
         }
 
         List<GrantedAuthority> authorities = getGrantedAuthorities(userDetailsTO);
-        return new AuthenticatedUser(userDetailsTO.getId(), authorities);
+        return new UsernamePasswordAuthenticationToken(
+                new AuthenticatedUser(userDetailsTO.getId(), userDetailsTO.getEmail(), authorities),
+                userDetailsTO.getEmail(), authorities);
+    }
+
+    @Override
+    public boolean supports(Class<?> authentication) {
+        return authentication.equals(JwtAuthenticationToken.class);
     }
 
     private List<GrantedAuthority> getGrantedAuthorities(UserDetailsTO userDetailsTO) {
         return userDetailsTO.getRoles().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 }
-
-
-
-
-
-

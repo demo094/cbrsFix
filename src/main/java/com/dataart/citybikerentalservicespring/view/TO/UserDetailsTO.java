@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
  */
 public class UserDetailsTO {
     private Integer id;
+    private String email;
     private List<String> roles;
     private Instant tokenIssueTime;
 
@@ -20,6 +21,7 @@ public class UserDetailsTO {
 
     public UserDetailsTO(User user) {
         this.id = user.getId();
+        this.email = user.getEmail();
         this.roles = getRolesFromUser(user);
     }
 
@@ -49,5 +51,13 @@ public class UserDetailsTO {
 
     private List<String> getRolesFromUser(User user){
         return user.getUserRoleList().stream().map(UserRole::getName).collect(Collectors.toList());
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
