@@ -8,14 +8,11 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by mkrasowski on 18.10.2016.
@@ -24,8 +21,6 @@ import java.util.Map;
 public class JwtHelper {
     @Value("${secret}")
     private String secret;
-
-
 
     public UserDetailsTO parseToken(String token) throws JsonWebTokenException {
         try {
@@ -58,9 +53,4 @@ public class JwtHelper {
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
     }
-
-//    public String generateToken(UserDetails userDetails) {
-//        Map<String, Object> claims = new HashMap<>();
-//        claims.put("email", userDetails.getUsername());
-//    }
 }

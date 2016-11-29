@@ -4,11 +4,13 @@ import com.dataart.citybikerentalservicespring.exceptions.CbrsException;
 import com.dataart.citybikerentalservicespring.exceptions.CbrsRuntimeException;
 import com.dataart.citybikerentalservicespring.view.responses.StatusErrorResponse;
 import com.dataart.citybikerentalservicespring.view.responses.ValidationErrorResponse;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -45,6 +47,13 @@ public class AppExceptionHandler {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public StatusErrorResponse handleAuthenticationExceptions(AuthenticationException ex) {
         LOGGER.error("There was an authentication problem!", ex);
+        return new StatusErrorResponse(HttpStatus.UNAUTHORIZED.value(), ex.getMessage());
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public StatusErrorResponse handleAccessDeniedException(AccessDeniedException ex){
+        LOGGER.error("Somebody tried to access resources without sufficient permission!", ex);
         return new StatusErrorResponse(HttpStatus.UNAUTHORIZED.value(), ex.getMessage());
     }
 
