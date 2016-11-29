@@ -1,12 +1,11 @@
 package com.dataart.citybikerentalservicespring.configuration;
 
-import com.dataart.citybikerentalservicespring.components.security.JwtProvider;
+import com.dataart.citybikerentalservicespring.components.security.JwtAuthenticationProvider;
 import com.dataart.citybikerentalservicespring.components.security.JwtTokenFilter;
 import com.dataart.citybikerentalservicespring.components.security.RestUnauthorizedEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -25,7 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private RestUnauthorizedEntryPoint entryPoint;
     @Autowired
-    private JwtProvider jwtProvider;
+    private JwtAuthenticationProvider jwtAuthenticationProvider;
 
     @Bean
     public JwtTokenFilter jwtTokenFilter() throws Exception {
@@ -43,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/**").permitAll()
                 .antMatchers("/api/**").authenticated();
-        http.authenticationProvider(jwtProvider);
+        http.authenticationProvider(jwtAuthenticationProvider);
         http.addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
         http.headers().cacheControl();

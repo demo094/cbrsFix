@@ -25,7 +25,7 @@
             </ul>
             <ul ng-controller="userpanelController" ng-show="userPanelTO != null" class="nav navbar-nav navbar-right">
                 <li><a ui-sref=".userpanel"><span class="glyphicon glyphicon-user"></span> User panel</a></li>
-                <li><a ui-sref="." ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                <li><a ng-controller="logoutController" href="#" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
             </ul>
         </div>
     </div>

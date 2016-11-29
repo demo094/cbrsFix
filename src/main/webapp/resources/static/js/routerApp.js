@@ -12,68 +12,68 @@ routerApp.config(function($stateProvider, $urlRouterProvider, $cookiesProvider) 
             controller: 'mainPageController'
         })
         .state('main.login', {
-            url: '/login',
+            url: 'login',
             templateUrl: 'resources/static/views/login.html',
             controller: 'loginController'
         })
         .state('main.about',{
-            url: '/about',
+            url: 'about',
             templateUrl: 'resources/static/views/about.html'
         })
         .state('main.news',{
-            url: '/news',
+            url: 'news',
             templateUrl: 'resources/static/views/news.html'
         })
         .state('main.gallery',{
-            url: '/gallery',
+            url: 'gallery',
             templateUrl: 'resources/static/views/gallery.html'
         })
         .state('main.contact',{
-            url: '/contact',
+            url: 'contact',
             templateUrl: 'resources/static/views/contact.html'
         })
         .state('main.resetpassword', {
-            url: '/resetpassword',
+            url: 'resetpassword',
             templateUrl: 'resources/static/views/resetpassword.html',
             controller: 'resetPassController'
         })
         .state('main.resetpasswordPage', {
-            url: '/resetpasswordpage/:token',
+            url: 'resetpasswordpage/:token',
             templateUrl: 'resources/static/views/resetpasswordPage.html',
             controller: 'resetPassPageController'
         })
         .state('main.registration', {
-            url: '/registration',
+            url: 'registration',
             templateUrl: 'resources/static/views/registration.html',
             controller: 'registrationController'
         })
         .state('main.registrationConfirm', {
-            url: '/registrationconfirm/:token',
+            url: 'registrationconfirm/:token',
             templateUrl: 'resources/static/views/registrationConfirm.html',
             controller: 'registrationConfirmController'
         })
         .state('main.resendactivation', {
-            url: '/resendactivation',
+            url: 'resendactivation',
             templateUrl: 'resources/static/views/resendactivation.html',
             controller: 'resendActTokenController'
         })
         .state('main.userpanel', {
-            url: '/userpanel',
+            url: 'userpanel',
             templateUrl: 'resources/static/views/userpanel.html',
             controller: 'userpanelController'
         })
         .state('main.userpanel.stations', {
-            url: '/stations',
+            url: 'stations',
             templateUrl: 'resources/static/views/stations.html',
             controller: 'stationsController'
         })
         .state('main.userpanel.stations.station', {
-            url: '/station/:id',
+            url: 'station/:id',
             templateUrl: 'resources/static/views/station.html',
             controller: 'slotController'
         })
         .state('main.userpanel.payments', {
-            url: '/payments',
+            url: 'payments',
             templateUrl: 'resources/static/views/payments.html',
             controller: 'paymentController'
         })

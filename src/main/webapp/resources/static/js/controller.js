@@ -3,7 +3,7 @@ var main;
 
 routerApp.controller('userpanelController', function($scope, $http, $state, $interval, $cookies){
     $scope.headingTitle = "User panel";
-    var bike;
+    var isBeingRented;
 
     $http.get('api/userpanel')
         .then(function(response){
@@ -15,9 +15,10 @@ routerApp.controller('userpanelController', function($scope, $http, $state, $int
 
     var updateInterval = $interval(function(){
     $http.get('api/rent/status').then(function(response){
-        bike = response.data.bike;
+        isBeingRented = response.data.beingRented;
+        $scope.isBeingRented = isBeingRented;
         $scope.serverTimeMillis = response.data.rentalBeginTime;
-        if(bike == null){
+        if(!isBeingRented){
             $interval.cancel(updateInterval);
             $scope.userPanelTO.bikeId = null;
             $scope.serverTimeMillis = null;
@@ -29,10 +30,13 @@ routerApp.controller('userpanelController', function($scope, $http, $state, $int
         });
     }, 5000);
 
+});
+
+routerApp.controller('logoutController', function($scope, $state, $cookies){
     $scope.logout = function(){
-        $cookies.remove('accessToken');
-        $state.reload();
-    };
+            $cookies.remove('accessToken');
+            $state.go('main');
+        };
 });
 
 routerApp.controller('mainPageController', function($scope, $http, $cookies, $state){
@@ -177,7 +181,7 @@ routerApp.controller('rentalController', function($scope, $http, $state){
 
 var loginController = routerApp.controller('loginController', function($scope, $http, $state, $location){
     $scope.login = function(){
-        $http.post('login', $scope.credentials).then(function(response){
+        $http.post('api/login', $scope.credentials).then(function(response){
                 $state.go('main.userpanel');
                 main.reload();
 //                $state.go('main.userpanel');
@@ -191,7 +195,7 @@ var loginController = routerApp.controller('loginController', function($scope, $
 
 routerApp.controller('resetPassController', function($scope, $http, $window){
     $scope.sendPasswordMail = function(){
-            $http.post('resetPassEmail', $scope.form).then(function(response){
+            $http.post('api/resetPassEmail', $scope.form).then(function(response){
                 document.getElementById("response").innerHTML = response.data.message;
                 $window.location.href = "index";
             }, function(response){
@@ -202,7 +206,7 @@ routerApp.controller('resetPassController', function($scope, $http, $window){
 
 routerApp.controller('resetPassPageController', function($scope, $http, $window, $stateParams){
     $scope.resetPassword = function(){
-        $http.post('resetPassData/' + $stateParams.token, $scope.newPassword).then(function(response){
+        $http.post('api/resetPassData/' + $stateParams.token, $scope.newPassword).then(function(response){
             $scope.resetResponse = response.data;
         }, function(response){
             $scope.resetError = response.data;
@@ -212,7 +216,7 @@ routerApp.controller('resetPassPageController', function($scope, $http, $window,
 
 routerApp.controller('registrationController', function($scope, $http, $window){
     $scope.registration = function(){
-            $http.post('register', $scope.register).then(function(response){
+            $http.post('api/register', $scope.register).then(function(response){
                 document.getElementById("response").innerHTML = response.data.message;
 
             }, function(response){
@@ -222,7 +226,7 @@ routerApp.controller('registrationController', function($scope, $http, $window){
 });
 
 routerApp.controller('registrationConfirmController', function($scope, $http, $stateParams){
-    $http.get('registrationConfirm/' + $stateParams.token)
+    $http.get('api/registrationConfirm/' + $stateParams.token)
     .then(function(response){
         $scope.confirmed = response.data.message;
     }, function(response){
@@ -232,7 +236,7 @@ routerApp.controller('registrationConfirmController', function($scope, $http, $s
 
 routerApp.controller('resendActTokenController', function($scope, $http, $window, $timeout){
        $scope.resend = function(){
-               $http.post('resendActToken', $scope.resendtoken).then(function(response){
+               $http.post('api/resendActToken', $scope.resendtoken).then(function(response){
                    document.getElementById("response").innerHTML = response.data.message;
                    $timeout(function(){
                        $window.location.href = "index";

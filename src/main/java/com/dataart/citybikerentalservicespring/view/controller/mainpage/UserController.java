@@ -34,6 +34,7 @@ import java.util.Calendar;
  * Created by mkrasowski on 20.10.2016.
  */
 @RestController
+@RequestMapping(value = "/api")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -43,7 +44,7 @@ public class UserController {
     private LoginService loginService;
 
 
-    @RequestMapping(value = "/api/userpanel", method = RequestMethod.GET)
+    @RequestMapping(value = "/userpanel", method = RequestMethod.GET)
     @PreAuthorize("hasRole('USER')")
     public UserPanelResponse userPanelTO() throws CbrsException {
         AuthenticatedUser authUser = AuthenticationContext.getAuthenticatedUser();
@@ -54,13 +55,13 @@ public class UserController {
     }
 
     @RequestMapping(value = "/resetPassEmail", method = RequestMethod.POST)
-    public CommonResponse angularResetPassword(@RequestBody ResendTokenRequest resendTokenRequest) {
+    public CommonResponse resetPassword(@RequestBody ResendTokenRequest resendTokenRequest) {
         userService.sendResetPasswordEmail(resendTokenRequest.getEmail());
         return new CommonResponse("Email sent!");
     }
 
     @RequestMapping(value = "/resetPassData/{token}", method = RequestMethod.POST)
-    public CommonResponse angularResetData(@PathVariable("token") String token, @RequestBody ResetPasswordRequest resetPasswordRequest) throws CbrsException {
+    public CommonResponse resetData(@PathVariable("token") String token, @RequestBody ResetPasswordRequest resetPasswordRequest) throws CbrsException {
         Token resetToken = userService.findTokenByBody(token);
         if (resetToken == null) {
             throw new InvalidTokenException();
@@ -79,7 +80,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public CommonResponse angularRegisterUser(@RequestBody RegistrationRequest registrationRequest) throws CbrsException {
+    public CommonResponse registerUser(@RequestBody RegistrationRequest registrationRequest) throws CbrsException {
         if (!registrationRequest.getPassword().equals(registrationRequest.getRetypedPassword())) {
             return new CommonResponse("Passwords must be the same!");
         }
@@ -89,20 +90,20 @@ public class UserController {
     }
 
     @RequestMapping(value = "/resendActToken", method = RequestMethod.POST)
-    public CommonResponse angularResendActToken(@RequestBody ResendTokenRequest resendTokenRequest) {
+    public CommonResponse resendActToken(@RequestBody ResendTokenRequest resendTokenRequest) {
         userService.resendActivationToken(resendTokenRequest.getEmail());
         return new CommonResponse("Activation link sent! Please follow instructions in the email.");
     }
 
-    @RequestMapping(value = "/api/payment", method = RequestMethod.GET)
+    @RequestMapping(value = "/payment", method = RequestMethod.GET)
     @PreAuthorize("hasRole('USER')")
     public PaymentResponse paymentData() {
         return new PaymentResponse(AuthenticationContext.getAuthenticatedUser());
     }
 
-    @RequestMapping(value = "/api/paymentData", method = RequestMethod.POST)
+    @RequestMapping(value = "/paymentData", method = RequestMethod.POST)
     @PreAuthorize("hasRole('USER')")
-    public CommonResponse angularPayment(@Valid @RequestBody PaymentRequest paymentRequest) throws CbrsException {
+    public CommonResponse payment(@Valid @RequestBody PaymentRequest paymentRequest) throws CbrsException {
         userService.updateBalance(paymentRequest.getIdUser(), paymentRequest.getAmount());
         return new CommonResponse("Payment done!");
     }
@@ -129,7 +130,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/api/rent/status", method = RequestMethod.GET)
+    @RequestMapping(value = "/rent/status", method = RequestMethod.GET)
     @PreAuthorize("hasRole('USER')")
     public RentalStatusResponse rentStatus() {
         AuthenticatedUser authenticatedUser = AuthenticationContext.getAuthenticatedUser();
