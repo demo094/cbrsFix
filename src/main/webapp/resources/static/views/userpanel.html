@@ -6,6 +6,7 @@
     <div id="navRow" class="row">
         <a id="stations" class="col-sm-2 btn btn-success" ui-sref=".stations">See the stations</a>
         <a id="payments" class="col-sm-2 btn btn-success" ui-sref=".payments">Add funds</a>
+        <a id="admin" class="col-sm-2 btn btn-success" ui-sref="^.adminPanel" ng-show="isAdmin" ui-sref=".admin">Admin panel</a>
     </div>
     <div class="clearfix"></div>
     Your current balance is: {{userPanelTO.userBalance}}

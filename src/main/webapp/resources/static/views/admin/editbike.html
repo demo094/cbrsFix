@@ -15,7 +15,7 @@
                         <option ng-repeat="slotTO in stationTO.slotTOs" ng-if="$index >= 0" ng-value="slotTO.slotId">slot {{slotTO.slotId}}
                         </option>
                     </optgroup>
-                    <option ng-model="editbike.id" value="" >Remove from slot</option>
+                    <option ng-model="editbike.id" value="" >No slot</option>
                 </select></td>
                 <input type="hidden" ng-model="editbike.id" ng-value="slotTO.bikeId"/>
             </tr>

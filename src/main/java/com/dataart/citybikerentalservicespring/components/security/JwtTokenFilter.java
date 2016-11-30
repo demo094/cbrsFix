@@ -1,6 +1,7 @@
 package com.dataart.citybikerentalservicespring.components.security;
 
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -13,6 +14,7 @@ import java.io.IOException;
 /**
  * Created by mkrasowski on 28.11.2016.
  */
+@Component
 public class JwtTokenFilter extends OncePerRequestFilter {
 
     @Override

@@ -12,23 +12,22 @@ import com.dataart.citybikerentalservicespring.service.LoginService;
 import com.dataart.citybikerentalservicespring.service.RentalService;
 import com.dataart.citybikerentalservicespring.service.UserService;
 import com.dataart.citybikerentalservicespring.utils.AuthenticationContext;
-import com.dataart.citybikerentalservicespring.view.requests.AuthenticationRequest;
-import com.dataart.citybikerentalservicespring.view.responses.PaymentResponse;
-import com.dataart.citybikerentalservicespring.view.responses.UserPanelResponse;
 import com.dataart.citybikerentalservicespring.view.requests.PaymentRequest;
 import com.dataart.citybikerentalservicespring.view.requests.RegistrationRequest;
 import com.dataart.citybikerentalservicespring.view.requests.ResendTokenRequest;
 import com.dataart.citybikerentalservicespring.view.requests.ResetPasswordRequest;
 import com.dataart.citybikerentalservicespring.view.responses.CommonResponse;
+import com.dataart.citybikerentalservicespring.view.responses.PaymentResponse;
 import com.dataart.citybikerentalservicespring.view.responses.RentalStatusResponse;
+import com.dataart.citybikerentalservicespring.view.responses.UserPanelResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by mkrasowski on 20.10.2016.
@@ -48,10 +47,11 @@ public class UserController {
     @PreAuthorize("hasRole('USER')")
     public UserPanelResponse userPanelTO() throws CbrsException {
         AuthenticatedUser authUser = AuthenticationContext.getAuthenticatedUser();
+        List<GrantedAuthority> authorities = authUser.getAuthorities();
         User user = userService.findById(authUser.getId());
         RentalHistory rentalHistory = rentalService.getLastRental(user);
         Payment payment = rentalService.getLastTripPrice(user);
-        return new UserPanelResponse(user, rentalHistory, payment);
+        return new UserPanelResponse(user, rentalHistory, payment, authorities);
     }
 
     @RequestMapping(value = "/resetPassEmail", method = RequestMethod.POST)
@@ -106,12 +106,6 @@ public class UserController {
     public CommonResponse payment(@Valid @RequestBody PaymentRequest paymentRequest) throws CbrsException {
         userService.updateBalance(paymentRequest.getIdUser(), paymentRequest.getAmount());
         return new CommonResponse("Payment done!");
-    }
-
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public CommonResponse userAuthentication(@RequestBody AuthenticationRequest authenticationRequest, HttpServletResponse response) {
-        response.addCookie(new Cookie("accessToken", loginService.createAuthenticationToken(authenticationRequest)));
-        return new CommonResponse("Login ok!");
     }
 
     @RequestMapping(value = "/registrationConfirm/{token}", method = RequestMethod.GET)

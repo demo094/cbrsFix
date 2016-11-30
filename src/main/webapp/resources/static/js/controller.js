@@ -1,14 +1,23 @@
 var user;
 var main;
+var mainScope;
+var userPanelTO;
 
-routerApp.controller('userpanelController', function($scope, $http, $state, $interval, $cookies){
+routerApp.controller('userpanelController', function($scope, $http, $state, $interval){
     $scope.headingTitle = "User panel";
     var isBeingRented;
 
     $http.get('api/userpanel')
         .then(function(response){
-            $scope.userPanelTO = response.data;
+            mainScope.isLoggedIn = true;
+            userPanelTO = response.data;
+            $scope.userPanelTO = userPanelTO;
             $scope.serverTimeMillis = response.data.serverTime;
+            for (var i = 0; i < userPanelTO.roles.length; i++){
+                if(userPanelTO.roles[i] == 'ROLE_ADMIN'){
+                    $scope.isAdmin = true;
+                }
+            }
         }, function(response){
             $scope.error = response.data;
         });
@@ -32,15 +41,21 @@ routerApp.controller('userpanelController', function($scope, $http, $state, $int
 
 });
 
-routerApp.controller('logoutController', function($scope, $state, $cookies){
-    $scope.logout = function(){
-            $cookies.remove('accessToken');
-            $state.go('main');
-        };
-});
-
-routerApp.controller('mainPageController', function($scope, $http, $cookies, $state){
+routerApp.controller('mainPageController', function($scope, $http, $state, $cookies){
+    mainScope = $scope;
+    if(mainScope.isLoggedIn){
+        mainScope.isLoggedIn = true;
+    } else {
+    mainScope.isLoggedIn = false;
+    }
     main = $state;
+
+    mainScope.logout = function(){
+        mainScope.isLoggedIn = false;
+        $cookies.remove('accessToken');
+        $http.get('api/logout');
+//                $state.go('main');
+    };
 });
 
 var modalInstance;
@@ -182,10 +197,7 @@ routerApp.controller('rentalController', function($scope, $http, $state){
 var loginController = routerApp.controller('loginController', function($scope, $http, $state, $location){
     $scope.login = function(){
         $http.post('api/login', $scope.credentials).then(function(response){
-                $state.go('main.userpanel');
-                main.reload();
-//                $state.go('main.userpanel');
-//                $location.path('/userpanel');
+                main.go('main.userpanel');
         }, function(response){
             $scope.loginError = response.data;
         });

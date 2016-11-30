@@ -3,9 +3,12 @@ package com.dataart.citybikerentalservicespring.view.responses;
 import com.dataart.citybikerentalservicespring.persistence.model.Payment;
 import com.dataart.citybikerentalservicespring.persistence.model.RentalHistory;
 import com.dataart.citybikerentalservicespring.persistence.model.User;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by mkrasowski on 22.09.2016.
@@ -15,12 +18,12 @@ public class UserPanelResponse {
     private BigDecimal paymentMoney;
     private Integer bikeId;
     private Long serverTime;
-
+    private List<String> roles;
 
     public UserPanelResponse() {
     }
 
-    public UserPanelResponse(User user, RentalHistory rentalHistory, Payment payment) {
+    public UserPanelResponse(User user, RentalHistory rentalHistory, Payment payment, List<GrantedAuthority> authorities) {
         if (rentalHistory != null) {
             this.serverTime = rentalHistory.getBeginTime().toEpochMilli();
         }
@@ -31,6 +34,7 @@ public class UserPanelResponse {
         if (payment != null) {
             this.paymentMoney = payment.getMoney();
         }
+        this.roles = authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
     }
 
     public Integer getBikeId() {
@@ -65,4 +69,11 @@ public class UserPanelResponse {
         this.serverTime = serverTime;
     }
 
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
+    }
 }

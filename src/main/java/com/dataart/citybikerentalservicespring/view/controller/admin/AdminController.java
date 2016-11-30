@@ -82,45 +82,45 @@ public class AdminController {
         return new PriceIntervalResponse(priceInterval);
     }
 
-    @RequestMapping(value = "/api/addstation", method = RequestMethod.PUT)
+    @RequestMapping(value = "/api/station", method = RequestMethod.PUT)
     public CommonResponse addStation(@RequestBody EditStationRequest addStationRequest) {
         stationService.addStation(addStationRequest.getName(), addStationRequest.getType(), addStationRequest.getAddress(),
                 addStationRequest.getCity());
         return new CommonResponse("Station added");
     }
 
-    @RequestMapping(value = "/api/addslot/{stationId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/api/slot/{stationId}", method = RequestMethod.PUT)
     public CommonResponse addSlot(@PathVariable("stationId") int stationId) {
         stationService.addNewSlotToStation(stationService.getStationById(stationId));
         return new CommonResponse("Slot added");
     }
 
-    @RequestMapping(value = "/api/updatestation", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/station", method = RequestMethod.POST)
     public CommonResponse updateStation(@RequestBody EditStationRequest editStationRequest) {
         stationService.updateStation(editStationRequest.getId(), editStationRequest.getName(),
                 editStationRequest.getType(), editStationRequest.getAddress(), editStationRequest.getCity());
         return new CommonResponse("Station edited");
     }
 
-    @RequestMapping(value = "/api/deletestation/{stationId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/api/station/{stationId}", method = RequestMethod.DELETE)
     public CommonResponse deleteStation(@PathVariable("stationId") int stationId) throws CbrsException {
         stationService.deleteStation(stationService.getStationById(stationId));
         return new CommonResponse("Station deleted");
     }
 
-    @RequestMapping(value = "/api/deletebike/{bikeId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/api/bike/{bikeId}", method = RequestMethod.DELETE)
     public CommonResponse deleteBike(@PathVariable("bikeId") int bikeId) throws CbrsException {
         stationService.deleteBikeById(bikeId);
         return new CommonResponse("Bike deleted!");
     }
 
-    @RequestMapping(value = "/api/addbike", method = RequestMethod.PUT)
+    @RequestMapping(value = "/api/bike", method = RequestMethod.PUT)
     public CommonResponse addBike() {
         stationService.addBike();
         return new CommonResponse("Bike added!");
     }
 
-    @RequestMapping(value = "/api/updatebike", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/bike", method = RequestMethod.POST)
     public CommonResponse updateBike(@RequestBody EditBikeRequest editBikeRequest) {
         stationService.updateBikeInfo(editBikeRequest.getId(), editBikeRequest.getType(),
                 editBikeRequest.getSlotId());
@@ -128,20 +128,20 @@ public class AdminController {
         return new CommonResponse("Bike updated!");
     }
 
-    @RequestMapping(value = "/api/updatePriceInterval", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/priceInterval", method = RequestMethod.POST)
     public CommonResponse updatePriceInterval(@RequestBody ManipulatePriceIntervalRequest manipulatePriceIntervalRequest) {
         priceIntervalService.updatePriceInterval(manipulatePriceIntervalRequest.getId(),
                 manipulatePriceIntervalRequest.getEnd(), manipulatePriceIntervalRequest.getPrice());
         return new CommonResponse("Price interval updated");
     }
 
-    @RequestMapping(value = "/api/deletepriceinterval/{priceIntervalId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/api/priceinterval/{priceIntervalId}", method = RequestMethod.DELETE)
     public CommonResponse deletePriceInterval(@PathVariable("priceIntervalId") int priceIntervalId) {
         priceIntervalService.deletePriceIntervalById(priceIntervalId);
         return new CommonResponse("Price interval deleted");
     }
 
-    @RequestMapping(value = "/api/addpriceinterval", method = RequestMethod.PUT)
+    @RequestMapping(value = "/api/priceinterval", method = RequestMethod.PUT)
     public CommonResponse addPriceInterval(@RequestBody ManipulatePriceIntervalRequest manipulatePriceIntervalRequest) {
         priceIntervalService.addPriceInterval(manipulatePriceIntervalRequest.getEnd(),
                 manipulatePriceIntervalRequest.getPrice());

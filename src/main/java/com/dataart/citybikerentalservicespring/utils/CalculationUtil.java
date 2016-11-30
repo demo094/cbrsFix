@@ -9,7 +9,6 @@ import java.util.List;
 /**
  * Created by mkrasowski on 22.09.2016.
  */
-@Component
 public class CalculationUtil {
     private static final int ONE_MINUTE = 60;
 
