@@ -3,7 +3,7 @@ var main;
 var mainScope;
 var userPanelTO;
 
-routerApp.controller('userpanelController', function($scope, $http, $state, $interval){
+routerApp.controller('userpanelController', function($scope, $http, $state, $interval, $cookies){
     $scope.headingTitle = "User panel";
     var isBeingRented;
 
@@ -24,7 +24,7 @@ routerApp.controller('userpanelController', function($scope, $http, $state, $int
 
     var updateInterval = $interval(function(){
     $http.get('api/rent/status').then(function(response){
-        isBeingRented = response.data.beingRented;
+        isBeingRented = response.data.bikeBeingRented;
         $scope.isBeingRented = isBeingRented;
         $scope.serverTimeMillis = response.data.rentalBeginTime;
         if(!isBeingRented){
@@ -41,7 +41,7 @@ routerApp.controller('userpanelController', function($scope, $http, $state, $int
 
 });
 
-routerApp.controller('mainPageController', function($scope, $http, $state, $cookies){
+routerApp.controller('mainPageController', function($scope, $http, $state, $cookies, $window){
     mainScope = $scope;
     if(mainScope.isLoggedIn){
         mainScope.isLoggedIn = true;
@@ -52,8 +52,7 @@ routerApp.controller('mainPageController', function($scope, $http, $state, $cook
 
     mainScope.logout = function(){
         mainScope.isLoggedIn = false;
-        $cookies.remove('accessToken');
-        $http.get('api/logout');
+        $http.post('api/logout');
 //                $state.go('main');
     };
 });

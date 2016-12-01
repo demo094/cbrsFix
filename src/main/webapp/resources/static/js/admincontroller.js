@@ -1,5 +1,5 @@
 routerApp.controller('adminPanelController', function($scope, $http, $window, $cookies){
-
+    mainScope.isLoggedIn = true;
 });
 
 routerApp.controller('bikeAdminController', function($scope, $http, $window, $state){
@@ -165,7 +165,7 @@ routerApp.controller('editPriceIntController', function($scope, $http, $state, $
         if($scope.editPriceInt.price == null){
             $scope.editPriceInt.price = $scope.priceIntervalTO.price;
         }
-        $scope.editPriceInt.intervalId = $stateParams.id;
+        $scope.editPriceInt.id = $stateParams.id;
         $http.post('api/priceInterval', $scope.editPriceInt).then(function(response){
             $scope.serverResponse = response.status;
             $state.reload();

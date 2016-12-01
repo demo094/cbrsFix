@@ -37,7 +37,7 @@
     <title>Bike rental service</title>
 </head>
 <body ng-app="routerApp" class="no-js">
-    <div ui-view></div>
+    <div ng-controller="mainPageController" ui-view></div>
 </body>
 
 </html>

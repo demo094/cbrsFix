@@ -11,5 +11,5 @@ import java.util.List;
  */
 @Repository
 public interface PriceIntervalRepository extends JpaRepository<PriceInterval, Integer> {
-
+    List<PriceInterval> findAllByOrderByEndAsc();
 }
