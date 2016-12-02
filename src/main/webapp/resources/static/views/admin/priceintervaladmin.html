@@ -19,6 +19,12 @@
     </table>
 
     <br><a ui-sref=".addpriceinterval">Add price interval</a>
-    <div ng-show="error != null">Error message {{error.message}} <br>{{error.message}}</div>
+    <div class="panel panel-danger" ng-show="error != null">
+        <div id="warningStatus" class="panel-heading" ng-show="error.message != null">Error</div>
+        <div class="panel-body">
+            {{error.message}}
+            <br><span ng-show="error.cause != null">{{error.cause}}</span>
+        </div>
+    </div>
     <div ui-view></div>
 </div>

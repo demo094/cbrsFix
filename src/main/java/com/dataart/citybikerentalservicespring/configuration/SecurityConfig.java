@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
@@ -44,13 +45,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-//                .exceptionHandling().accessDeniedHandler(appExceptionHandler.handleAccessDeniedException())
+                .exceptionHandling().authenticationEntryPoint(entryPoint)
+                .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers("/api/login").permitAll()
+                .antMatchers("/**").permitAll()
                 .antMatchers("/api/**").authenticated()
+                .antMatchers("/api/login").permitAll()
+                .antMatchers("/api/registrationConfirm/**").permitAll()
+                .antMatchers("/api/resetPassEmail").permitAll()
+                .antMatchers("/api/resetPassData/**").permitAll()
+                .antMatchers("/api/register").permitAll()
+                .antMatchers("/api/resendActToken").permitAll()
+
                 .and()
                 .authenticationProvider(jwtAuthenticationProvider)
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)

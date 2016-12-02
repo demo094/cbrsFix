@@ -1,19 +1,22 @@
 package com.dataart.citybikerentalservicespring.view.requests;
 
+import com.dataart.citybikerentalservicespring.constants.BikeType;
+import org.springframework.security.access.method.P;
+
 /**
  * Created by mkrasowski on 23.09.2016.
  */
 public class EditBikeRequest {
-    private Integer id;
+    private Integer bikeId;
     private String type;
     private Integer slotId;
 
     public Integer getId() {
-        return id;
+        return bikeId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(Integer bikeId) {
+        this.bikeId = bikeId;
     }
 
     public String getType() {

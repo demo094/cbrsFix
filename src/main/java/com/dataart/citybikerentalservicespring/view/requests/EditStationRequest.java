@@ -1,14 +1,17 @@
 package com.dataart.citybikerentalservicespring.view.requests;
 
+import java.math.BigDecimal;
+
 /**
  * Created by mkrasowski on 27.09.2016.
  */
 public class EditStationRequest {
     private int id;
     private String name;
-    private String type;
     private String address;
     private String city;
+    private BigDecimal latitude;
+    private BigDecimal longitude;
 //    private String coordinates;
 
     public EditStationRequest() {
@@ -20,10 +23,6 @@ public class EditStationRequest {
 
     public String getName() {
         return name;
-    }
-
-    public String getType() {
-        return type;
     }
 
     public String getAddress() {
@@ -42,10 +41,6 @@ public class EditStationRequest {
         this.name = name;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public void setAddress(String address) {
         this.address = address;
     }
@@ -54,4 +49,19 @@ public class EditStationRequest {
         this.city = city;
     }
 
+    public BigDecimal getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(BigDecimal latitude) {
+        this.latitude = latitude;
+    }
+
+    public BigDecimal getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(BigDecimal longitude) {
+        this.longitude = longitude;
+    }
 }

@@ -6,17 +6,29 @@ import com.dataart.citybikerentalservicespring.persistence.model.Bike;
  * Created by mkrasowski on 26.09.2016.
  */
 public class BikeTO {
-    public Integer bikeId;
+    private Integer id;
+    private String type;
 
     public BikeTO(Bike bike) {
-        this.bikeId = bike.getId();
+        this.id = bike.getId();
+        if(bike.getType() != null) {
+            this.type = bike.getType().getTypeValue();
+        }
     }
 
     public Integer getBikeId() {
-        return bikeId;
+        return id;
     }
 
     public void setBikeId(Integer bikeId) {
-        this.bikeId = bikeId;
+        this.id = bikeId;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

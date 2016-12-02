@@ -13,18 +13,10 @@ import java.util.Date;
 
 public class WebUtil {
 
-    public static String createAuthErrorUrl(HttpServletRequest request, UserMessage userMessage) {
-        return String.format("%s/infopage/%d", request.getContextPath(), userMessage.getId());
-    }
-
-    public static String createInfoUrl(UserMessage userMessage) {
-        return String.format("redirect:/infopage/%d", userMessage.getId());
-    }
-
     public static String createActivationLink(String token) {
 //        remember to create some configuration
         String applicationURL = "http://localhost:8080/citybikerentalservicespring";
-        return String.format("%s/#/registrationconfirm/%s", applicationURL, token);
+        return String.format("%s/#/main/registrationconfirm/%s", applicationURL, token);
     }
 
     public static Date calculateTokenExpiryDate() {
@@ -40,6 +32,6 @@ public class WebUtil {
 
     public static String createPasswordResetLink(String tokenBody) {
         String applicationURL = "http://localhost:8080/citybikerentalservicespring";
-        return String.format("%s/#/resetpasswordpage/%s", applicationURL, tokenBody);
+        return String.format("%s/#/main/resetpasswordpage/%s", applicationURL, tokenBody);
     }
 }

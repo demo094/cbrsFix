@@ -17,8 +17,6 @@ public class Station {
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
-    private String type;
-    @Column(nullable = false)
     private String address;
     @Column(nullable = false)
     private String city;
@@ -44,20 +42,30 @@ public class Station {
         this.slotList = slotList;
     }
 
-    public Station(int id, String name, String type, String address, String city, List<Slot> slotList) {
+    public Station(int id, String name, String address, String city, List<Slot> slotList) {
         this.id = id;
         this.name = name;
-        this.type = type;
         this.address = address;
         this.city = city;
         this.slotList = slotList;
     }
 
-    public Station(String name, String type, String address, String city) {
+    public Station(int id, String name, String address, String city, List<Slot> slotList, BigDecimal latitude, BigDecimal longitude) {
+        this.id = id;
         this.name = name;
-        this.type = type;
         this.address = address;
         this.city = city;
+        this.slotList = slotList;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
+    public Station(String name, String address, String city, BigDecimal latitude, BigDecimal longitude) {
+        this.name = name;
+        this.address = address;
+        this.city = city;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public int getId() {
@@ -74,14 +82,6 @@ public class Station {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getAddress() {

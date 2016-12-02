@@ -14,7 +14,6 @@ public class StationTO {
 
     private Integer stationId;
     private String stationName;
-    private String stationType;
     private String stationAddress;
     private String stationCity;
     private BigDecimal latitude;
@@ -27,7 +26,6 @@ public class StationTO {
     public StationTO(Station station) {
         this.stationId = station.getId();
         this.stationName = station.getName();
-        this.stationType = station.getType();
         this.stationAddress = station.getAddress();
         this.stationCity = station.getCity();
         this.latitude = station.getLatitude();
@@ -63,14 +61,6 @@ public class StationTO {
 
     private List<SlotTO> returnSlotTOs(Station station) {
         return station.getSlotList().stream().map(slot -> new SlotTO(slot.getBike(), slot)).collect(Collectors.toList());
-    }
-
-    public String getStationType() {
-        return stationType;
-    }
-
-    public void setStationType(String stationType) {
-        this.stationType = stationType;
     }
 
     public String getStationAddress() {

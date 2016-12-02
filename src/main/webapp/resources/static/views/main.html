@@ -14,8 +14,6 @@
         <div class="collapse navbar-collapse" id="mainNavbar">
             <ul class="nav navbar-nav">
                 <li><a ui-sref=".about">About</a></li>
-                <li><a ui-sref=".news">News</a></li>
-                <li><a ui-sref=".gallery">Gallery</a></li>
                 <li><a ui-sref=".contact">Contact</a></li>
             </ul>
 
@@ -33,18 +31,17 @@
 
 <div class="container-fluid">
     <div class="row content">
-        <div id="nav_menu_left" class="panel panel-default col-sm-2 sidenav">
+        <div ng-show="!isLoggedIn" id="nav_menu_left" class="panel panel-default col-sm-2 sidenav">
             <div class="panel-heading">
                 <h4>Support menu</h4>
             </div>
             <div class="panel-body">
-                <a ng-show="!isLoggedIn" ui-sref=".resetpassword">Forgot password?</a>
-                <a ng-show="!isLoggedIn" ui-sref=".resendactivation">Resend activation link</a>
-                <a href=".adminmail">Mail admins!</a>
+                <a ui-sref=".resetpassword">Forgot password?</a>
+                <br><a ui-sref=".resendactivation">Resend activation link</a>
             </div>
         </div>
-        <div class="panel panel-default col-sm-10 text-left" ui-view></div>
-
+        <div ng-show="isLoggedIn" class="panel panel-default col-sm-12 text-left" ui-view></div>
+        <div ng-show="!isLoggedIn" class="panel panel-default col-sm-10 text-left" ui-view></div>
 
     </div>
     <br>

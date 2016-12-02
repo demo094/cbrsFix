@@ -1,5 +1,6 @@
 package com.dataart.citybikerentalservicespring.service;
 
+import com.dataart.citybikerentalservicespring.constants.BikeType;
 import com.dataart.citybikerentalservicespring.exceptions.CbrsException;
 import com.dataart.citybikerentalservicespring.exceptions.adminexceptions.EntityBindingException;
 import com.dataart.citybikerentalservicespring.persistence.model.Bike;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -80,7 +82,7 @@ public class StationService {
     }
 
     @Transactional
-    public void updateBikeInfo(Integer bikeId, String type, Integer slotId) {
+    public void updateBikeInfo(Integer bikeId, BikeType type, Integer slotId) {
         if(bikeId == null){
             Slot slot = slotRepository.findOne(slotId);
             slot.setBike(null);
@@ -93,17 +95,18 @@ public class StationService {
     }
 
     @Transactional
-    public void updateStation(int id, String name, String type, String address, String city) {
+    public void updateStation(int id, String name, String address, String city, BigDecimal latitude, BigDecimal longitude) {
         Station station = stationRepository.findById(id);
         station.setName(name);
-        station.setType(type);
         station.setAddress(address);
         station.setCity(city);
+        station.setLatitude(latitude);
+        station.setLongitude(longitude);
     }
 
     @Transactional
-    public void addStation(String name, String type, String address, String city) {
-        stationRepository.save(new Station(name, type, address, city));
+    public void addStation(String name, String address, String city, BigDecimal latitude, BigDecimal longitude) {
+        stationRepository.save(new Station(name, address, city, latitude, longitude));
     }
 
     @Transactional

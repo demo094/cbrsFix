@@ -5,10 +5,12 @@
     <table class="table table-hover table-compact">
         <tr>
             <th>No</th>
+            <th>Type</th>
             <th colspan="2">Actions</th>
         </tr>
         <tr ng-repeat="bikeTO in bikeTOs" ng-if="$index >= 0">
             <td>{{bikeTO.bikeId}}</td>
+            <td>{{bikeTO.type}}</td>
             <td><a ui-sref=".editbike({id:bikeTO.bikeId})">Edit</a></td>
             <td>
                 <button ng-click="deleteBike(bikeTO.bikeId)">Delete</button>
@@ -19,7 +21,13 @@
     <br>
     <button class="btn btn-default" ng-click="addBike()">Add bike</button>
 
-    <div ng-show="error != null">Error message {{error.message}} <br>{{error.message}}</div>
+    <div class="panel panel-danger" ng-show="error != null">
+        <div id="warningStatus" class="panel-heading" ng-show="error.message != null">Error</div>
+        <div class="panel-body">
+            {{error.message}}
+            <br><span ng-show="error.cause != null">{{error.cause}}</span>
+        </div>
+    </div>
     <div ui-view></div>
 </div>
 

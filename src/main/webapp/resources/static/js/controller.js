@@ -45,9 +45,10 @@ routerApp.controller('mainPageController', function($scope, $http, $state, $cook
     mainScope = $scope;
     if(mainScope.isLoggedIn){
         mainScope.isLoggedIn = true;
-    } else {
-    mainScope.isLoggedIn = false;
     }
+//    else {
+//        mainScope.isLoggedIn = false;
+//    }
     main = $state;
 
     mainScope.logout = function(){
@@ -208,7 +209,9 @@ routerApp.controller('resetPassController', function($scope, $http, $window){
     $scope.sendPasswordMail = function(){
             $http.post('api/resetPassEmail', $scope.form).then(function(response){
                 document.getElementById("response").innerHTML = response.data.message;
-                $window.location.href = "index";
+                $scope.emailForm.$setPristine();
+                $scope.form = {};
+//                $state.go('main');
             }, function(response){
                 $scope.error = response.data;
             });
@@ -219,6 +222,8 @@ routerApp.controller('resetPassPageController', function($scope, $http, $window,
     $scope.resetPassword = function(){
         $http.post('api/resetPassData/' + $stateParams.token, $scope.newPassword).then(function(response){
             $scope.resetResponse = response.data;
+            $scope.resetForm.$setPristine();
+            $scope.newPassword = {};
         }, function(response){
             $scope.resetError = response.data;
         });
@@ -229,7 +234,8 @@ routerApp.controller('registrationController', function($scope, $http, $window){
     $scope.registration = function(){
             $http.post('api/register', $scope.register).then(function(response){
                 document.getElementById("response").innerHTML = response.data.message;
-
+                $scope.register = {};
+                $scope.registerForm.$setPristine();
             }, function(response){
                 $scope.error = response.data;
             });
@@ -273,9 +279,6 @@ routerApp.controller('paymentController', function($scope, $http, $state, $timeo
             $scope.paymentResponse = response.data.message;
             $scope.paymentForm.$setPristine();
             $scope.payment = {};
-            $timeout(function(){
-                $state.reload();
-            }, 3000);
         }, function(response){
             if(response.data.status != null){
                 $scope.paymentError = response.data.message;

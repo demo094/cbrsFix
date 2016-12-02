@@ -36,8 +36,7 @@ public class PriceIntervalService {
 
         if(lastPriceIntervalResponse == null){
             PriceInterval priceInterval = new PriceInterval(null,
-                    priceIntervals
-                            .get(priceIntervals.size() - 1).getPrice().add(BigDecimal.ONE));
+                    priceIntervals.get(priceIntervals.size() - 1).getPrice().add(BigDecimal.ONE));
             priceIntervalRepository.save(priceInterval);
             lastPriceIntervalResponse = new PriceIntervalResponse(priceInterval);
         }
@@ -77,11 +76,6 @@ public class PriceIntervalService {
                 throw new WrongPriceIntervalDataException(UserMessage.DOUBLE_PRICING);
             }
         }
-
-        if (end != null) {
-            priceIntervalRepository.save(new PriceInterval(end, price));
-        } else {
-            priceIntervalRepository.save(new PriceInterval(price));
-        }
+        priceIntervalRepository.save(new PriceInterval(end, price));
     }
 }

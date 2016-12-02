@@ -23,15 +23,12 @@ public class PaymentRequest {
 
     @NotNull
     private Integer idUser;
-    @NotNull(message = "No card number provided.")
     @NotEmpty(message = "No card number provided.")
     @Pattern(regexp = "((?=.*\\d).{16})", message = "Incorrect card number! Should contain 16 number characters.")
     private String cardNo;
-    @NotNull(message = "No expiration date provided.")
     @NotEmpty(message = "No expiration date provided.")
     @NotExpired(message = "This card has expired!")
     private String cardExpirationDate;
-    @NotNull(message = "No cvv card code provided.")
     @NotEmpty(message = "No cvv card code provided.")
     @Pattern(regexp = "((?=.*\\d).{3})", message = "Cvv code should have 3 number characters.")
     private String cvvCode;

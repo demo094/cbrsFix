@@ -4,20 +4,24 @@
     <form ng-submit="saveChanges()">
         <table>
             <tr>
-                <td>Name:</td>
-                <td><input type="text" ng-model="editstation.name" placeholder="{{stationTO.stationName}}" /></td>
+                <td>Name: </td>
+                <td><input type="text" ng-model="editstation.name" /></td>
             </tr>
             <tr>
-                <td>Type:</td>
-                <td><input type="text" ng-model="editstation.type" placeholder="{{stationTO.stationType}}" /></td>
+                <td>Address: </td>
+                <td><input type="text" ng-model="editstation.address" /></td>
             </tr>
             <tr>
-                <td>Address:</td>
-                <td><input type="text" ng-model="editstation.address" placeholder="{{stationTO.stationAddress}}" /></td>
+                <td>City: </td>
+                <td><input type="text" ng-model="editstation.city" /></td>
             </tr>
             <tr>
-                <td>City:</td>
-                <td><input type="text" ng-model="editstation.city" placeholder="{{stationTO.stationCity}}" /></td>
+                <td>Latitude: </td>
+                <td><input type="text" ng-model="editstation.latitude" /></td>
+            </tr>
+            <tr>
+                <td>Longitude: </td>
+                <td><input type="text" ng-model="editstation.longitude" /></td>
             </tr>
             <input type="hidden" ng-model="editstation.id" />
             <tr>
