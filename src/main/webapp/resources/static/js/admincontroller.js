@@ -1,8 +1,5 @@
 routerApp.controller('adminPanelController', function($scope, $http, $window, $cookies){
-    $scope.logout = function(){
-        $cookies.remove('accessToken');
-        $window.location.href = 'index';
-    }
+    mainScope.isLoggedIn = true;
 });
 
 routerApp.controller('bikeAdminController', function($scope, $http, $window, $state){
@@ -15,7 +12,7 @@ routerApp.controller('bikeAdminController', function($scope, $http, $window, $st
     });
 
     $scope.deleteBike = function(id){
-        $http.delete('api/deletebike/' + id).then(function(response){
+        $http.delete('api/bike/' + id).then(function(response){
             $scope.bikeDeleted = response.data;
             $state.reload();
         }, function(response){
@@ -24,7 +21,7 @@ routerApp.controller('bikeAdminController', function($scope, $http, $window, $st
     }
 
     $scope.addBike = function(){
-        $http.put('api/addbike').then(function(response){
+        $http.put('api/bike').then(function(response){
             $state.reload();
         }, function(response){
             $scope.error = response.data;
@@ -45,7 +42,7 @@ routerApp.controller('editBikeController', function($scope, $http, $stateParams,
     });
     $scope.saveChanges = function(){
         $scope.editbike.id = bikeEditionData.slotTO.bikeId;
-        $http.post('api/updatebike', $scope.editbike).then(function(response){
+        $http.post('api/bike', $scope.editbike).then(function(response){
             $scope.serverResponse = response.status;
             $state.reload();
         }, function(response){
@@ -65,7 +62,7 @@ routerApp.controller('stationAdminController', function($scope, $http, $state){
         });
 
     $scope.addStation = function(){
-        $http.put('api/addstation', $scope.addstation).then(function(response){
+        $http.put('api/station', $scope.addstation).then(function(response){
                     $scope.serverResponse = response.status;
                     $state.reload();
                 }, function(response){
@@ -74,7 +71,7 @@ routerApp.controller('stationAdminController', function($scope, $http, $state){
     }
 
     $scope.deleteStation = function(id){
-        $http.delete('api/deletestation/' + id).then(function(response){
+        $http.delete('api/station/' + id).then(function(response){
             $scope.serverResponse = response.status;
             $state.reload();
         }, function(response){
@@ -106,7 +103,7 @@ routerApp.controller('editStationController', function($scope, $http, $statePara
         $scope.editstation.city = $scope.stationTO.stationCity;
     }
 
-        $http.post('api/updatestation', $scope.editstation).then(function(response){
+        $http.post('api/station', $scope.editstation).then(function(response){
             $scope.serverResponse = response.status;
             $state.reload();
         }, function(response){
@@ -115,7 +112,7 @@ routerApp.controller('editStationController', function($scope, $http, $statePara
     }
 
     $scope.addSlot = function(){
-        $http.put('api/addslot/' + $scope.stationTO.stationId).then(function(response){
+        $http.put('api/slot/' + $scope.stationTO.stationId).then(function(response){
             $scope.serverResponse = response.data;
             $state.reload();
         }, function(response){
@@ -134,7 +131,7 @@ routerApp.controller('priceIntController', function($scope, $http, $state, $stat
     });
 
     $scope.addPriceInterval = function(){
-        $http.put('api/addpriceinterval', $scope.addPriceInt).then(function(response){
+        $http.put('api/priceinterval', $scope.addPriceInt).then(function(response){
             $scope.serverResponse = response.status;
             $state.reload();
 
@@ -144,7 +141,7 @@ routerApp.controller('priceIntController', function($scope, $http, $state, $stat
     }
 
     $scope.deletePriceInterval = function(id){
-        $http.delete('api/deletepriceinterval/' + id).then(function(response){
+        $http.delete('api/priceinterval/' + id).then(function(response){
             $scope.serverResponse = response.status;
             $state.reload();
         }, function(response){
@@ -168,8 +165,8 @@ routerApp.controller('editPriceIntController', function($scope, $http, $state, $
         if($scope.editPriceInt.price == null){
             $scope.editPriceInt.price = $scope.priceIntervalTO.price;
         }
-        $scope.editPriceInt.intervalId = $stateParams.id;
-        $http.post('api/updatePriceInterval', $scope.editPriceInt).then(function(response){
+        $scope.editPriceInt.id = $stateParams.id;
+        $http.post('api/priceInterval', $scope.editPriceInt).then(function(response){
             $scope.serverResponse = response.status;
             $state.reload();
         }, function(response){

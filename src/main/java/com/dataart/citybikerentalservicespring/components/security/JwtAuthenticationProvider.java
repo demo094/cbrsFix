@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  */
 
 @Component
-public class JwtProvider implements AuthenticationProvider {
+public class JwtAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
     private JwtHelper jwtHelper;

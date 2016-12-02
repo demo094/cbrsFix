@@ -8,6 +8,7 @@ import com.dataart.citybikerentalservicespring.exceptions.userexceptions.UserBal
 import com.dataart.citybikerentalservicespring.persistence.model.*;
 import com.dataart.citybikerentalservicespring.persistence.repo.*;
 import com.dataart.citybikerentalservicespring.utils.CalculationUtil;
+import com.dataart.citybikerentalservicespring.view.responses.PriceIntervalResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,11 +35,11 @@ public class RentalService {
     @Autowired
     private RentalHistoryRepository rentalHistoryRepository;
     @Autowired
-    private PriceIntervalRepository priceIntervalRepository;
-    @Autowired
     private PaymentRepository paymentRepository;
     @Autowired
     private SlotRepository slotRepository;
+    @Autowired
+    private PriceIntervalService priceIntervalService;
 
     @Transactional
     public void rentBikeFromSlot(User user, Integer slotId) throws CbrsException {
@@ -79,7 +80,7 @@ public class RentalService {
 
     private void substractMoneyFromUser(User user, Bike bike) {
         RentalHistory rentalHistory = rentalHistoryRepository.findFirstByBikeAndUserOrderByIdDesc(bike, user);
-        List<PriceInterval> priceIntervalList = priceIntervalRepository.findAll();
+        List<PriceIntervalResponse> priceIntervalList = priceIntervalService.getPriceIntervalTOs();
         Duration tripDuration = Duration.between(rentalHistory.getBeginTime(), rentalHistory.getEndTime());
         long secondsOfRent = tripDuration.toMillis() / 1000;
         BigDecimal tripPrice = CalculationUtil.calculateTripPrice(secondsOfRent, priceIntervalList);

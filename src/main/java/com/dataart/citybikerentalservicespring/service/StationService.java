@@ -87,10 +87,8 @@ public class StationService {
         } else {
             Bike bike = bikeRepository.findOne(bikeId);
             bike.setType(type);
-            bikeRepository.save(bike);
             Slot slot = slotRepository.findOne(slotId);
             slot.setBike(bike);
-            slotRepository.save(slot);
         }
     }
 
@@ -101,7 +99,6 @@ public class StationService {
         station.setType(type);
         station.setAddress(address);
         station.setCity(city);
-        stationRepository.save(station);
     }
 
     @Transactional

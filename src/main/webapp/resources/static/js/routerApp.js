@@ -2,12 +2,12 @@ var routerApp = angular.module('routerApp', ['ui.router', 'ngCookies', 'timer', 
 
 routerApp.config(function($stateProvider, $urlRouterProvider, $cookiesProvider) {
 
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/main');
 
     $stateProvider
         // MAIN PAGE STATES AND NESTED VIEWS OF USER'S PANEL ========================================
         .state('main', {
-            url: '/',
+            url: '/main',
             templateUrl: 'resources/static/views/main.html',
             controller: 'mainPageController'
         })
@@ -80,52 +80,52 @@ routerApp.config(function($stateProvider, $urlRouterProvider, $cookiesProvider) 
 
 
 //        ADMIN PANEL STATES
-        .state('adminPanel', {
+        .state('main.adminPanel', {
             url: '/adminPanel',
             templateUrl: 'resources/static/views/admin/adminpanel.html',
             controller: 'adminPanelController'
         })
-        .state('adminPanel.bikeadmin', {
+        .state('main.adminPanel.bikeadmin', {
             url: '/bikeadmin',
             templateUrl: 'resources/static/views/admin/bikeadmin.html',
             controller: 'bikeAdminController'
         })
-        .state('adminPanel.bikeadmin.editbike', {
+        .state('main.adminPanel.bikeadmin.editbike', {
             url: '/editbike/:id',
             templateUrl: 'resources/static/views/admin/editbike.html',
             controller: 'editBikeController'
         })
-        .state('adminPanel.stationadmin', {
+        .state('main.adminPanel.stationadmin', {
             url: '/stationadmin',
             templateUrl: 'resources/static/views/admin/stationadmin.html',
             controller: 'stationAdminController'
         })
-        .state('adminPanel.stationadmin.addstation', {
+        .state('main.adminPanel.stationadmin.addstation', {
             url: '/addstation',
             templateUrl: 'resources/static/views/admin/addstation.html',
             controller: 'stationAdminController'
         })
-        .state('adminPanel.stationadmin.editstation', {
+        .state('main.adminPanel.stationadmin.editstation', {
             url: '/editstation/:id',
             templateUrl: 'resources/static/views/admin/editstation.html',
             controller: 'editStationController'
         })
-        .state('adminPanel.priceintervaladmin', {
+        .state('main.adminPanel.priceintervaladmin', {
             url: '/priceintervaladmin',
             templateUrl: 'resources/static/views/admin/priceintervaladmin.html',
             controller: 'priceIntController'
         })
-        .state('adminPanel.priceintervaladmin.addpriceinterval', {
+        .state('main.adminPanel.priceintervaladmin.addpriceinterval', {
             url: '/addpriceinterval',
             templateUrl: 'resources/static/views/admin/addpriceinterval.html',
             controller: 'priceIntController'
         })
-        .state('adminPanel.priceintervaladmin.editpriceinterval', {
+        .state('main.adminPanel.priceintervaladmin.editpriceinterval', {
             url: '/editpriceinterval/:id',
             templateUrl: 'resources/static/views/admin/editpriceinterval.html',
             controller: 'editPriceIntController'
         })
-        .state('adminPanel.statistics', {
+        .state('main.adminPanel.statistics', {
             url: '/statistics',
             templateUrl: 'resources/static/views/admin/statistics.html',
             controller: 'statisticsController'

@@ -1,6 +1,5 @@
 package com.dataart.citybikerentalservicespring.view.responses;
 
-import com.dataart.citybikerentalservicespring.persistence.model.Bike;
 import com.dataart.citybikerentalservicespring.persistence.model.RentalHistory;
 import com.dataart.citybikerentalservicespring.persistence.model.User;
 
@@ -10,15 +9,13 @@ import com.dataart.citybikerentalservicespring.persistence.model.User;
 public class RentalStatusResponse {
     private Long rentalBeginTime;
 
-    private Bike bike;
+    private boolean bikeBeingRented;
 
     public RentalStatusResponse(User user, RentalHistory rentalHistory) {
-        if(rentalHistory != null) {
+        if (rentalHistory != null) {
             this.rentalBeginTime = rentalHistory.getBeginTime().toEpochMilli();
-        } else {
-            this.rentalBeginTime = null;
         }
-        this.bike = user.getBike();
+        this.bikeBeingRented = user.getBike() != null;
     }
 
     public Long getRentalBeginTime() {
@@ -29,11 +26,11 @@ public class RentalStatusResponse {
         this.rentalBeginTime = rentalBeginTime;
     }
 
-    public Bike getBike() {
-        return bike;
+    public boolean isBikeBeingRented() {
+        return bikeBeingRented;
     }
 
-    public void setBike(Bike bike) {
-        this.bike = bike;
+    public void setBikeBeingRented(boolean bikeBeingRented) {
+        this.bikeBeingRented = bikeBeingRented;
     }
 }

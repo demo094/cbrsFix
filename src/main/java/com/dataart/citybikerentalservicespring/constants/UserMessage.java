@@ -7,8 +7,6 @@ package com.dataart.citybikerentalservicespring.constants;
  * @author mkrasowski
  */
 public enum UserMessage {
-    BIKE_RENTED(1, MessageType.MESSAGE, "Bike rented!"),
-    BIKE_RETURNED(2, MessageType.MESSAGE, "Bike returned!"),
     NO_BIKE_BOUND(3, MessageType.ERROR, "Sorry, You have no bike bound to your account!"),
     BIKE_BOUND(4, MessageType.ERROR, "Sorry, You have a bike already bound to your account!"),
     INVALID_USER_CREDENTIALS(5, MessageType.ERROR, "Sorry, you have provided either invalid e-mail or password. Please try again."),
@@ -34,7 +32,11 @@ public enum UserMessage {
     PASSWORD_RESET_SUCCESS(25, MessageType.MESSAGE, "Password reset successful! You can now log in."),
     STATION_NOT_FOUND(26, MessageType.ERROR, "Sorry, the station you requested was not found."),
     NO_PRICE_INTERVAL(27, MessageType.ERROR, "Sorry, the price interval you requested was not found."),
-    SEVERE_SYSTEM_ERROR(28, MessageType.ERROR, "Sorry, some unexpected system error occurred. Please contact administration if you see this page again.");
+    SEVERE_SYSTEM_ERROR(28, MessageType.ERROR, "Sorry, some unexpected system error occurred. Please contact administration if you see this page again."),
+    DOUBLE_NULL_PRICE_INTERVAL(29, MessageType.ERROR , "You cannot create second empty interval!"),
+    DOUBLE_PRICE_INTERVAL(30, MessageType.ERROR, "You cannot create two price intervals with the same end!"),
+    DOUBLE_PRICING(31, MessageType.ERROR, "Price is already in the set!"),
+    PRICE_HIGHER_THAN_IN_NEXT(31, MessageType.ERROR, "Price cannot be higher than in the next price interval!");
 
 
     private final String message;

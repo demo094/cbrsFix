@@ -24,18 +24,22 @@ public class JwtHelper {
 
     public UserDetailsTO parseToken(String token) throws JsonWebTokenException {
         try {
-            Claims body = Jwts.parser()
-                    .setSigningKey(secret)
-                    .parseClaimsJws(token)
-                    .getBody();
+            if(token.isEmpty()){
+                return null;
+            } else {
+                Claims body = Jwts.parser()
+                        .setSigningKey(secret)
+                        .parseClaimsJws(token)
+                        .getBody();
 
-            UserDetailsTO userDetailsTO = new UserDetailsTO();
-            userDetailsTO.setEmail(body.getSubject());
-            userDetailsTO.setId(Integer.parseInt((String) body.get("id")));
-            userDetailsTO.setRoles((List<String>) body.get("userRoleList"));
-            userDetailsTO.setTokenIssueTime(Instant.ofEpochMilli((Long) body.get("issueTime")));
+                UserDetailsTO userDetailsTO = new UserDetailsTO();
+                userDetailsTO.setEmail(body.getSubject());
+                userDetailsTO.setId(Integer.parseInt((String) body.get("id")));
+                userDetailsTO.setRoles((List<String>) body.get("userRoleList"));
+                userDetailsTO.setTokenIssueTime(Instant.ofEpochMilli((Long) body.get("issueTime")));
 
-            return userDetailsTO;
+                return userDetailsTO;
+            }
         } catch (JwtException | ClassCastException ex) {
             throw new JsonWebTokenException(ex);
         }

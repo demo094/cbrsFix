@@ -23,6 +23,10 @@ public class PriceInterval {
     public PriceInterval() {
     }
 
+    public PriceInterval(BigDecimal price){
+        this.price = price;
+    }
+
     public PriceInterval(Long end, BigDecimal price) {
         this.end = end;
         this.price = price;

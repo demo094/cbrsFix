@@ -113,6 +113,5 @@ public class UserService {
         }
         String newPasswordHash = passwordEncoder.encode(password);
         user.setPasswordHash(newPasswordHash);
-        userRepository.save(user);
     }
 }

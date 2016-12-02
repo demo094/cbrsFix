@@ -1,13 +1,18 @@
 package com.dataart.citybikerentalservicespring.service;
 
+import com.dataart.citybikerentalservicespring.components.security.JwtAuthenticationProvider;
+import com.dataart.citybikerentalservicespring.components.security.JwtAuthenticationToken;
 import com.dataart.citybikerentalservicespring.components.security.JwtHelper;
 import com.dataart.citybikerentalservicespring.exceptions.userexceptions.AccountNotActivatedException;
 import com.dataart.citybikerentalservicespring.exceptions.userexceptions.UnexpectedAuthenticationException;
 import com.dataart.citybikerentalservicespring.persistence.model.User;
 import com.dataart.citybikerentalservicespring.view.requests.AuthenticationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +27,8 @@ public class LoginService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private JwtHelper jwtHelper;
+    @Autowired
+    private JwtAuthenticationProvider authenticationProvider;
 
     public String createAuthenticationToken(AuthenticationRequest authenticationRequest) {
         try {

@@ -1,16 +1,26 @@
 package com.dataart.citybikerentalservicespring.view.requests;
 
+import com.dataart.citybikerentalservicespring.utils.annotations.NotExpired;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.StringJoiner;
 
 /**
  * Created by mkrasowski on 16.09.2016.
  */
 public class PaymentRequest {
+
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("MM-yyyy");
+
     @NotNull
     private Integer idUser;
     @NotNull(message = "No card number provided.")
@@ -19,9 +29,7 @@ public class PaymentRequest {
     private String cardNo;
     @NotNull(message = "No expiration date provided.")
     @NotEmpty(message = "No expiration date provided.")
-//    There is nice annotation for checking the Instant date objects for being in the past or the future
-//    but the problem is the jackson library doesn't parse the Instants yet. Maybe I could work it around
-//    using some parsing on the method level and annotate the method
+    @NotExpired(message = "This card has expired!")
     private String cardExpirationDate;
     @NotNull(message = "No cvv card code provided.")
     @NotEmpty(message = "No cvv card code provided.")

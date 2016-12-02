@@ -12,28 +12,28 @@ import com.dataart.citybikerentalservicespring.service.LoginService;
 import com.dataart.citybikerentalservicespring.service.RentalService;
 import com.dataart.citybikerentalservicespring.service.UserService;
 import com.dataart.citybikerentalservicespring.utils.AuthenticationContext;
-import com.dataart.citybikerentalservicespring.view.requests.AuthenticationRequest;
-import com.dataart.citybikerentalservicespring.view.responses.PaymentResponse;
-import com.dataart.citybikerentalservicespring.view.responses.UserPanelResponse;
 import com.dataart.citybikerentalservicespring.view.requests.PaymentRequest;
 import com.dataart.citybikerentalservicespring.view.requests.RegistrationRequest;
 import com.dataart.citybikerentalservicespring.view.requests.ResendTokenRequest;
 import com.dataart.citybikerentalservicespring.view.requests.ResetPasswordRequest;
 import com.dataart.citybikerentalservicespring.view.responses.CommonResponse;
+import com.dataart.citybikerentalservicespring.view.responses.PaymentResponse;
 import com.dataart.citybikerentalservicespring.view.responses.RentalStatusResponse;
+import com.dataart.citybikerentalservicespring.view.responses.UserPanelResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by mkrasowski on 20.10.2016.
  */
 @RestController
+@RequestMapping(value = "/api")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -43,24 +43,25 @@ public class UserController {
     private LoginService loginService;
 
 
-    @RequestMapping(value = "/api/userpanel", method = RequestMethod.GET)
+    @RequestMapping(value = "/userpanel", method = RequestMethod.GET)
     @PreAuthorize("hasRole('USER')")
     public UserPanelResponse userPanelTO() throws CbrsException {
         AuthenticatedUser authUser = AuthenticationContext.getAuthenticatedUser();
+        List<GrantedAuthority> authorities = authUser.getAuthorities();
         User user = userService.findById(authUser.getId());
         RentalHistory rentalHistory = rentalService.getLastRental(user);
         Payment payment = rentalService.getLastTripPrice(user);
-        return new UserPanelResponse(user, rentalHistory, payment);
+        return new UserPanelResponse(user, rentalHistory, payment, authorities);
     }
 
     @RequestMapping(value = "/resetPassEmail", method = RequestMethod.POST)
-    public CommonResponse angularResetPassword(@RequestBody ResendTokenRequest resendTokenRequest) {
+    public CommonResponse resetPassword(@RequestBody ResendTokenRequest resendTokenRequest) {
         userService.sendResetPasswordEmail(resendTokenRequest.getEmail());
         return new CommonResponse("Email sent!");
     }
 
     @RequestMapping(value = "/resetPassData/{token}", method = RequestMethod.POST)
-    public CommonResponse angularResetData(@PathVariable("token") String token, @RequestBody ResetPasswordRequest resetPasswordRequest) throws CbrsException {
+    public CommonResponse resetData(@PathVariable("token") String token, @RequestBody ResetPasswordRequest resetPasswordRequest) throws CbrsException {
         Token resetToken = userService.findTokenByBody(token);
         if (resetToken == null) {
             throw new InvalidTokenException();
@@ -79,7 +80,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public CommonResponse angularRegisterUser(@RequestBody RegistrationRequest registrationRequest) throws CbrsException {
+    public CommonResponse registerUser(@RequestBody RegistrationRequest registrationRequest) throws CbrsException {
         if (!registrationRequest.getPassword().equals(registrationRequest.getRetypedPassword())) {
             return new CommonResponse("Passwords must be the same!");
         }
@@ -89,28 +90,22 @@ public class UserController {
     }
 
     @RequestMapping(value = "/resendActToken", method = RequestMethod.POST)
-    public CommonResponse angularResendActToken(@RequestBody ResendTokenRequest resendTokenRequest) {
+    public CommonResponse resendActToken(@RequestBody ResendTokenRequest resendTokenRequest) {
         userService.resendActivationToken(resendTokenRequest.getEmail());
         return new CommonResponse("Activation link sent! Please follow instructions in the email.");
     }
 
-    @RequestMapping(value = "/api/payment", method = RequestMethod.GET)
+    @RequestMapping(value = "/payment", method = RequestMethod.GET)
     @PreAuthorize("hasRole('USER')")
     public PaymentResponse paymentData() {
         return new PaymentResponse(AuthenticationContext.getAuthenticatedUser());
     }
 
-    @RequestMapping(value = "/api/paymentData", method = RequestMethod.POST)
+    @RequestMapping(value = "/paymentData", method = RequestMethod.POST)
     @PreAuthorize("hasRole('USER')")
-    public CommonResponse angularPayment(@Valid @RequestBody PaymentRequest paymentRequest) throws CbrsException {
+    public CommonResponse payment(@Valid @RequestBody PaymentRequest paymentRequest) throws CbrsException {
         userService.updateBalance(paymentRequest.getIdUser(), paymentRequest.getAmount());
         return new CommonResponse("Payment done!");
-    }
-
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public CommonResponse userAuthentication(@RequestBody AuthenticationRequest authenticationRequest, HttpServletResponse response) {
-        response.addCookie(new Cookie("accessToken", loginService.createAuthenticationToken(authenticationRequest)));
-        return new CommonResponse("Login ok!");
     }
 
     @RequestMapping(value = "/registrationConfirm/{token}", method = RequestMethod.GET)
@@ -129,7 +124,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/api/rent/status", method = RequestMethod.GET)
+    @RequestMapping(value = "/rent/status", method = RequestMethod.GET)
     @PreAuthorize("hasRole('USER')")
     public RentalStatusResponse rentStatus() {
         AuthenticatedUser authenticatedUser = AuthenticationContext.getAuthenticatedUser();

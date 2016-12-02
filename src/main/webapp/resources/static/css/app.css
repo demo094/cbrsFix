@@ -59,6 +59,10 @@ body {
     margin-left: 5px;
 }
 
+#admin {
+    margin-left: 5px;
+}
+
 #navRow .col-sm-2 .btn .btn-success {
     display: inline;
 }
