@@ -21,7 +21,7 @@ public class PriceIntervalService {
     @Autowired
     private PriceIntervalRepository priceIntervalRepository;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<PriceIntervalResponse> getPriceIntervalTOs() {
         List<PriceIntervalResponse> priceIntervalResponses = new ArrayList<>();
         List<PriceInterval> priceIntervals = priceIntervalRepository.findAllByOrderByEndAsc();
@@ -46,7 +46,7 @@ public class PriceIntervalService {
         return priceIntervalResponses;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public PriceInterval getPriceIntervalById(int priceIntervalId) {
         return priceIntervalRepository.findOne(priceIntervalId);
     }

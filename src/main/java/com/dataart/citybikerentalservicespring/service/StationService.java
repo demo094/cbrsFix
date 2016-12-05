@@ -33,12 +33,12 @@ public class StationService {
     @Autowired
     private SlotRepository slotRepository;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Station> getStationList() {
         return stationRepository.findAll();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Bike getBikeById(int bikeId) {
         return bikeRepository.findOne(bikeId);
     }
@@ -56,39 +56,41 @@ public class StationService {
         bikeRepository.delete(bikeId);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Station getStationById(Integer stationId) {
         return stationRepository.findById(stationId);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Slot getSlotById(Integer slotId) {
         return slotRepository.findOne(slotId);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Slot getSlotByBike(Bike bike) {
         return slotRepository.findSlotByBike(bike);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<BikeTO> getBikeTOs() {
         return bikeRepository.findAll().stream().map(BikeTO::new).collect(Collectors.toList());
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<StationTO> getStationTOs() {
         return getStationList().stream().map(StationTO::new).collect(Collectors.toList());
     }
 
     @Transactional
-    public void updateBikeInfo(Integer bikeId, BikeType type, Integer slotId) {
+    public void updateBikeInfo(Integer bikeId, BikeType type, Integer slotId, Integer oldSlotId) {
         if(bikeId == null){
             Slot slot = slotRepository.findOne(slotId);
             slot.setBike(null);
         } else {
             Bike bike = bikeRepository.findOne(bikeId);
             bike.setType(type);
+            Slot oldSlot = slotRepository.findOne(oldSlotId);
+            oldSlot.setBike(null);
             Slot slot = slotRepository.findOne(slotId);
             slot.setBike(bike);
         }

@@ -40,10 +40,6 @@ public class SecurityController {
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     public CommonResponse userLogout(HttpServletRequest request, HttpServletResponse response){
-        Stream.of(request.getCookies())
-                .filter(cookie -> cookie.getName().equals("accessToken"))
-                .findAny()
-                .ifPresent(cookie -> cookie.setValue(""));
         response.addCookie(new Cookie("accessToken", ""));
         return new CommonResponse("Logout ok");
     }

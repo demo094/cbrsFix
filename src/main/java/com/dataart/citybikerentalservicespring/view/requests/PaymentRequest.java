@@ -33,7 +33,6 @@ public class PaymentRequest {
     @Pattern(regexp = "((?=.*\\d).{3})", message = "Cvv code should have 3 number characters.")
     private String cvvCode;
     @NotNull(message = "Provide an amount to add!")
-//    @NotEmpty(message = "Provide an amount to add!")
     @Min(value = 0, message = "Value must be greater than zero!")
     private BigDecimal amount;
 

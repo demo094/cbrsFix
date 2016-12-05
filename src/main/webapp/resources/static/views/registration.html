@@ -1,9 +1,9 @@
 <div class="panel-heading">
     <h4>Registration panel</h4>
 </div>
-<div class="panel-body">
+<div class="panel-body" ng-controller="registrationController">
     Register to become one of the users of the service. :) Remember, the credentials must not be empty!
-    <form name="registerForm" ng-controller="registrationController" ng-submit="registration()">
+    <form name="registerForm" ng-submit="registration()">
         <table>
             <tr>
                 <td><input type="email" class="form-control" id="email" ng-model="register.email" placeholder="Email"/></td>
@@ -22,12 +22,13 @@
     </form>
     <br>
     <div id="response"></div>
-</div>
-<div class="panel panel-danger" ng-show="error != null">
-    <div id="warningStatus" class="panel-heading" >An error occured!</div>
-    <div class="panel-body">
-        {{error.message}}
+    <div class="panel panel-danger" ng-show="error != null">
+        <div id="warningStatus" class="panel-heading" >An error occured!</div>
+        <div class="panel-body">
+            {{error.message}}
+        </div>
     </div>
 </div>
+
 
 

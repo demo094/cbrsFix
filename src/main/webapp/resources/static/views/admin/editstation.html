@@ -6,14 +6,23 @@
             <tr>
                 <td>Name: </td>
                 <td><input type="text" ng-model="editstation.name" /></td>
+                <td ng-show="fieldErrors.name != null">
+                    <span class="bg-danger">{{fieldErrors.name.message}}</span>
+                </td>
             </tr>
             <tr>
                 <td>Address: </td>
                 <td><input type="text" ng-model="editstation.address" /></td>
+                <td ng-show="fieldErrors.address != null">
+                    <span class="bg-danger">{{fieldErrors.address.message}}</span>
+                </td>
             </tr>
             <tr>
                 <td>City: </td>
                 <td><input type="text" ng-model="editstation.city" /></td>
+                <td ng-show="fieldErrors.city != null">
+                    <span class="bg-danger">{{fieldErrors.city.message}}</span>
+                </td>
             </tr>
             <tr>
                 <td>Latitude: </td>
@@ -47,7 +56,7 @@
             <td>{{slotTO.slotId}}</td>
             <td ng-show="slotTO.bikeId != null">Bike - {{slotTO.bikeId}}</td>
             <td ng-show="slotTO.bikeId == null">empty</td>
-            <td><button ng-click="delete()">Delete</button></td>
+            <td><button ng-click="deleteSlot(slotTO.slotId)">Delete</button></td>
         </tr>
     </table>
 

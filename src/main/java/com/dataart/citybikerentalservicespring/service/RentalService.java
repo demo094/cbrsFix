@@ -88,12 +88,12 @@ public class RentalService {
         userRepository.substractMoney(tripPrice, user.getId());
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public RentalHistory getLastRental(User user) {
         return rentalHistoryRepository.findFirstByUserOrderByIdDesc(user);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Payment getLastTripPrice(User user) {
         return paymentRepository.findFirstByUserOrderByIdDesc(user);
     }

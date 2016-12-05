@@ -1,5 +1,8 @@
 package com.dataart.citybikerentalservicespring.view.requests;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 /**
@@ -7,12 +10,14 @@ import java.math.BigDecimal;
  */
 public class EditStationRequest {
     private int id;
+    @NotEmpty(message = "You have to put in station's name!")
     private String name;
+    @NotEmpty(message = "You have to put in station's address!")
     private String address;
+    @NotEmpty(message = "You have to put in station's city!")
     private String city;
     private BigDecimal latitude;
     private BigDecimal longitude;
-//    private String coordinates;
 
     public EditStationRequest() {
     }

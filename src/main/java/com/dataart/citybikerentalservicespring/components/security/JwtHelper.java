@@ -26,7 +26,6 @@ public class JwtHelper {
     public UserDetailsTO parseToken(String token) throws JsonWebTokenException {
         try {
             if(token.isEmpty()){
-//                return null;
                 throw new JwtCbrsException("You have to login first!");
             } else {
                 Claims body = Jwts.parser()

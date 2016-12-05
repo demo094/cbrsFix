@@ -3,7 +3,7 @@
     <form novalidate ng-submit="updatePriceInterval()">
         <table>
             <input type="hidden" ng-model="editPriceInt.intervalId"/>
-            <tr>
+            <tr ng-show="editPriceInt.end != null">
                 <td>End:</td>
                 <td><input type="text" ng-model="editPriceInt.end" /></td>
                 <td ng-show="fieldErrors.end != null">

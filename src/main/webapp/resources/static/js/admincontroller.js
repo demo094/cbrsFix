@@ -9,6 +9,7 @@ routerApp.controller('bikeAdminController', function($scope, $http, $window, $st
 
     $http.get('api/adminbikelist').then(function(response){
         $scope.bikeTOs = response.data;
+        mainScope.isLoggedIn = true;
     }, function(response){
         $scope.error = response.data;
     });
@@ -34,9 +35,9 @@ routerApp.controller('bikeAdminController', function($scope, $http, $window, $st
 
 routerApp.controller('editBikeController', function($scope, $http, $stateParams, $state){
     $scope.header = "Edit bike panel";
-//    var id = $stateParams.id;
     var bikeEditionData;
     $http.get('api/bike/' + $stateParams.id).then(function(response){
+        mainScope.isLoggedIn = true;
         bikeEditionData = response.data;
         $scope.editBikeTO = bikeEditionData;
         $scope.editbike = {id: bikeEditionData.slotTO.bikeId, type: '', slotId: bikeEditionData.slotTO.slotId};
@@ -48,8 +49,14 @@ routerApp.controller('editBikeController', function($scope, $http, $stateParams,
         if($scope.editbike.type == null){
             $scope.editbike.type = 'ordinary';
         }
+
+        if($scope.editbike.slotId == null){
+            $scope.editbike.slotId = bikeEditionData.slotTO.slotId;
+        }
+
+        $scope.editbike.slotId = parseInt($scope.editbike.slotId);
+        $scope.editbike.oldSlotId = bikeEditionData.slotTO.slotId;
         $http.post('api/bike', $scope.editbike).then(function(response){
-            $scope.serverResponse = response.status;
             $state.reload();
         }, function(response){
             $scope.editBikeError = response.data;
@@ -62,6 +69,7 @@ routerApp.controller('stationAdminController', function($scope, $http, $state){
     $scope.addStationHeader = "Add station panel";
 
     $http.get('api/adminstationlist').then(function(response){
+            mainScope.isLoggedIn = true;
             $scope.stationTOs = response.data;
         }, function(response){
             $scope.error = response.data;
@@ -72,6 +80,9 @@ routerApp.controller('stationAdminController', function($scope, $http, $state){
                     $scope.serverResponse = response.status;
                     $state.reload();
                 }, function(response){
+                    if(response.data.fieldErrors != null){
+                        $scope.fieldErrors = response.data.fieldErrors;
+                    }
                     $scope.addStationError = response.data;
                 });
     }
@@ -90,6 +101,7 @@ routerApp.controller('editStationController', function($scope, $http, $statePara
     $scope.header = "Edit station panel";
     var stationTO;
     $http.get('api/adminstation/' + $stateParams.id).then(function(response){
+            mainScope.isLoggedIn = true;
             stationTO = response.data;
             $scope.stationTO = stationTO;
             $scope.editstation = {name: stationTO.stationName, address: stationTO.stationAddress,
@@ -119,6 +131,9 @@ routerApp.controller('editStationController', function($scope, $http, $statePara
             $scope.serverResponse = response.status;
             $state.reload();
         }, function(response){
+            if(response.data.fieldErrors != null){
+                $scope.fieldErrors = response.data.fieldErrors;
+            }
             $scope.editStationError = response.data;
         });
     }
@@ -131,12 +146,22 @@ routerApp.controller('editStationController', function($scope, $http, $statePara
             $scope.editStationError = response.data;
         });
     }
+
+    $scope.deleteSlot = function(slotId){
+            $http.delete('api/station/' + $stateParams.id + '/slot/' + slotId).then(function(response){
+                $scope.serverResponse = response.data;
+                $state.reload();
+            }, function(response){
+                $scope.editStationError = response.data;
+            });
+        }
 });
 
 routerApp.controller('priceIntController', function($scope, $http, $state, $stateParams){
     $scope.header = "Price interval management";
     $scope.addStationHeader = "Add price interval";
     $http.get('api/adminpriceintervals').then(function(response){
+        mainScope.isLoggedIn = true;
         $scope.priceIntervalTOs = response.data;
     }, function(response){
         $scope.error = response.data;

@@ -2,10 +2,10 @@ var user;
 var main;
 var mainScope;
 var userPanelTO;
+var isBeingRented;
 
 routerApp.controller('userpanelController', function($scope, $http, $state, $interval, $cookies){
     $scope.headingTitle = "User panel";
-    var isBeingRented;
 
     $http.get('api/userpanel')
         .then(function(response){
@@ -174,6 +174,8 @@ routerApp.controller('rentalController', function($scope, $http, $state){
             $http.post(url)
             .then(function(response){
                 document.getElementById("server_response").innerHTML = response.data.rentStatus;
+                $scope.serverTimeMillis = response.data.beginTimeInMillis;
+                isBeingRented = true;
                 modalInstance.close();
                 $state.reload();
             }, function(response){
@@ -208,7 +210,7 @@ var loginController = routerApp.controller('loginController', function($scope, $
 routerApp.controller('resetPassController', function($scope, $http, $window){
     $scope.sendPasswordMail = function(){
             $http.post('api/resetPassEmail', $scope.form).then(function(response){
-                document.getElementById("response").innerHTML = response.data.message;
+                $scope.message = response.data.message;
                 $scope.emailForm.$setPristine();
                 $scope.form = {};
 //                $state.go('main');
@@ -254,10 +256,9 @@ routerApp.controller('registrationConfirmController', function($scope, $http, $s
 routerApp.controller('resendActTokenController', function($scope, $http, $window, $timeout){
        $scope.resend = function(){
                $http.post('api/resendActToken', $scope.resendtoken).then(function(response){
-                   document.getElementById("response").innerHTML = response.data.message;
-                   $timeout(function(){
-                       $window.location.href = "index";
-                   }, 5000);
+                   $scope.message = response.data.message;
+                   $scope.emailForm.$setPristine();
+                   $scope.form = {};
                }, function(response){
                    $scope.error = response.data;
                });
@@ -279,6 +280,9 @@ routerApp.controller('paymentController', function($scope, $http, $state, $timeo
             $scope.paymentResponse = response.data.message;
             $scope.paymentForm.$setPristine();
             $scope.payment = {};
+            if($scope.fieldErrors != null){
+                $scope.fieldErrors = null;
+            }
         }, function(response){
             if(response.data.status != null){
                 $scope.paymentError = response.data.message;

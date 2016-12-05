@@ -3,23 +3,32 @@
     <form ng-submit="addStation()">
         <table>
             <tr>
-                <td>Name: </td>
-                <td><input type="text" ng-model="addstation.name" name="name"/></td>
+                <td>Name:</td>
+                <td><input type="text" placeholder="Required" ng-model="addstation.name" name="name"/></td>
+                <td ng-show="fieldErrors.name != null">
+                    <span class="bg-danger">{{fieldErrors.name.message}}</span>
+                </td>
             </tr>
             <tr>
-                <td>Address: </td>
-                <td><input type="text" ng-model="addstation.address" name="address"/></td>
+                <td>Address:</td>
+                <td><input type="text" placeholder="Required" ng-model="addstation.address" name="address"/></td>
+                <td ng-show="fieldErrors.address != null">
+                    <span class="bg-danger">{{fieldErrors.address.message}}</span>
+                </td>
             </tr>
             <tr>
-                <td>City: </td>
-                <td><input type="text" ng-model="addstation.city" name="city"/></td>
+                <td>City:</td>
+                <td><input type="text" placeholder="Required" ng-model="addstation.city" name="city"/></td>
+                <td ng-show="fieldErrors.city != null">
+                    <span class="bg-danger">{{fieldErrors.city.message}}</span>
+                </td>
             </tr>
             <tr>
-                <td>Latitude: </td>
+                <td>Latitude:</td>
                 <td><input type="text" ng-model="addstation.latitude" name="lat"/></td>
             </tr>
             <tr>
-                <td>Longitude: </td>
+                <td>Longitude:</td>
                 <td><input type="text" ng-model="addstation.longitude" name="long"/></td>
             </tr>
             <tr>
@@ -30,7 +39,8 @@
         </table>
     </form>
     <div class="panel panel-danger" ng-show="addStationError != null">
-        <div id="warning" class="panel-heading" ng-show="addStationError.cause != null"><br>{{addStationError.cause}}</div>
+        <div id="warning" class="panel-heading" ng-show="addStationError.cause != null"><br>{{addStationError.cause}}
+        </div>
         <div id="warningStatus" class="panel-heading" ng-show="addStationError.message != null">Error</div>
         <div class="panel-body">
             {{addStationError.message}}
