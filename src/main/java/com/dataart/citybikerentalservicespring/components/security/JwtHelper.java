@@ -1,6 +1,7 @@
 package com.dataart.citybikerentalservicespring.components.security;
 
 import com.dataart.citybikerentalservicespring.exceptions.jsonwebtokenexceptions.JsonWebTokenException;
+import com.dataart.citybikerentalservicespring.exceptions.jsonwebtokenexceptions.JwtCbrsException;
 import com.dataart.citybikerentalservicespring.persistence.model.User;
 import com.dataart.citybikerentalservicespring.view.TO.UserDetailsTO;
 import io.jsonwebtoken.Claims;
@@ -25,7 +26,7 @@ public class JwtHelper {
     public UserDetailsTO parseToken(String token) throws JsonWebTokenException {
         try {
             if(token.isEmpty()){
-                return null;
+                throw new JwtCbrsException("You have to login first!");
             } else {
                 Claims body = Jwts.parser()
                         .setSigningKey(secret)

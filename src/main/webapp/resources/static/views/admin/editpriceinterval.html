@@ -1,15 +1,21 @@
 <div class="section" ng-controller="editPriceIntController">
     <h4>{{editPriceIntervalHeader}}</h4>
-    <form ng-submit="updatePriceInterval()">
+    <form novalidate ng-submit="updatePriceInterval()">
         <table>
             <input type="hidden" ng-model="editPriceInt.intervalId"/>
-            <tr>
+            <tr ng-show="editPriceInt.end != null">
                 <td>End:</td>
-                <td><input type="text" ng-model="editPriceInt.end" placeholder="{{priceIntervalTO.end}}"/></td>
+                <td><input type="text" ng-model="editPriceInt.end" /></td>
+                <td ng-show="fieldErrors.end != null">
+                    <span class="bg-danger">{{fieldErrors.end.message}}</span>
+                </td>
             </tr>
             <tr>
                 <td>Price:</td>
-                <td><input type="text" ng-model="editPriceInt.price" placeholder="{{priceIntervalTO.price}}"/></td>
+                <td><input type="text" ng-model="editPriceInt.price" /></td>
+                <td ng-show="fieldErrors.price != null">
+                    <span class="bg-danger">{{fieldErrors.price.message}}</span>
+                </td>
             </tr>
             <tr>
                 <td>

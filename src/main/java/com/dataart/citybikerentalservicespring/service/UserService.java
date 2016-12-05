@@ -66,7 +66,7 @@ public class UserService {
         }
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
@@ -76,12 +76,12 @@ public class UserService {
         userRepository.setActivated(activated, user.getId());
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public User findById(Integer userId) {
         return userRepository.findOne(userId);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Token findTokenByBody(String tokenBody) {
         return tokenRepository.findByBody(tokenBody);
     }
@@ -113,5 +113,6 @@ public class UserService {
         }
         String newPasswordHash = passwordEncoder.encode(password);
         user.setPasswordHash(newPasswordHash);
+        userRepository.save(user);
     }
 }

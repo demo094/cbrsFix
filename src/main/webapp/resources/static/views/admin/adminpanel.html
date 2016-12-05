@@ -6,15 +6,14 @@
     <a ui-sref=".bikeadmin">Manage bikes</a>
     <br><a ui-sref=".stationadmin">Manage stations</a>
     <br><a ui-sref=".priceintervaladmin">Manage price intervals</a>
-    <br><a ui-sref=".statistics">Look up system statistics</a>
 
     <div class="panel panel-default" ui-view></div>
 
 </div>
 <div class="panel panel-danger" ng-show="error != null">
-    <div id="warning" class="panel-heading" ng-show="error.cause != null"><br>{{error.cause}}</div>
     <div id="warningStatus" class="panel-heading" ng-show="error.message != null">Error</div>
     <div class="panel-body">
         {{error.message}}
+        <br><span ng-show="error.cause != null">{{error.cause}}</span>
     </div>
 </div>

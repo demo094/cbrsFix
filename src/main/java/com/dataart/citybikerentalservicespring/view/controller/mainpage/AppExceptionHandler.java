@@ -78,7 +78,7 @@ public class AppExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public StatusErrorResponse handleRuntimeExceptions(RuntimeException ex) {
         LOGGER.error("An error occurred!", ex);
-        return new StatusErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Severe system problem occurred. Please contact with administation.");
+        return new StatusErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Severe system problem occurred. Please contact with administration.");
     }
 
     private ValidationErrorResponse processFieldValidationErrors(List<FieldError> fieldErrors) {

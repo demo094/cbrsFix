@@ -4,16 +4,17 @@ package com.dataart.citybikerentalservicespring.view.requests;
  * Created by mkrasowski on 23.09.2016.
  */
 public class EditBikeRequest {
-    private Integer id;
+    private Integer bikeId;
     private String type;
     private Integer slotId;
+    private Integer oldSlotId;
 
     public Integer getId() {
-        return id;
+        return bikeId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(Integer bikeId) {
+        this.bikeId = bikeId;
     }
 
     public String getType() {
@@ -30,5 +31,13 @@ public class EditBikeRequest {
 
     public void setSlotId(Integer slotId) {
         this.slotId = slotId;
+    }
+
+    public Integer getOldSlotId() {
+        return oldSlotId;
+    }
+
+    public void setOldSlotId(Integer oldSlotId) {
+        this.oldSlotId = oldSlotId;
     }
 }

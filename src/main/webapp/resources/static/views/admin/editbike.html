@@ -6,7 +6,13 @@
         <table>
             <tr>
                 <td>Type:</td>
-                <td><input type="text" ng-model="editbike.type" name="type"/></td>
+                <td>
+                    <select ng-model="editbike.type">
+                        <option>ordinary</option>
+                        <option>children</option>
+                        <option>mountain</option>
+                    </select>
+                </td>
             </tr>
             <tr>
                 <td>Slot:</td>
@@ -15,9 +21,10 @@
                         <option ng-repeat="slotTO in stationTO.slotTOs" ng-if="$index >= 0" ng-value="slotTO.slotId">slot {{slotTO.slotId}}
                         </option>
                     </optgroup>
-                    <option ng-model="editbike.id" value="" >No slot</option>
+                    <option ng-model="editbike.bikeId" ng-value="" >No slot</option>
                 </select></td>
-                <input type="hidden" ng-model="editbike.id" ng-value="slotTO.bikeId"/>
+                <input type="hidden" ng-model="editbike.bikeId" ng-value="slotTO.bikeId"/>
+                <input type="hidden" ng-model="editbike.oldSlotId" />
             </tr>
             <tr>
                 <td>

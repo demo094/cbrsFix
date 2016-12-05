@@ -1,5 +1,6 @@
 package com.dataart.citybikerentalservicespring.service;
 
+import com.dataart.citybikerentalservicespring.constants.BikeType;
 import com.dataart.citybikerentalservicespring.exceptions.CbrsException;
 import com.dataart.citybikerentalservicespring.exceptions.adminexceptions.EntityBindingException;
 import com.dataart.citybikerentalservicespring.persistence.model.Bike;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,12 +33,12 @@ public class StationService {
     @Autowired
     private SlotRepository slotRepository;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Station> getStationList() {
         return stationRepository.findAll();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Bike getBikeById(int bikeId) {
         return bikeRepository.findOne(bikeId);
     }
@@ -54,56 +56,59 @@ public class StationService {
         bikeRepository.delete(bikeId);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Station getStationById(Integer stationId) {
         return stationRepository.findById(stationId);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Slot getSlotById(Integer slotId) {
         return slotRepository.findOne(slotId);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Slot getSlotByBike(Bike bike) {
         return slotRepository.findSlotByBike(bike);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<BikeTO> getBikeTOs() {
         return bikeRepository.findAll().stream().map(BikeTO::new).collect(Collectors.toList());
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<StationTO> getStationTOs() {
         return getStationList().stream().map(StationTO::new).collect(Collectors.toList());
     }
 
     @Transactional
-    public void updateBikeInfo(Integer bikeId, String type, Integer slotId) {
+    public void updateBikeInfo(Integer bikeId, BikeType type, Integer slotId, Integer oldSlotId) {
         if(bikeId == null){
             Slot slot = slotRepository.findOne(slotId);
             slot.setBike(null);
         } else {
             Bike bike = bikeRepository.findOne(bikeId);
             bike.setType(type);
+            Slot oldSlot = slotRepository.findOne(oldSlotId);
+            oldSlot.setBike(null);
             Slot slot = slotRepository.findOne(slotId);
             slot.setBike(bike);
         }
     }
 
     @Transactional
-    public void updateStation(int id, String name, String type, String address, String city) {
+    public void updateStation(int id, String name, String address, String city, BigDecimal latitude, BigDecimal longitude) {
         Station station = stationRepository.findById(id);
         station.setName(name);
-        station.setType(type);
         station.setAddress(address);
         station.setCity(city);
+        station.setLatitude(latitude);
+        station.setLongitude(longitude);
     }
 
     @Transactional
-    public void addStation(String name, String type, String address, String city) {
-        stationRepository.save(new Station(name, type, address, city));
+    public void addStation(String name, String address, String city, BigDecimal latitude, BigDecimal longitude) {
+        stationRepository.save(new Station(name, address, city, latitude, longitude));
     }
 
     @Transactional

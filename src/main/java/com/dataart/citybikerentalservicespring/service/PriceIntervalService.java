@@ -21,7 +21,7 @@ public class PriceIntervalService {
     @Autowired
     private PriceIntervalRepository priceIntervalRepository;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<PriceIntervalResponse> getPriceIntervalTOs() {
         List<PriceIntervalResponse> priceIntervalResponses = new ArrayList<>();
         List<PriceInterval> priceIntervals = priceIntervalRepository.findAllByOrderByEndAsc();
@@ -36,8 +36,7 @@ public class PriceIntervalService {
 
         if(lastPriceIntervalResponse == null){
             PriceInterval priceInterval = new PriceInterval(null,
-                    priceIntervals
-                            .get(priceIntervals.size() - 1).getPrice().add(BigDecimal.ONE));
+                    priceIntervals.get(priceIntervals.size() - 1).getPrice().add(BigDecimal.ONE));
             priceIntervalRepository.save(priceInterval);
             lastPriceIntervalResponse = new PriceIntervalResponse(priceInterval);
         }
@@ -47,7 +46,7 @@ public class PriceIntervalService {
         return priceIntervalResponses;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public PriceInterval getPriceIntervalById(int priceIntervalId) {
         return priceIntervalRepository.findOne(priceIntervalId);
     }
@@ -77,11 +76,6 @@ public class PriceIntervalService {
                 throw new WrongPriceIntervalDataException(UserMessage.DOUBLE_PRICING);
             }
         }
-
-        if (end != null) {
-            priceIntervalRepository.save(new PriceInterval(end, price));
-        } else {
-            priceIntervalRepository.save(new PriceInterval(price));
-        }
+        priceIntervalRepository.save(new PriceInterval(end, price));
     }
 }

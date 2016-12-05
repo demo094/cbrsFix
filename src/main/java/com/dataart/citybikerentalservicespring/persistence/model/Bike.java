@@ -1,5 +1,7 @@
 package com.dataart.citybikerentalservicespring.persistence.model;
 
+import com.dataart.citybikerentalservicespring.constants.BikeType;
+
 import javax.persistence.*;
 
 /**
@@ -15,13 +17,18 @@ public class Bike {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column
-    private String type;
+    private BikeType type;
 
     public Bike() {
     }
 
     public Bike(Integer id){
         this.id = id;
+    }
+
+    public Bike(Integer id, BikeType type){
+        this.id = id;
+        this.type = type;
     }
 
     public Integer getId() {
@@ -32,11 +39,12 @@ public class Bike {
         this.id = id;
     }
 
-    public String getType() {
+    @Enumerated(EnumType.STRING)
+    public BikeType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(BikeType type) {
         this.type = type;
     }
 

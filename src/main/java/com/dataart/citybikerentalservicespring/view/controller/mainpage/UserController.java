@@ -54,47 +54,6 @@ public class UserController {
         return new UserPanelResponse(user, rentalHistory, payment, authorities);
     }
 
-    @RequestMapping(value = "/resetPassEmail", method = RequestMethod.POST)
-    public CommonResponse resetPassword(@RequestBody ResendTokenRequest resendTokenRequest) {
-        userService.sendResetPasswordEmail(resendTokenRequest.getEmail());
-        return new CommonResponse("Email sent!");
-    }
-
-    @RequestMapping(value = "/resetPassData/{token}", method = RequestMethod.POST)
-    public CommonResponse resetData(@PathVariable("token") String token, @RequestBody ResetPasswordRequest resetPasswordRequest) throws CbrsException {
-        Token resetToken = userService.findTokenByBody(token);
-        if (resetToken == null) {
-            throw new InvalidTokenException();
-        }
-        User user = resetToken.getUser();
-        if (user == null) {
-            throw new UserNotFoundException();
-        }
-
-        if (!resetPasswordRequest.getPassword().equals(resetPasswordRequest.getPasswordRetype())) {
-            return new CommonResponse("The passwords must match!");
-        }
-        userService.updatePasswordHash(user, resetPasswordRequest.getPassword());
-        return new CommonResponse("Password reset successful!");
-
-    }
-
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public CommonResponse registerUser(@RequestBody RegistrationRequest registrationRequest) throws CbrsException {
-        if (!registrationRequest.getPassword().equals(registrationRequest.getRetypedPassword())) {
-            return new CommonResponse("Passwords must be the same!");
-        }
-
-        userService.registerUser(registrationRequest.getEmail(), registrationRequest.getPassword());
-        return new CommonResponse("Registration submitted! Please read instructions sent to your registration email.");
-    }
-
-    @RequestMapping(value = "/resendActToken", method = RequestMethod.POST)
-    public CommonResponse resendActToken(@RequestBody ResendTokenRequest resendTokenRequest) {
-        userService.resendActivationToken(resendTokenRequest.getEmail());
-        return new CommonResponse("Activation link sent! Please follow instructions in the email.");
-    }
-
     @RequestMapping(value = "/payment", method = RequestMethod.GET)
     @PreAuthorize("hasRole('USER')")
     public PaymentResponse paymentData() {
@@ -106,22 +65,6 @@ public class UserController {
     public CommonResponse payment(@Valid @RequestBody PaymentRequest paymentRequest) throws CbrsException {
         userService.updateBalance(paymentRequest.getIdUser(), paymentRequest.getAmount());
         return new CommonResponse("Payment done!");
-    }
-
-    @RequestMapping(value = "/registrationConfirm/{token}", method = RequestMethod.GET)
-    public CommonResponse confirmationPage(@PathVariable("token") String token) throws CbrsException {
-        Token storedToken = userService.findTokenByBody(token);
-        if (storedToken == null) {
-            throw new InvalidTokenException();
-        }
-        User user = storedToken.getUser();
-        Calendar calendar = Calendar.getInstance();
-        if (storedToken.getExpirationDate().getTime() - calendar.getTime().getTime() <= 0) {
-            return new CommonResponse("Token has expired!");
-        } else {
-            userService.setUserActivated(user, true);
-            return new CommonResponse("Account activated. You can now log in.");
-        }
     }
 
     @RequestMapping(value = "/rent/status", method = RequestMethod.GET)

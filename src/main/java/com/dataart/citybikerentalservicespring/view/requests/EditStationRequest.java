@@ -1,15 +1,23 @@
 package com.dataart.citybikerentalservicespring.view.requests;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
+
 /**
  * Created by mkrasowski on 27.09.2016.
  */
 public class EditStationRequest {
     private int id;
+    @NotEmpty(message = "You have to put in station's name!")
     private String name;
-    private String type;
+    @NotEmpty(message = "You have to put in station's address!")
     private String address;
+    @NotEmpty(message = "You have to put in station's city!")
     private String city;
-//    private String coordinates;
+    private BigDecimal latitude;
+    private BigDecimal longitude;
 
     public EditStationRequest() {
     }
@@ -20,10 +28,6 @@ public class EditStationRequest {
 
     public String getName() {
         return name;
-    }
-
-    public String getType() {
-        return type;
     }
 
     public String getAddress() {
@@ -42,10 +46,6 @@ public class EditStationRequest {
         this.name = name;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public void setAddress(String address) {
         this.address = address;
     }
@@ -54,4 +54,19 @@ public class EditStationRequest {
         this.city = city;
     }
 
+    public BigDecimal getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(BigDecimal latitude) {
+        this.latitude = latitude;
+    }
+
+    public BigDecimal getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(BigDecimal longitude) {
+        this.longitude = longitude;
+    }
 }

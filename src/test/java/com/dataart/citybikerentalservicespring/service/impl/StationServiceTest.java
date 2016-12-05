@@ -1,5 +1,6 @@
 package com.dataart.citybikerentalservicespring.service.impl;
 
+import com.dataart.citybikerentalservicespring.constants.BikeType;
 import com.dataart.citybikerentalservicespring.persistence.repo.BikeRepository;
 import com.dataart.citybikerentalservicespring.persistence.repo.StationRepository;
 import com.dataart.citybikerentalservicespring.service.StationService;
@@ -59,7 +60,6 @@ public class StationServiceTest {
         assertEquals(Integer.valueOf(1), stationTOs.get(0).getSlotTOs().get(0).getSlotId());
         assertEquals(Integer.valueOf(2), stationTOs.get(0).getSlotTOs().get(0).getBikeId());
 
-        assertEquals("", stationTOs.get(0).getStationType());
         assertEquals(getStations().get(0).getAddress(), stationTOs.get(0).getStationAddress());
 
         for (int i = 0; i < stations.size(); i++) {
@@ -74,7 +74,7 @@ public class StationServiceTest {
     public List<Station> getStations() {
         List<Station> stations = new ArrayList<>();
         List<Slot> slots = new ArrayList<>();
-        Station station5 = new Station(5, "Krakowskie6", "", "KrakowskiePrzedmiescie6", "Lublin", slots);
+        Station station5 = new Station(5, "Krakowskie6", "KrakowskiePrzedmiescie6", "Lublin", slots);
         Slot slotOnStation5 = new Slot(station5);
         slotOnStation5.setId(1);
         slotOnStation5.setBike(new Bike(2));
@@ -83,18 +83,18 @@ public class StationServiceTest {
         stations.add(new Station(6, slots));
         stations.add(new Station(7, slots));
         stations.add(new Station(8, slots));
-        stations.add(new Station(9, "3Maja17", "ordinary", "3Maja17", "Lublin", slots));
+        stations.add(new Station(9, "3Maja17", "3Maja17", "Lublin", slots));
 
         return stations;
     }
 
     public List<Bike> getBikes() {
         List<Bike> bikes = new ArrayList<>();
-        bikes.add(new Bike(1));
-        bikes.add(new Bike(2));
-        bikes.add(new Bike(3));
-        bikes.add(new Bike(4));
-        bikes.add(new Bike(5));
+        bikes.add(new Bike(1, BikeType.ORDINARY));
+        bikes.add(new Bike(2, BikeType.ORDINARY));
+        bikes.add(new Bike(3, BikeType.ORDINARY));
+        bikes.add(new Bike(4, BikeType.ORDINARY));
+        bikes.add(new Bike(5, BikeType.ORDINARY));
         return bikes;
     }
 }
