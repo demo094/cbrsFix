@@ -148,6 +148,7 @@ routerApp.controller('modalSlotController', function($scope, $http, data){
         }, function(response){
             $scope.error = response.data;
         });
+
 });
 
 routerApp.controller('slotController', function($scope, $http, $stateParams){
